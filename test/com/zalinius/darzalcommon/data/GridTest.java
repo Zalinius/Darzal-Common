@@ -13,6 +13,21 @@ public class GridTest {
 		int result = grid.size();
 		
 		assertEquals(25, result);
+		assertFalse(grid.isEmpty());
+	}
+	
+	@Test
+	void stream_onGrid_streams() throws Exception {
+		Grid<String> grid = new Grid<>(3, 3);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				grid.set(i, j, "a");
+			}
+		}
+		
+		String result = grid.stream().map(String::toUpperCase).reduce("", (a,b) -> a+b);
+
+		assertEquals("AAAAAAAAA", result);
 	}
 
 }
