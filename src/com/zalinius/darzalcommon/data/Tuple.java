@@ -12,6 +12,13 @@ public class Tuple <E,F> {
 		this.f = f;
 	}
 
+	public E getE() {
+		return e;
+	}
+	public F getF() {
+		return f;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(e, f);
