@@ -18,6 +18,11 @@ public class Tuple <E,F> {
 	public F getF() {
 		return f;
 	}
+	
+	@Override
+	public String toString() {
+		return "Tuple: [" + e + ", " + f + "]";
+	}
 
 	@Override
 	public int hashCode() {
