@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -83,7 +84,6 @@ public class Grid<E> implements Collection<E>{
 		set(coord.i, coord.j, value);
 	}
 
-
 	public E get(int i, int j) {
 		if(!isInGrid(i, j)) {
 			return defaultValue;
@@ -95,7 +95,40 @@ public class Grid<E> implements Collection<E>{
 	public E get(Coord coord) {
 		return get(coord.i, coord.j);
 	}
+	
+	public Coord coordinatesOf(E e) {
+		int linearPosition = inside.indexOf(e);
+		if(linearPosition == -1) {
+			return null;
+		}
+		else {
+			return computeCoordPosition(linearPosition);
+		}
+	}
+	
+	public List<Coord> getDirectlyAdjacentCoordinates(int i, int j){
+		return streamCoordinates()
+			  .filter(coord -> coord.taxiDistance(new Coord(i, j)) == 1)
+			  .filter(this::isInGrid)
+			  .collect(Collectors.toList());
+	}
 
+	public List<Coord> getAdjacentCoordinates(int i, int j){
+		return streamCoordinates()
+			  .filter(coord -> coord.kingDistance(new Coord(i, j)) == 1)
+			  .filter(this::isInGrid)
+			  .collect(Collectors.toList());
+	}
+
+	public List<E> getDirectlyAdjacentElements(int i, int j){
+		List<Coord> coordsToGet = getDirectlyAdjacentCoordinates(i, j);		
+		return coordsToGet.stream().map(this::get).collect(Collectors.toList());
+	}
+
+	public List<E> getAdjacentElements(int i, int j){
+		List<Coord> coordsToGet = getAdjacentCoordinates(i, j);		
+		return coordsToGet.stream().map(this::get).collect(Collectors.toList());
+	}	
 
 	private E getFromList(int i, int j) {
 		int position = computeLinearPosition(i, j);
@@ -110,6 +143,11 @@ public class Grid<E> implements Collection<E>{
 		return i + j*width;
 	}
 	
+	private Coord computeCoordPosition(int linearPosition) {
+		int i = linearPosition % width;
+		int j = linearPosition / width;
+		return new Coord(i, j);
+	}
 	
 
 	@Override

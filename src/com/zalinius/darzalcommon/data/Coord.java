@@ -55,5 +55,13 @@ public class Coord {
 	}
 	
 	
+	public int taxiDistance(Coord coord) {
+		return Math.abs(i - coord.i) + Math.abs(j - coord.j);
+	}
+	
+	public int kingDistance(Coord coord) {
+		return Math.max(Math.abs(i - coord.i), Math.abs(j - coord.j));
+	}
+	
 
 }
