@@ -34,6 +34,144 @@ public class GridTest {
 		
 		assertThrows(IllegalArgumentException.class, () -> grid.set(6, 8, 23));
 	}
+	
+	@Test
+	void contains_onObjectNotInGrid_returnsFalse() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		Integer integer = 5;
+		
+		boolean result = grid.contains(integer);
+		
+		assertFalse(result);
+	}
+
+	@Test
+	void contains_onObjectInGridOnce_returnsTrue() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		Integer integer = 5;
+		grid.set(2,  3, integer);
+		
+		boolean result = grid.contains(integer);
+		
+		assertTrue(result);
+	}
+
+	@Test
+	void contains_onObjectInGridMultipleTimes_returnsTrue() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		Integer integer = 5;
+		grid.set(2, 3, integer);
+		grid.set(3, 6, integer);
+		
+		boolean result = grid.contains(integer);
+		
+		assertTrue(result);
+	}
+
+	@Test
+	void coordinatesOf_onObjectNotInGrid_returnsNull() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		Integer integer = 5;
+		
+		Coord result = grid.coordinatesOf(integer);
+		
+		assertNull(result);
+	}
+
+	@Test
+	void coordinatesOf_onObjecInGrid_returnsCoordinates() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		Integer integer = 5;
+		grid.set(2, 3, integer); 
+		
+		Coord result = grid.coordinatesOf(integer);
+		
+		assertEquals(new Coord(2, 3), result);
+	}
+	
+	@Test
+	void getDirectlyAdjacentElements_onEmptyGrid_returns4NullObjects() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		
+		List<Integer> result = grid.getDirectlyAdjacentElements(2, 3);
+		
+		assertEquals(4, result.size());
+		assertNull(result.get(0));
+		assertNull(result.get(1));
+		assertNull(result.get(2));
+		assertNull(result.get(3));
+	}
+
+	@Test
+	void getDirectlyAdjacentCoordinates_onMiddle_returns4DirectlyAdjacentCoordinates() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		
+		List<Coord> results = grid.getDirectlyAdjacentCoordinates(2, 3);
+		
+		assertEquals(4, results.size());
+		assertTrue(results.contains(new Coord(2, 2)));
+		assertTrue(results.contains(new Coord(2, 4)));
+		assertTrue(results.contains(new Coord(1, 3)));
+		assertTrue(results.contains(new Coord(3, 3)));
+	}
+
+	@Test
+	void getDirectlyAdjacentElements_onOrigin_returns2NullObjects() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		
+		List<Integer> result = grid.getDirectlyAdjacentElements(0, 0);
+		
+		assertEquals(2, result.size());
+		assertNull(result.get(0));
+		assertNull(result.get(1));
+	}
+
+	@Test
+	void getDirectlyAdjacentElements_onEdge_returns3NullObjects() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		
+		List<Integer> result = grid.getDirectlyAdjacentElements(2, 6);
+		
+		assertEquals(3, result.size());
+		assertNull(result.get(0));
+		assertNull(result.get(1));
+		assertNull(result.get(2));
+	}
+	
+	@Test
+	void getAdjacentCoordinates_onMiddle_returns8AdjacentCoordinates() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		
+		List<Coord> results = grid.getAdjacentCoordinates(2, 3);
+		
+		assertEquals(8, results.size());
+		assertTrue(results.contains(new Coord(1, 2)));
+		assertTrue(results.contains(new Coord(2, 2)));
+		assertTrue(results.contains(new Coord(3, 2)));
+		assertTrue(results.contains(new Coord(1, 3)));
+		assertTrue(results.contains(new Coord(3, 3)));
+		assertTrue(results.contains(new Coord(1, 4)));
+		assertTrue(results.contains(new Coord(2, 4)));
+		assertTrue(results.contains(new Coord(3, 4)));
+	}
+	
+	@Test
+	void getAdjacentElements_onOrigin_returns3Objects() throws Exception {
+		Grid<Integer> grid = new Grid<>(4, 7);
+		grid.set(0, 1, 22);
+		grid.set(1, 0, 23);
+		grid.set(1, 1, 24);
+		grid.set(0, 0, 19);
+		
+		List<Integer> results = grid.getAdjacentElements(0, 0);
+		
+		assertEquals(3, results.size());
+		assertTrue(results.contains(22));
+		assertTrue(results.contains(23));
+		assertTrue(results.contains(24));
+		assertFalse(results.contains(19));
+	}
+
 
 	@Test
 	void constructorWithInitializerAndDefaultValue_whenGivenInitializerLambdaAndDefault_initializedValues() {
