@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-public class TupleTest {
+class TupleTest {
 	
 	@Test
 	void accessors_bothValues_works() throws Exception {

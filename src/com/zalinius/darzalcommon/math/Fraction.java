@@ -3,7 +3,8 @@ package com.zalinius.darzalcommon.math;
 import java.util.Objects;
 
 public class Fraction {
-	public final int numerator, denominator;
+	public final int numerator;
+	public final int denominator;
 	
 
 	public Fraction(){

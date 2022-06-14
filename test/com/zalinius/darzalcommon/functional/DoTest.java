@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.jupiter.api.Test;
 
-public class DoTest {
+class DoTest {
 	
 	@Test
 	void xTimes_callIncrement20Times_increments20Times() throws Exception {
