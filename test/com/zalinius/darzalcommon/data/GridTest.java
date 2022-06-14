@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-public class GridTest {
+class GridTest {
 	
 	@Test
 	void size_of5x7grid_is35() throws Exception {

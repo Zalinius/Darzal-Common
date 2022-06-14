@@ -7,7 +7,7 @@ import java.util.function.Consumer;
 
 import org.junit.jupiter.api.Test;
 
-public class ConsumersTest {
+class ConsumersTest {
 	
 	@Test
 	void nullConsumer_whenUsed_doesNothing() throws Exception {
