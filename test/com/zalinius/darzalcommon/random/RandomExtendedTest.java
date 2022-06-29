@@ -15,12 +15,12 @@ import org.junit.jupiter.api.Test;
  * We're deliberately not using the same seed here, as we're not testing the source of randomness,
  *  instead we're testing the method interfaces, using a barrage approach
  */
-public class RandomExtendedTest {
+class RandomExtendedTest {
 
 	private RandomExtended randomExtended;
 	
 	@BeforeEach
-	public void setup() {
+	void setup() {
 		randomExtended = new RandomExtended();
 	}
 	

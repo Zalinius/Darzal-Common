@@ -9,8 +9,6 @@ import com.zalinius.darzalcommon.time.FileFriendlyTimeFormatter;
 
 public abstract class LoggingUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
-	public LoggingUncaughtExceptionHandler() {}
-
 	@Override
 	public void uncaughtException(Thread originatingThread, Throwable throwable) {
 		TimestampedThrowable log = new TimestampedThrowable(throwable, Instant.now());

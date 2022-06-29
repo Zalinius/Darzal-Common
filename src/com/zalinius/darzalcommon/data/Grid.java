@@ -204,12 +204,12 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean add(E e) {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean remove(Object o) {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -219,22 +219,22 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void clear() {
-		throw new RuntimeException("Not implemented Teehee");
+		throw new UnsupportedOperationException();
 	}
 	
 }

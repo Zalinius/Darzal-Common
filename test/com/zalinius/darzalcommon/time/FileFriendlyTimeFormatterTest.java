@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 import org.junit.jupiter.api.Test;
 
-public class FileFriendlyTimeFormatterTest {
+class FileFriendlyTimeFormatterTest {
 
 	@Test
 	void fileFriendlyTimeFormatter_default_createsFileFriendlyUTCTimeFormatter() throws Exception {
