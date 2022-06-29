@@ -2,7 +2,10 @@ package com.zalinius.darzalcommon.random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeAll;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
@@ -65,4 +68,76 @@ public class RandomExtendedTest {
 		
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.nextInt(lowerBound, upperBound));
 	}
+	
+	@RepeatedTest(100)
+	void nextChance_withZeroNumerator_returnsAlwaysFalse() throws Exception {
+		int numerator = 0;
+		int denominator = 7;		
+		
+		boolean result = randomExtended.nextChance(numerator, denominator);
+		assertFalse(result);
+	}
+
+	@RepeatedTest(100)
+	void nextChance_withNumeratorEqualToDenominator_returnsAlwaysTrue() throws Exception {
+		int numerator = 7;
+		int denominator = 7;		
+		
+		boolean result = randomExtended.nextChance(numerator, denominator);
+		assertTrue(result);
+	}
+
+	@Test
+	void nextChance_withNegativeNumerator_throwsIllegalArgumentException() throws Exception {
+		int numerator = -2;
+		int denominator = 7;		
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.nextChance(numerator, denominator));
+	}
+
+	@Test
+	void nextChance_withNegativeDenominator_throwsIllegalArgumentException() throws Exception {
+		int numerator = 2;
+		int denominator = -7;		
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.nextChance(numerator, denominator));
+	}
+	
+	@Test
+	void randomSubset_withSet_returnsAProperSubsetOfCorrectSize() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 3;
+		
+		Set<Integer> subset = randomExtended.getRandomSubset(set, subsetSize);
+
+		assertEquals(3, subset.size());
+		assertTrue(set.containsAll(subset));
+		assertFalse(subset.containsAll(set));
+	}
+	
+	@Test
+	void randomSubset_withZeroSubsetSize_throwsIllegalArgumentException() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 0;
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
+	}
+
+	@Test
+	void randomSubset_withSubsetSizeEqualToSetSize_throwsIllegalArgumentException() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 8;
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
+	}
+
+	@Test
+	void randomSubset_withEmptySet_throwsIllegalArgumentException() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList());
+		int subsetSize = 8;
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
+	}
+
+
 }
