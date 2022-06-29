@@ -55,6 +55,22 @@ public class RandomExtended extends Random{
 		return super.nextInt(range) + lowerBound;
 	}
 	
+	public double nextRadian() {
+		return 2.0 * Math.PI * super.nextDouble();
+	}
+
+	public double nextDegree() {
+		return 360.0 * super.nextDouble();
+	}
+	
+	public float nextRadianF() {
+		return 2.0f * (float)Math.PI * super.nextFloat();
+	}
+
+	public float nextDegreeF() {
+		return 360.0f * super.nextFloat();
+	}
+	
 	public <E> Set<E> getRandomSubset(final Set<E> set, final int subsetSize){
 		if(subsetSize <= 0) {
 			throw new IllegalArgumentException("Subset size must be positive: " + subsetSize);

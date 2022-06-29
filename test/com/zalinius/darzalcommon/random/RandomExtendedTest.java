@@ -52,6 +52,34 @@ public class RandomExtendedTest {
 		assertTrue(-200 <= result);
 		assertTrue(result < 200);
 	}
+	
+	@RepeatedTest(100)
+	void nextRadian__returnsAValueBetween0And2Pi() throws Exception {
+		double result = randomExtended.nextRadian();
+		assertTrue(0.0 <= result);
+		assertTrue(result < 2.0*Math.PI);
+	}
+
+	@RepeatedTest(100)
+	void nextDegree__returnsAValueBetween0And360() throws Exception {
+		double result = randomExtended.nextDegree();
+		assertTrue(0.0 <= result);
+		assertTrue(result < 360.0);
+	}
+
+	@RepeatedTest(100)
+	void nextRadianF__returnsAValueBetween0And2Pi() throws Exception {
+		float result = randomExtended.nextRadianF();
+		assertTrue(0.0f <= result);
+		assertTrue(result < 2.0f*(float)Math.PI);
+	}
+
+	@RepeatedTest(100)
+	void nextDegreeF__returnsAValueBetween0And360() throws Exception {
+		float result = randomExtended.nextDegreeF();
+		assertTrue(0.0f <= result);
+		assertTrue(result < 360.0f);
+	}
 
 	@Test
 	void nextInt_withIdenticalBounds_throwsIllegalArgumentException() throws Exception {
