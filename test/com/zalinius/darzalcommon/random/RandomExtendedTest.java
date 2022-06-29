@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +22,18 @@ public class RandomExtendedTest {
 	@BeforeEach
 	public void setup() {
 		randomExtended = new RandomExtended();
+	}
+	
+	@Test
+	void constructor_usedWithLongSeed_doesNotChangeParentFunctions() throws Exception {
+		long seed = 0;
+		RandomExtended childClass = new RandomExtended(seed);
+		Random parentClass = new Random(seed);
+		
+		int childResult = childClass.nextInt();
+		int parentResult = parentClass.nextInt();
+		
+		assertEquals(parentResult, childResult);
 	}
 	
 	@RepeatedTest(100)
