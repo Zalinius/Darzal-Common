@@ -72,8 +72,8 @@ public class RandomExtended extends Random{
 	}
 	
 	public <E> Set<E> getRandomSubset(final Set<E> set, final int subsetSize){
-		if(subsetSize <= 0) {
-			throw new IllegalArgumentException("Subset size must be positive: " + subsetSize);
+		if(subsetSize < 0) {
+			throw new IllegalArgumentException("Subset size must not be negative: " + subsetSize);
 		}
 		if(subsetSize >= set.size()) {
 			throw new IllegalArgumentException("Subset size(" + subsetSize + ") must be smaller than original set size(" + set.size() + ")");
