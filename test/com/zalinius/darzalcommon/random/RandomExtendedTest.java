@@ -159,7 +159,7 @@ class RandomExtendedTest {
 	@Test
 	void randomSubset_withZeroSubsetSize_throwsIllegalArgumentException() throws Exception {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
-		int subsetSize = 0;
+		int subsetSize = -1;
 		
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
 	}
