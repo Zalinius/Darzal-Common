@@ -75,8 +75,8 @@ public class RandomExtended extends Random{
 		if(subsetSize < 0) {
 			throw new IllegalArgumentException("Subset size must not be negative: " + subsetSize);
 		}
-		if(subsetSize >= set.size()) {
-			throw new IllegalArgumentException("Subset size(" + subsetSize + ") must be smaller than original set size(" + set.size() + ")");
+		if(subsetSize > set.size()) {
+			throw new IllegalArgumentException("Subset size(" + subsetSize + ") must not be greater than original set size(" + set.size() + ")");
 		}
 
 		Set<E> setToPickFrom = new HashSet<>(set);

@@ -157,7 +157,7 @@ class RandomExtendedTest {
 	}
 	
 	@Test
-	void randomSubset_withZeroSubsetSize_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() throws Exception {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = -1;
 		
@@ -165,19 +165,50 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSubsetSizeEqualToSetSize_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() throws Exception {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 9;
+		
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
+	}
+
+	@Test
+	void randomSubset_with0SubsetSize_returnsEmptySet() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 0;
+		
+		Set<Integer> subset = randomExtended.getRandomSubset(set, subsetSize);
+		
+		assertEquals(0, subset.size());
+	}
+
+	@Test
+	void randomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		int subsetSize = 8;
+		
+		Set<Integer> subset = randomExtended.getRandomSubset(set, subsetSize);
+		
+		assertEquals(8, subset.size());
+		assertEquals(set, subset);
+	}
+
+	@Test
+	void randomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() throws Exception {
+		Set<Integer> set = new HashSet<>(Arrays.asList());
 		int subsetSize = 8;
 		
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
 	}
 
 	@Test
-	void randomSubset_withEmptySet_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() throws Exception {
 		Set<Integer> set = new HashSet<>(Arrays.asList());
-		int subsetSize = 8;
+		int subsetSize = 0;
 		
-		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomSubset(set, subsetSize));
+		Set<Integer> subset = randomExtended.getRandomSubset(set, subsetSize);
+		
+		assertEquals(0, subset.size());
 	}
 
 
