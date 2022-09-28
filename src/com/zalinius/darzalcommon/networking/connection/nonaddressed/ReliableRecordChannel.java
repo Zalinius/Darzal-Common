@@ -16,11 +16,11 @@ import com.zalinius.darzalcommon.networking.data.RttTracker;
 
 /**
  * A wrapper class for the Datagram channel's, which provides features useful for real time games:
- * <li>Serialization and deserialization via Java records
- * <li>Protocol ID
- * <li>Redundant acknowledgments
- * <li>No Head of Line Blocking
- * <li>Congestion Control
+ * Serialization and deserialization via Java records,
+ * Protocol ID,
+ * Redundant acknowledgments,
+ * No Head of Line Blocking,
+ * Congestion Control,
  * 
  * @author Zalinius
  *
