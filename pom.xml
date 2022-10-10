@@ -5,7 +5,7 @@
 
 	<groupId>com.zalinius</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.2.2</version>
+	<version>0.2.3</version>
 	<name>Darzal Common</name>
 
 	<properties>

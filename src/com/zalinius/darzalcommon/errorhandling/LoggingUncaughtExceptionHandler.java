@@ -10,12 +10,14 @@ import com.zalinius.darzalcommon.time.FileFriendlyTimeFormatter;
 public abstract class LoggingUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
 	@Override
-	public void uncaughtException(Thread originatingThread, Throwable throwable) {
+	public void uncaughtException(Thread originatingThread, Throwable throwable){
 		TimestampedThrowable log = new TimestampedThrowable(throwable, Instant.now());
 		try (PrintStream printStream = getPrintStream(log)) {
 			printStream.println(FileFriendlyTimeFormatter.dateTimeFileFriendlyFormat(log.timestamp, ZoneId.systemDefault()));
 			log.printStackTrace(printStream);	
 		}
+		System.err.println();
+		throwable.printStackTrace();	
 	}
 
 	protected abstract PrintStream getPrintStream(TimestampedThrowable report);
