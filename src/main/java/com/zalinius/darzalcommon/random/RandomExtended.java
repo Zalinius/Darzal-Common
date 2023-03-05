@@ -46,7 +46,8 @@ public class RandomExtended extends Random{
 			return targetToMeetOrBeat >= nextInt(denominator);
 		}
 	}
-	
+
+	@Override
 	public int nextInt(int lowerBound, int upperBound) {
 		if (lowerBound >= upperBound) {
 			throw new IllegalArgumentException("Lower bound must be strictly lower than upper bound: " + lowerBound +", "+ upperBound);
