@@ -47,7 +47,6 @@ public class RandomExtended extends Random{
 		}
 	}
 
-	@Override
 	public int nextInt(int lowerBound, int upperBound) {
 		if (lowerBound >= upperBound) {
 			throw new IllegalArgumentException("Lower bound must be strictly lower than upper bound: " + lowerBound +", "+ upperBound);
