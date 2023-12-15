@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import org.junit.jupiter.api.Test;
 
-public class RunnablesTest {
+class RunnablesTest {
 	
 	@Test
 	void nullRunnable_whenRun_doesntThrow() throws Exception {

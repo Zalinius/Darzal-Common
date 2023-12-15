@@ -6,7 +6,7 @@ import java.util.BitSet;
 
 import org.junit.jupiter.api.Test;
 
-public class PackAckQueueTest {
+class PackAckQueueTest {
 	
 	@Test
 	void packAckQueue_withNoPackets_hasNoAcks() throws Exception {

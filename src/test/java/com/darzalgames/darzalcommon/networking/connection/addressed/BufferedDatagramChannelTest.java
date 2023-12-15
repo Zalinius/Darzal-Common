@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import com.darzalgames.darzalcommon.testutils.TwoWayFakeDatagramChannel;
 
-public class BufferedDatagramChannelTest {
+class BufferedDatagramChannelTest {
 	
 	@Test
 	void receive_whenNothingSent_throwsException() throws Exception {

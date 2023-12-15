@@ -1,18 +1,10 @@
 package com.darzalgames.darzalcommon.networking.connection.nonaddressed;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.util.NoSuchElementException;
 
-import com.darzalgames.darzalcommon.networking.data.BinaryCongestionStrategy;
-import com.darzalgames.darzalcommon.networking.data.GameNetworkingProtocolIdentifier;
-import com.darzalgames.darzalcommon.networking.data.PackAckQueue;
-import com.darzalgames.darzalcommon.networking.data.PacketHeader;
-import com.darzalgames.darzalcommon.networking.data.RttTracker;
+import com.darzalgames.darzalcommon.networking.data.*;
 
 /**
  * A wrapper class for the Datagram channel's, which provides features useful for real time games:
@@ -126,9 +118,7 @@ public class ReliableRecordChannel<E> {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(receivedData.array(), PacketHeader.strictByteSize(), receivedData.limit() - PacketHeader.strictByteSize());
 
 		ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
-		E recordData = (E) objectInputStream.readObject();
-
-		return recordData;
+		return (E) objectInputStream.readObject();
 	}
 
 	/**

@@ -11,7 +11,7 @@ import java.nio.channels.DatagramChannel;
 
 import org.junit.jupiter.api.Test;
 
-public class TwoWayFakeDatagramChannelTest {
+class TwoWayFakeDatagramChannelTest {
 	
 	@Test
 	void twoWayFakeDatagramChannel_receiveWithoutSending_returnsNull() throws Exception {

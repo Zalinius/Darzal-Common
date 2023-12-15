@@ -4,10 +4,7 @@ import static com.darzalgames.darzalcommon.functional.LambdaExceptionUtil.rethro
 
 import java.io.IOException;
 import java.net.SocketAddress;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -41,7 +38,7 @@ public class GameServer<E> {
 	}
 	
 
-	public void update(double delta) throws Exception {
+	public void update(double delta) {
 		//CONNECT NEW CLIENTS
 		Set<SocketAddress> newClients = new HashSet<>();
 		newClients.addAll(multiplexer.allConnections());

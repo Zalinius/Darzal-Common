@@ -14,7 +14,7 @@ import com.darzalgames.darzalcommon.testutils.SimpleRecord;
 import com.darzalgames.darzalcommon.testutils.TwoWayFakeDatagramChannel;
 import com.darzalgames.darzalcommon.testutils.TwoWayFakeDatagramChannel.FakeDatagramChannel;
 
-public class ReliableRecordChannelTest {
+ class ReliableRecordChannelTest {
 	
 	private ReliableRecordChannel<SimpleRecord> sender;
 	private FakeDatagramChannel senderInnerChannel;
