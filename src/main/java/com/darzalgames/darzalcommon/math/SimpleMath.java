@@ -1,6 +1,8 @@
 package com.darzalgames.darzalcommon.math;
 
 public class SimpleMath {
+	
+	private SimpleMath() {}
 
 	public static boolean isEven(int value) {
 		return value % 2 == 0;
