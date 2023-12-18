@@ -6,4 +6,8 @@
 		<exclude name="**/time/**" />
 		<exclude name="**/errorhandling/**" />
 	</source>
+	
+	<!-- Dummy entry point to force compilation -->
+	<entry-point class='com.darzalgames.darzalcommon.gwt.DummyEntryPoint' />
+
 </module>

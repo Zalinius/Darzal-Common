@@ -5,12 +5,14 @@
 
 	<groupId>com.darzalgames</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.4.0</version>
+	<version>0.5.0</version>
 	<name>Darzal Common</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.release>17</maven.compiler.release>
+		<gwt.version>2.10.0</gwt.version>
+		<gwt.maven.version>2.10.0</gwt.maven.version>
 	</properties>
 
 	<build>
@@ -24,27 +26,27 @@
 				<artifactId>maven-source-plugin</artifactId>
 				<version>3.2.1</version>
 				<executions>
-				    <execution>
-				        <id>attach-sources</id>
-				        <goals>
-					        <goal>jar</goal>
-				        </goals>
-			        </execution>
-	            </executions>
-	        </plugin>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.4.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.4.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
 
 			<plugin>
@@ -71,6 +73,26 @@
 					</execution>
 				</executions>
 			</plugin>
+
+			<!-- GWT Validation to ensure library is GWT compatible -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>gwt-maven-plugin</artifactId>
+				<version>${gwt.maven.version}</version>
+				<configuration>
+					<strict>true</strict>
+					<failOnError>true</failOnError>
+					<validateOnly>true</validateOnly>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
@@ -81,6 +103,12 @@
 			<version>5.8.0-M1</version>
 			<type>pom.sha512</type>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.gwtproject</groupId>
+			<artifactId>gwt-user</artifactId>
+			<version>${gwt.version}</version>
 		</dependency>
 	</dependencies>
 

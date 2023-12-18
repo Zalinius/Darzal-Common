@@ -21,9 +21,8 @@ public class BiMap <F, S> {
 	}
 	
 	/**
-	 * 
-	 * @param objectT A key and value to insert
-	 * @param objectU A key and value to insert
+	 * @param first A key and value to insert
+	 * @param second A key and value to insert
      * @return the previous two values potentially replaced by this insertion, or null if nothing was replaced
 	 */
 	public Tuple<F, S> addPair(F first, S second) {
