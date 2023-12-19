@@ -7,9 +7,11 @@ import java.util.List;
 
 public class GetRandomValueFromCollection {
 
+	private GetRandomValueFromCollection() {}
+
 	public static <T> T next(Collection<T> toGetFrom, IntegerSequence ints)
 	{
-		if (toGetFrom.size() == 0)
+		if (toGetFrom.isEmpty())
 			return null;
 		
 		int index = ints.nextInt(toGetFrom.size());
@@ -24,7 +26,7 @@ public class GetRandomValueFromCollection {
 	
 	public static <T> T next(ArrayList<T> toGetFrom, IntegerSequence ints)
 	{
-		if (toGetFrom.size() == 0)
+		if (toGetFrom.isEmpty())
 			return null;
 		
 		int index = ints.nextInt(toGetFrom.size());

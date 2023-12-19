@@ -16,7 +16,6 @@ public abstract class LoggingUncaughtExceptionHandler implements UncaughtExcepti
 			printStream.println(FileFriendlyTimeFormatter.dateTimeFileFriendlyFormat(log.timestamp, ZoneId.systemDefault()));
 			log.printStackTrace(printStream);	
 		}
-		System.err.println();
 		throwable.printStackTrace();	
 	}
 

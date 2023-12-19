@@ -1,10 +1,13 @@
-package com.darzalgames.darzalcommon.functional;
+package com.darzalgames.darzalcommon.math;
 
 import java.util.ArrayList;
 import java.util.List;
 
 // thanks https://stackoverflow.com/questions/10305153/generating-all-possible-permutations-of-a-list-recursively
 public class Permutation {
+	
+	private Permutation() {}
+	
 	public static <E> List<List<E>> generatePerm(List<E> original) {
 		  if (original.isEmpty()) {
 		    List<List<E>> result = new ArrayList<>();

@@ -4,6 +4,10 @@ public class SimpleMath {
 	
 	private SimpleMath() {}
 
+	/**
+	 * @param value
+	 * @return
+	 */
 	public static boolean isEven(int value) {
 		return value % 2 == 0;
 	}
@@ -11,13 +15,6 @@ public class SimpleMath {
 		return value % 2 == 1 || value % 2 == -1;
 	}
 	
-	public static boolean isEven(float value) {
-		return isEven((int) value);
-	}
-	public static boolean isOdd(float value) {
-		return isOdd((int) value);
-	}
-
 	public static boolean isMultiple(int value, int base) {
 		return value % base == 0;
 	}

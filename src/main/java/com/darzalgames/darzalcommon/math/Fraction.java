@@ -2,6 +2,9 @@ package com.darzalgames.darzalcommon.math;
 
 import java.util.Objects;
 
+/**
+ * A class to represent exact fractions.
+ */
 public class Fraction {
 	public final int numerator;
 	public final int denominator;

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class FunctionalConverter {
+	
+	private FunctionalConverter() {}
 
 	public static <T, U extends T> Supplier<List<T>> convertSupplierOfList(Supplier<List<U>> supplierToConvert) {
 		List<U> original = supplierToConvert.get();

@@ -6,6 +6,10 @@ import java.util.Set;
 
 import com.darzalgames.darzalcommon.functional.Do;
 
+/**
+ * An extension to the Java Random class with some convenience functions for GameDev.
+ * Can give you angles and subsets and such
+ */
 public class RandomExtended extends Random{
 	
 	/**
@@ -13,12 +17,26 @@ public class RandomExtended extends Random{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Creates a RandomExtended with a random seed
+	 */
 	public RandomExtended() {
 		super();
 	}
-	
+
+	/**
+	 * Creates a RandomExtended with a the specified long seed
+     * @param seed the initial long seed
+	 */
 	public RandomExtended(long seed) {
 		super(seed);
+	}
+	
+	/**
+	 * @return a boolean with 50/50 odds of being true or false
+	 */
+	public boolean nextCoinFlip() {
+		return nextChance(1, 2);
 	}
 	
 	/**
@@ -47,31 +65,42 @@ public class RandomExtended extends Random{
 		}
 	}
 
-	public int nextInt(int lowerBound, int upperBound) {
-		if (lowerBound >= upperBound) {
-			throw new IllegalArgumentException("Lower bound must be strictly lower than upper bound: " + lowerBound +", "+ upperBound);
-		}
-		int range = upperBound - lowerBound;
-		return super.nextInt(range) + lowerBound;
-	}
-	
+	/**
+	 * @return a random double radian between 0.0(inclusive) and 2pi(exclusive)
+	 */
 	public double nextRadian() {
 		return 2.0 * Math.PI * super.nextDouble();
 	}
 
+	/**
+	 * @return a random double degree between 0.0(inclusive) and 360.0(exclusive)
+	 */
 	public double nextDegree() {
 		return 360.0 * super.nextDouble();
 	}
 	
+	/**
+	 * @return a random float radian between 0.0f(inclusive) and 2pi(exclusive)
+	 */
 	public float nextRadianF() {
 		return 2.0f * (float)Math.PI * super.nextFloat();
 	}
 
+	/**
+	 * @return a random float degree between 0.0f(inclusive) and 360.0f(exclusive)
+	 */
 	public float nextDegreeF() {
 		return 360.0f * super.nextFloat();
 	}
 	
-	public <E> Set<E> getRandomSubset(final Set<E> set, final int subsetSize){
+	/**
+	 * Returns a random subset
+	 * @param <E> The generic type of the subset
+	 * @param set The input set. It is not modified by this function call
+	 * @param subsetSize The number of elements desired in the subset. Must be between 0 and the original size, inclusive.
+	 * @return A subset, which is modifiable
+	 */
+	public <E> Set<E> getNextRandomSubset(final Set<E> set, final int subsetSize){
 		if(subsetSize < 0) {
 			throw new IllegalArgumentException("Subset size must not be negative: " + subsetSize);
 		}
