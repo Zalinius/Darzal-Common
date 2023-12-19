@@ -1,6 +1,5 @@
 package com.darzalgames.darzalcommon.random;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -24,7 +23,7 @@ public class GetRandomValueFromCollection {
 		return it.next();
 	}
 	
-	public static <T> T next(ArrayList<T> toGetFrom, IntegerSequence ints)
+	public static <T> T next(List<T> toGetFrom, IntegerSequence ints)
 	{
 		if (toGetFrom.isEmpty())
 			return null;

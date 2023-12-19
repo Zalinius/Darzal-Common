@@ -1,13 +1,14 @@
 package com.darzalgames.darzalcommon.math;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-public class PermutationTest {
+class PermutationTest {
 	@Test
 	void listOfThree_permuted_hasCorrectValues() {
 		List<Integer> test = new ArrayList<>();
@@ -17,8 +18,8 @@ public class PermutationTest {
 
 		List<List<Integer>> permutations = Permutation.generatePerm(test);
 
-		assertTrue(permutations.size() == 6);
-		assertTrue(permutations.stream().distinct().count() == permutations.size());
+		assertTrue(permutations.isEmpty());
+		assertEquals((long)permutations.size(), permutations.stream().distinct().count());
 
 		assertTrue(permutations.contains(List.of(1, 2, 3)));
 		assertTrue(permutations.contains(List.of(1, 3, 2)));
@@ -37,7 +38,7 @@ public class PermutationTest {
 
 		List<List<Integer>> permutations = Permutation.generatePerm(test);
 
-		assertTrue(permutations.size() == 6);
+		assertEquals(6, permutations.size());
 
 		assertTrue(permutations.contains(List.of(1, 3, 3)));
 		assertTrue(permutations.contains(List.of(1, 3, 3)));

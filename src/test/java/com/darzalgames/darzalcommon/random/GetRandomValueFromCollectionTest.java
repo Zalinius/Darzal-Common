@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
-public class GetRandomValueFromCollectionTest {
+class GetRandomValueFromCollectionTest {
 
 	@Test
 	void getRandomUnique_hasNoDuplicates() {
