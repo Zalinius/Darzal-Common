@@ -100,6 +100,11 @@ public class BiMap <F, S> {
 		}
 	}
 	
+	/**
+	 * Removes the key pair with the specified F key
+	 * @param first the key to be used
+	 * @return True if a pair is removed, false otherwise
+	 */
 	public boolean removeByFirstType(F first)	{
 		if (mapFirstToSecond.containsKey(first)) {
 			return removePair(first, mapFirstToSecond.get(first));
@@ -109,6 +114,11 @@ public class BiMap <F, S> {
 		}
 	}
 	
+	/**
+	 * Removes the key pair with the specified S key
+	 * @param second the key to be used
+	 * @return True if a pair is removed, false otherwise
+	 */
 	public boolean removeBySecondType(S second) {
 		if (mapSecondToFirst.containsKey(second)) {
 			return removePair(mapSecondToFirst.get(second), second);

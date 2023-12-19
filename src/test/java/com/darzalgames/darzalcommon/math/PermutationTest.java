@@ -18,7 +18,7 @@ class PermutationTest {
 
 		List<List<Integer>> permutations = Permutation.generatePerm(test);
 
-		assertTrue(permutations.isEmpty());
+		assertEquals(6, permutations.size());
 		assertEquals((long)permutations.size(), permutations.stream().distinct().count());
 
 		assertTrue(permutations.contains(List.of(1, 2, 3)));

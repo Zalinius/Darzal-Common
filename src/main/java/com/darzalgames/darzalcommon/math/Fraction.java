@@ -9,15 +9,26 @@ public class Fraction {
 	public final int numerator;
 	public final int denominator;
 	
-
+	/**
+	 * Creates a fraction with a value of 0
+	 */
 	public Fraction(){
 		this(0, 1);
 	}
 	
+	/**
+	 * Creates an integer fraction
+	 * @param wholeNumber The integer value of the fraction
+	 */
 	public Fraction(int wholeNumber){
 		this(wholeNumber, 1);
 	}
 	
+	/**
+	 * Creates a fraction
+	 * @param numerator The integer numerator
+	 * @param denominator The integer denominator. Must be non zero
+	 */
 	public Fraction(int numerator, int denominator){
 		if(denominator == 0) {
 			throw new ArithmeticException("Fraction can not have a zero denominator");

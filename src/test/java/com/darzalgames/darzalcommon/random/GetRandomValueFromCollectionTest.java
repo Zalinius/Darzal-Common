@@ -7,6 +7,8 @@ import java.util.Collection;
 
 import org.junit.jupiter.api.Test;
 
+import com.darzalgames.darzalcommon.functional.Do;
+
 class GetRandomValueFromCollectionTest {
 
 	@Test
@@ -25,9 +27,9 @@ class GetRandomValueFromCollectionTest {
 		allNames.add("testFive");
 		allNames.add("testSix");
 		
-		for (int i = 0; i < 3000; i++) {
+		Do.xTimes(3000, ()->{
 			String randomName = GetRandomValueFromCollection.nextUnique(allNames, usedNames, intSeq);
 			assertFalse(usedNames.contains(randomName));
-		}
+		});
 	}
 }
