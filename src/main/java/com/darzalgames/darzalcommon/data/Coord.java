@@ -2,6 +2,10 @@ package com.darzalgames.darzalcommon.data;
 
 import java.util.Objects;
 
+/**
+ * A class representing an integer Cartesian Coordinate.
+ * Instances of this class are immutable
+ */
 public class Coord {
 	
 	/**

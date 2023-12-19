@@ -4,7 +4,6 @@ import static com.darzalgames.darzalcommon.functional.LambdaExceptionUtil.rethro
 import static com.darzalgames.darzalcommon.functional.LambdaExceptionUtil.rethrowFunction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,13 +11,13 @@ import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
-public class LambdaExceptionUtilTest {
+class LambdaExceptionUtilTest {
 
 	@Test
-	public void testConsumer() throws MyTestException {
+	void testConsumer() throws MyTestException {
 		assertThrows(MyTestException.class, () -> 
 		Stream.of((String)null).forEach(
-				rethrowConsumer(s -> checkValue(s))
+				rethrowConsumer(this::checkValue)
 				));
 	}
 
@@ -28,15 +27,14 @@ public class LambdaExceptionUtilTest {
 		}
 	}
 
-	private class MyTestException extends Exception {
+	private class MyTestException extends RuntimeException {
 		private static final long serialVersionUID = 1L; }
 
 	@Test
-	public void testConsumerRaisingExceptionInTheMiddle() {
+	void testConsumerRaisingExceptionInTheMiddle() {
 		MyLongAccumulator accumulator = new MyLongAccumulator();
 		try {
 			Stream.of(2L, 3L, 4L, null, 5L).forEach(rethrowConsumer(s -> accumulator.add(s)));
-			fail();
 		} catch (MyTestException e) {
 			assertEquals(9L, accumulator.acc);
 		}
@@ -53,8 +51,8 @@ public class LambdaExceptionUtilTest {
 	}
 
 	@Test
-	public void testFunction() throws MyTestException {
-		List<Integer> sizes = Stream.of("ciao", "hello").<Integer>map(rethrowFunction(s -> transform(s))).collect(Collectors.toList());
+	void testFunction() throws MyTestException {
+		List<Integer> sizes = Stream.of("ciao", "hello").<Integer>map(rethrowFunction(this::transform)).collect(Collectors.toList());
 		assertEquals(2, sizes.size());
 		assertEquals(4, sizes.get(0).intValue());
 		assertEquals(5, sizes.get(1).intValue());
@@ -68,9 +66,9 @@ public class LambdaExceptionUtilTest {
 	}
 
 	@Test
-	public void testFunctionRaisingException() throws MyTestException {
+	void testFunctionRaisingException() throws MyTestException {
 		assertThrows(MyTestException.class, () ->
-		Stream.of("ciao", null, "hello").<Integer>map(rethrowFunction(s -> transform(s))).collect(Collectors.toList()));
+		Stream.of("ciao", null, "hello").<Integer>map(rethrowFunction(this::transform)).collect(Collectors.toList()));
 	}
 
 }
