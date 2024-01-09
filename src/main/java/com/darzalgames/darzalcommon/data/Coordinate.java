@@ -6,7 +6,7 @@ import java.util.Objects;
  * A class representing an integer Cartesian Coordinate.
  * Instances of this class are immutable
  */
-public class Coord {
+public class Coordinate {
 	
 	/**
 	 * The i (or horizontal) coordinate
@@ -18,26 +18,26 @@ public class Coord {
 	public final int j;
 	
 	/**
-	 * Creates a coord centered at the origin
+	 * Creates a coordinate centered at the origin
 	 */
-	public Coord() {
+	public Coordinate() {
 		this(0,0);
 	}
 
 	/**
-	 * Creates a coord from an integer tuple
+	 * Creates a coordinate from an integer tuple
 	 * @param tuple a non-null tuple of non-null integers
 	 */
-	public Coord(Tuple<Integer, Integer> tuple) {
+	public Coordinate(Tuple<Integer, Integer> tuple) {
 		this(tuple.e, tuple.f);
 	}
 
 	/**
-	 * Creates a coord centered at i,j
+	 * Creates a coordinate centered at i,j
 	 * @param i The i (or horizontal) coordinate
 	 * @param j The j (or vertical) coordinate
 	 */
-	public Coord(int i, int j) {
+	public Coordinate(int i, int j) {
 		this.i = i;
 		this.j = j;
 	}
@@ -57,7 +57,7 @@ public class Coord {
 	}
 	
 	/**
-	 * @return A tuple of integers corresponding to this coord.
+	 * @return A tuple of integers corresponding to this coordinate.
 	 */
 	public Tuple<Integer, Integer> toTuple(){
 		return new Tuple<>(i, j);
@@ -65,7 +65,7 @@ public class Coord {
 
 	@Override
 	public String toString() {
-		return "Coord [i=" + i + ", j=" + j + "]";
+		return "Coordinate [i=" + i + ", j=" + j + "]";
 	}
 
 	@Override
@@ -81,28 +81,28 @@ public class Coord {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Coord other = (Coord) obj;
+		Coordinate other = (Coordinate) obj;
 		return i == other.i && j == other.j;
 	}
 	
 	/**
-	 * Returns the taxi distance between this coord and another.
-	 * The taxi distance is the shortest path distance between two coords, using only vertical and horizontal moves.
-	 * @param coord The other coordinate
+	 * Returns the taxi distance between this coordinate and another.
+	 * The taxi distance is the shortest path distance between two coordinates, using only vertical and horizontal moves.
+	 * @param coordinate The other coordinate
 	 * @return The taxi distance, a non negative integer. 
 	 */
-	public int taxiDistance(Coord coord) {
-		return Math.abs(i - coord.i) + Math.abs(j - coord.j);
+	public int taxiDistance(Coordinate coordinate) {
+		return Math.abs(i - coordinate.i) + Math.abs(j - coordinate.j);
 	}
 	
 	/**
-	 * Returns the king distance between this coord and another.
-	 * The king distance is the shortest path distance between two coords, where diagonal crossings are allowed.
-	 * @param coord The other coordinate
+	 * Returns the king distance between this coordinate and another.
+	 * The king distance is the shortest path distance between two coordinates, where diagonal crossings are allowed.
+	 * @param coordinate The other coordinate
 	 * @return The king distance, a non negative integer. 
 	 */
-	public int kingDistance(Coord coord) {
-		return Math.max(Math.abs(i - coord.i), Math.abs(j - coord.j));
+	public int kingDistance(Coordinate coordinate) {
+		return Math.max(Math.abs(i - coordinate.i), Math.abs(j - coordinate.j));
 	}
 	
 

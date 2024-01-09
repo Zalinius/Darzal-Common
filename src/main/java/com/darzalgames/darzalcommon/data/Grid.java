@@ -20,19 +20,43 @@ public class Grid<E> implements Collection<E>{
 	public final int height;
 	public final E   defaultValue;
 	
+	/**
+	 * Creates a grid of a fixed width and height, with values initialized to null
+	 * @param width The width of the grid
+	 * @param height The height of the grid
+	 */
 	public Grid(int width, int height) {
 		this(width, height, (i, j) -> null, null);
 	}
 
+	/**
+	 * Creates a grid of a fixed width and height, with values initialized to a default value
+	 * @param width The width of the grid
+	 * @param height The height of the grid
+	 * @param defaultValue The value returned for coordinates outside the grid
+	 */
 	public Grid(int width, int height, E defaultValue) {
 		this(width, height, (i, j) -> null, defaultValue);
 	}
 
+	/**
+	 * Creates a grid of a fixed width and height, with values initialized using a function
+	 * @param width The width of the grid
+	 * @param height The height of the grid
+	 * @param initializer The initialization function, which uses the i and j coordinates as input
+	 */
 	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
 		this(width, height, initializer, null);
 	}
 
-	
+
+	/**
+	 * Creates a grid of a fixed width and height, with values initialized using a function
+	 * @param width The width of the grid
+	 * @param height The height of the grid
+	 * @param initializer The initialization function, which uses the i and j coordinates as input
+	 * @param defaultValue The value returned for coordinates outside the grid
+	 */
 	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer, E defaultValue) {
 		inside = new ArrayList<>(width*height);
 		for (int i = 0; i < width*height; i++) {
@@ -51,12 +75,17 @@ public class Grid<E> implements Collection<E>{
 	}
 
 
+	/**
+	 * @param i The i coordinate, which runs along the width 
+	 * @param j The j coordinate, which runs along the height 
+	 * @return True if the coordinate pair is in the grid, false otherwise
+	 */
 	public boolean isInGrid(int i, int j) {
 		return i >= 0 && i < width
 				&& j >= 0 && j < height;
 	}
-	public boolean isInGrid(Coord coord) {
-		return isInGrid(coord.i, coord.j);
+	public boolean isInGrid(Coordinate coordinate) {
+		return isInGrid(coordinate.i, coordinate.j);
 	}
 
 	/**
@@ -80,8 +109,8 @@ public class Grid<E> implements Collection<E>{
 
 		setToList(i, j, value);
 	}
-	public void set(Coord coord, E value) {
-		set(coord.i, coord.j, value);
+	public void set(Coordinate coordinate, E value) {
+		set(coordinate.i, coordinate.j, value);
 	}
 
 	public E get(int i, int j) {
@@ -92,43 +121,43 @@ public class Grid<E> implements Collection<E>{
 			return getFromList(i, j);
 		}
 	}
-	public E get(Coord coord) {
-		return get(coord.i, coord.j);
+	public E get(Coordinate coordinate) {
+		return get(coordinate.i, coordinate.j);
 	}
 	
-	public Coord coordinatesOf(E e) {
+	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
 		if(linearPosition == -1) {
 			return null;
 		}
 		else {
-			return computeCoordPosition(linearPosition);
+			return computeCoordinatePosition(linearPosition);
 		}
 	}
 	
-	public List<Coord> getDirectlyAdjacentCoordinates(int i, int j){
+	public List<Coordinate> getDirectlyAdjacentCoordinates(int i, int j){
 		return streamCoordinates()
-			  .filter(coord -> coord.taxiDistance(new Coord(i, j)) == 1)
+			  .filter(coordinate -> coordinate.taxiDistance(new Coordinate(i, j)) == 1)
 			  .filter(this::isInGrid)
 			  .collect(Collectors.toList());
 	}
 
-	public List<Coord> getAdjacentCoordinates(int i, int j){
+	public List<Coordinate> getAdjacentCoordinates(int i, int j){
 		return streamCoordinates()
-			  .filter(coord -> coord.kingDistance(new Coord(i, j)) == 1)
+			  .filter(coordinate -> coordinate.kingDistance(new Coordinate(i, j)) == 1)
 			  .filter(this::isInGrid)
 			  .collect(Collectors.toList());
 	}
 
 	public List<E> getDirectlyAdjacentElements(int i, int j){
-		List<Coord> coordsToGet = getDirectlyAdjacentCoordinates(i, j);		
-		return coordsToGet.stream().map(this::get).collect(Collectors.toList());
+		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(i, j);		
+		return coordinatesToGet.stream().map(this::get).collect(Collectors.toList());
 
 	}
 
 	public List<E> getAdjacentElements(int i, int j){
-		List<Coord> coordsToGet = getAdjacentCoordinates(i, j);		
-		return coordsToGet.stream().map(this::get).collect(Collectors.toList());
+		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);		
+		return coordinatesToGet.stream().map(this::get).collect(Collectors.toList());
 
 	}	
 
@@ -145,10 +174,10 @@ public class Grid<E> implements Collection<E>{
 		return i + j*width;
 	}
 	
-	private Coord computeCoordPosition(int linearPosition) {
+	private Coordinate computeCoordinatePosition(int linearPosition) {
 		int i = linearPosition % width;
 		int j = linearPosition / width;
-		return new Coord(i, j);
+		return new Coordinate(i, j);
 	}
 	
 
@@ -167,11 +196,11 @@ public class Grid<E> implements Collection<E>{
 	}
 	
 	
-	public Stream<Coord> streamCoordinates(){
-		List<Coord> coordinates = new ArrayList<>();
+	public Stream<Coordinate> streamCoordinates(){
+		List<Coordinate> coordinates = new ArrayList<>();
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				coordinates.add(new Coord(i, j));
+				coordinates.add(new Coordinate(i, j));
 			}
 		}
 
