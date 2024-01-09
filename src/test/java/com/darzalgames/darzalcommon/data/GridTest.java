@@ -73,7 +73,7 @@ class GridTest {
 		Grid<Integer> grid = new Grid<>(4, 7);
 		Integer integer = 5;
 		
-		Coord result = grid.coordinatesOf(integer);
+		Coordinate result = grid.coordinatesOf(integer);
 		
 		assertNull(result);
 	}
@@ -84,9 +84,9 @@ class GridTest {
 		Integer integer = 5;
 		grid.set(2, 3, integer); 
 		
-		Coord result = grid.coordinatesOf(integer);
+		Coordinate result = grid.coordinatesOf(integer);
 		
-		assertEquals(new Coord(2, 3), result);
+		assertEquals(new Coordinate(2, 3), result);
 	}
 	
 	@Test
@@ -106,13 +106,13 @@ class GridTest {
 	void getDirectlyAdjacentCoordinates_onMiddle_returns4DirectlyAdjacentCoordinates() throws Exception {
 		Grid<Integer> grid = new Grid<>(4, 7);
 		
-		List<Coord> results = grid.getDirectlyAdjacentCoordinates(2, 3);
+		List<Coordinate> results = grid.getDirectlyAdjacentCoordinates(2, 3);
 		
 		assertEquals(4, results.size());
-		assertTrue(results.contains(new Coord(2, 2)));
-		assertTrue(results.contains(new Coord(2, 4)));
-		assertTrue(results.contains(new Coord(1, 3)));
-		assertTrue(results.contains(new Coord(3, 3)));
+		assertTrue(results.contains(new Coordinate(2, 2)));
+		assertTrue(results.contains(new Coordinate(2, 4)));
+		assertTrue(results.contains(new Coordinate(1, 3)));
+		assertTrue(results.contains(new Coordinate(3, 3)));
 	}
 
 	@Test
@@ -142,17 +142,17 @@ class GridTest {
 	void getAdjacentCoordinates_onMiddle_returns8AdjacentCoordinates() throws Exception {
 		Grid<Integer> grid = new Grid<>(4, 7);
 		
-		List<Coord> results = grid.getAdjacentCoordinates(2, 3);
+		List<Coordinate> results = grid.getAdjacentCoordinates(2, 3);
 		
 		assertEquals(8, results.size());
-		assertTrue(results.contains(new Coord(1, 2)));
-		assertTrue(results.contains(new Coord(2, 2)));
-		assertTrue(results.contains(new Coord(3, 2)));
-		assertTrue(results.contains(new Coord(1, 3)));
-		assertTrue(results.contains(new Coord(3, 3)));
-		assertTrue(results.contains(new Coord(1, 4)));
-		assertTrue(results.contains(new Coord(2, 4)));
-		assertTrue(results.contains(new Coord(3, 4)));
+		assertTrue(results.contains(new Coordinate(1, 2)));
+		assertTrue(results.contains(new Coordinate(2, 2)));
+		assertTrue(results.contains(new Coordinate(3, 2)));
+		assertTrue(results.contains(new Coordinate(1, 3)));
+		assertTrue(results.contains(new Coordinate(3, 3)));
+		assertTrue(results.contains(new Coordinate(1, 4)));
+		assertTrue(results.contains(new Coordinate(2, 4)));
+		assertTrue(results.contains(new Coordinate(3, 4)));
 	}
 	
 	@Test
@@ -205,18 +205,18 @@ class GridTest {
 	}
 
 	@Test
-	void streamCoordinatess_onGrid_streamsCoords() throws Exception {
+	void streamCoordinatess_onGrid_streamsCoordinates() throws Exception {
 		Grid<String> grid = new Grid<>(2, 3);
 		
-		List<Coord> coords = grid.streamCoordinates().collect(Collectors.toList());
+		List<Coordinate> coordinates = grid.streamCoordinates().collect(Collectors.toList());
 
-		assertEquals(6, coords.size());
-		assertTrue(coords.contains(new Coord(0, 0)));
-		assertTrue(coords.contains(new Coord(1, 0)));
-		assertTrue(coords.contains(new Coord(0, 1)));
-		assertTrue(coords.contains(new Coord(1, 1)));
-		assertTrue(coords.contains(new Coord(0, 2)));
-		assertTrue(coords.contains(new Coord(1, 2)));
+		assertEquals(6, coordinates.size());
+		assertTrue(coordinates.contains(new Coordinate(0, 0)));
+		assertTrue(coordinates.contains(new Coordinate(1, 0)));
+		assertTrue(coordinates.contains(new Coordinate(0, 1)));
+		assertTrue(coordinates.contains(new Coordinate(1, 1)));
+		assertTrue(coordinates.contains(new Coordinate(0, 2)));
+		assertTrue(coordinates.contains(new Coordinate(1, 2)));
 	}
 	
 	@Test 
