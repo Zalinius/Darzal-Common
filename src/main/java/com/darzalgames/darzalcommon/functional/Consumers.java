@@ -24,14 +24,14 @@ public class Consumers {
 	}
 	
 	/**
-	 * @return An DoubleConsumer which has no effect when accepting.
+	 * @return A DoubleConsumer which has no effect when accepting.
 	 */
 	public static DoubleConsumer nullDoubleConsumer() {
 		return e -> {};
 	}
 	
 	/**
-	 * for with new ja@return ASeeing LongConsumer which has no effect when accepting.
+	 * @return A LongConsumer which has no effect when accepting.
 	 */
 	public static LongConsumer nullLongConsumer() {
 		return e -> {};
