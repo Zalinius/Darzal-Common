@@ -6,7 +6,13 @@ import java.util.Objects;
  * A class to represent exact fractions.
  */
 public class Fraction {
+	/**
+	 * The numerator of the fraction
+	 */
 	public final int numerator;
+	/**
+	 * The denominator of the fraction, guaranteed to be non-zero
+	 */
 	public final int denominator;
 	
 	/**
