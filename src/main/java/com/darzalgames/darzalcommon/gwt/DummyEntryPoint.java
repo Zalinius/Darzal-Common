@@ -2,6 +2,9 @@ package com.darzalgames.darzalcommon.gwt;
 
 import com.google.gwt.core.client.EntryPoint;
 
+/**
+ * A dummy entry point to force GWT to validate this library's code
+ */
 public class DummyEntryPoint implements EntryPoint {
 
 	@Override

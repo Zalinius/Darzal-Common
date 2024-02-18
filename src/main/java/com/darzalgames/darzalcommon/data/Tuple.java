@@ -2,19 +2,34 @@ package com.darzalgames.darzalcommon.data;
 
 import java.util.Objects;
 
+/**
+ * A class representing a tuple of values, of potentially different types
+ * @param <E> The first type
+ * @param <F> The second type
+ */
 public class Tuple <E,F> {
 
 	public final E e;
 	public final F f;
 	
+	/**
+	 * @param e the first value
+	 * @param f the second value
+	 */
 	public Tuple(E e, F f) {
 		this.e = e;
 		this.f = f;
 	}
 
+	/**
+	 * @return The value of the first type
+	 */
 	public E getE() {
 		return e;
 	}
+	/**
+	 * @return The value of the second type
+	 */
 	public F getF() {
 		return f;
 	}
