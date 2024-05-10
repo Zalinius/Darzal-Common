@@ -5,7 +5,7 @@
 
 	<groupId>com.darzalgames</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.5.3</version>
+	<version>0.5.4</version>
 	<name>Darzal Common</name>
 
 	<properties>
@@ -89,6 +89,7 @@
 						<goals>
 							<goal>compile</goal>
 						</goals>
+						<phase>test</phase>
 					</execution>
 				</executions>
 			</plugin>
@@ -109,6 +110,7 @@
 			<groupId>org.gwtproject</groupId>
 			<artifactId>gwt-user</artifactId>
 			<version>${gwt.version}</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
