@@ -5,12 +5,12 @@
 
 	<groupId>com.darzalgames</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.5.4</version>
+	<version>0.5.5</version>
 	<name>Darzal Common</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>17</maven.compiler.release>
+		<maven.compiler.release>11</maven.compiler.release>
 		<gwt.version>2.10.0</gwt.version>
 		<gwt.maven.version>2.10.0</gwt.maven.version>
 	</properties>
