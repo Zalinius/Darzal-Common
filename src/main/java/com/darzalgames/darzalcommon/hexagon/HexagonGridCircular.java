@@ -5,11 +5,8 @@ import com.darzalgames.darzalcommon.data.Coordinate;
 
 public class HexagonGridCircular extends HexagonGrid {
 	
-	private final int radius;
-
 	public HexagonGridCircular(int radius) {
 		super(makeGrid(radius - 1));
-		this.radius = radius;
 	}
 	
 	private static BiMap<Coordinate, Hexagon> makeGrid(int radius) {
@@ -30,7 +27,7 @@ public class HexagonGridCircular extends HexagonGrid {
 
 	@Override
 	public Hexagon getMiddleHexagon() {
-		return grid.getSecondValue(new Coordinate(radius, 0));
+		return getHexagonAt(new Coordinate(0, 0));
 	}
 
 }

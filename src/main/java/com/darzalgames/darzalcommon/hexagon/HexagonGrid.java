@@ -11,6 +11,7 @@ public abstract class HexagonGrid {
 	protected final BiMap<Coordinate, Hexagon> grid;
 
 	protected HexagonGrid(BiMap<Coordinate, Hexagon> grid) {
+		// TODO fail on empty grid?
 		this.grid = grid;
 	}
 	

@@ -1,15 +1,16 @@
 package com.darzalgames.darzalcommon.hexagon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import com.darzalgames.darzalcommon.data.Coordinate;
 
@@ -31,38 +32,64 @@ class HexagonGridTest {
 		neighbors.forEach(Assertions::assertNotNull);
 	}
 
-	@Test
-	void getAllHexagons_size2x2_returnsAll() {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(2, 2);
+	
+	@ParameterizedTest
+    @CsvSource({
+        "3, 3",
+        "5, 2",
+        "1, 1",
+        "2, -1",
+        "0, 0",
+        "2, 4",
+        "2, 2",
+        "2, 4",
+        "4, -1",
+    })
+	void getHexagonAt_withVariousValidCoordinates_returnsExpectedHexagon(int expectedQ, int expectedR) {
+		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
+		Hexagon expected = new Hexagon(expectedQ, expectedR);
 		
-		Collection<Hexagon> all = hexagonGrid.getAllHexagons();
+		Hexagon resultHexagon = hexagonGrid.getHexagonAt(new Coordinate(expectedQ, expectedR));
 		
-		assertEquals(4, all.size());
-		assertTrue(all.contains(new Hexagon(0, 0)));
-		assertTrue(all.contains(new Hexagon(0, 1)));
-		assertTrue(all.contains(new Hexagon(1, 0)));
-		assertTrue(all.contains(new Hexagon(1, 1)));
+		assertEquals(expected.getQ(), resultHexagon.getQ());
+		assertEquals(expected.getR(), resultHexagon.getR());
+		assertEquals(expected, resultHexagon);
 	}
 
 	@ParameterizedTest
     @CsvSource({
-        "3, 3,		1, 1",
-        "5, 2,		2, 0",
-        "1, 1,		0, 0",
-        "3, 5,		1, 2",
-        "2, 4,		0, 2",
-        "2, 2,		0, 1",
-        "7, 4,		3, 0",
-        "4, 3,		1, 1",
-        "4, 4,		1, 1",
+        "3, 5",
+        "4, 4",
+        "-4, 7",
     })
-	void getMiddleHexagon_withVariousSizes_returnsExpectedCoordinates(int gridWidth, int gridHeight, int expectedQ, int expectedR) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(gridWidth, gridHeight);
+	void getHexagonAt_withOutOfBoundsCoordinates_returnsNull(int expectedQ, int expectedR) {
+		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
 		
-		Hexagon middle = hexagonGrid.getMiddleHexagon();
+		Hexagon resultHexagon = hexagonGrid.getHexagonAt(new Coordinate(expectedQ, expectedR));
 		
-		assertEquals(expectedQ, middle.getQ());
-		assertEquals(expectedR, middle.getR());
+		assertNull(resultHexagon);
+	}
+	
+
+	private static Stream<Arguments> hexagonAndNeighborInDirectionCoordinates() {
+		return Stream.of(
+				Arguments.of(2, 0, HexagonDirection.TOP, 2, -1), 
+				Arguments.of(1, 2, HexagonDirection.TOP_RIGHT, 2, 1),
+				Arguments.of(0, 2, HexagonDirection.BOTTOM_RIGHT, 1, 2), 
+				Arguments.of(1, 0, HexagonDirection.BOTTOM, 1, 1),
+				Arguments.of(3, 0, HexagonDirection.BOTTOM_LEFT, 2, 1), 
+				Arguments.of(1, 1, HexagonDirection.TOP_LEFT, 0, 1)
+				);
+	}
+	@ParameterizedTest
+	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
+	void getNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
+		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
+		
+		Hexagon neighbor = hexagonGrid.getNeighborInDirection(new Hexagon(new Coordinate(hexagonQ, hexagonR)), testDirection);
+		
+		assertEquals(expectedNeighborHexagonQ, neighbor.getQ());
+		assertEquals(expectedNeighborHexagonR, neighbor.getR());
 	}
 	
 }

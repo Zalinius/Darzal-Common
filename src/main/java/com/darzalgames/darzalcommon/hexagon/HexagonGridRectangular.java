@@ -55,11 +55,7 @@ public class HexagonGridRectangular extends HexagonGrid {
 		if (SimpleMath.isEven(gridHeight) && SimpleMath.isOdd(x)) {
 			y -= 1;
 		}
-		Hexagon hexagon = getHexagonAt(HexagonMath.offsetToAxialCoordinates(x, y));
-		if (hexagon == null) {
-			hexagon = getHexagonAt(new Coordinate(0, 0));
-		}
-		return hexagon;
+		return getHexagonAt(HexagonMath.offsetToAxialCoordinates(x, y));
 	}
 
 }

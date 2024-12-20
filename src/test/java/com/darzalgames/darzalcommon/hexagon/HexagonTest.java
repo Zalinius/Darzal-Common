@@ -22,19 +22,18 @@ class HexagonTest {
 	
 	@ParameterizedTest
     @CsvSource({
-        "0,  0",
-        "3, -3",
-        "-5, -2",
-        "4, 9",
-        "-8, 1",
-        "0, 5",
-        "-8, 0"
+        "0,  0,	0", // s = -q-r
+        "3, -3, 0",
+        "-5, -2, 7",
+        "4, 9, -13",
+        "-8, 1, 7",
+        "0, 5, -5",
+        "-8, 0, 8"
     })
-	void getS_isCalculatedCorrectly(int q, int r) {
+	void getS_isCalculatedCorrectly(int q, int r, int s) {
 		Hexagon hexagon = new Hexagon(q, r);
-
-		// s = -q-r
-		assertEquals(-q-r, hexagon.getS());
+		
+		assertEquals(s, hexagon.getS());
 	}
 
 	@Test
@@ -68,13 +67,30 @@ class HexagonTest {
 
 		assertFalse(nullComparisonResult);
 	}
+	
+	@Test
+	void equals_withNonHexagon_isFalse() {
+		Hexagon hexagon1 = new Hexagon(3, 20);
+		
+		@SuppressWarnings("unlikely-arg-type")
+		boolean stringComparisonResult = hexagon1.equals("hexagon");
+
+		assertFalse(stringComparisonResult);
+	}
 
 	@Test
-	void hashCode_sameCoordinates_isEqual() {
+	void hashCode_sameHexagon_isEqual() {
 		Hexagon hexagon1 = new Hexagon(3, -5);
 		Hexagon hexagon2 = new Hexagon(3, -5);
 
 		assertEquals(hexagon1.hashCode(), hexagon2.hashCode());
+	}
+
+	@Test
+	void hashCode_sameCoordinates_isEqual() {
+		Hexagon hexagon = new Hexagon(2, -8);
+
+		assertEquals(hexagon.hashCode(), hexagon.hashCode());
 	}
 	
 	@Test
