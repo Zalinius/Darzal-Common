@@ -70,5 +70,10 @@ public class Hexagon {
 	public int hashCode() {
 		return coordinate.hashCode();
 	}
+	
+	@Override
+	public String toString() {
+		return coordinate.toString();
+	}
 
 }
