@@ -1,7 +1,7 @@
 package com.darzalgames.darzalcommon.hexagon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -62,12 +62,12 @@ class HexagonGridTest {
         "4, 4",
         "-4, 7",
     })
-	void getHexagonAt_withOutOfBoundsCoordinates_returnsNull(int expectedQ, int expectedR) {
+	void getHexagonAt_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
 		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
 		
-		Hexagon resultHexagon = hexagonGrid.getHexagonAt(new Coordinate(expectedQ, expectedR));
+		Coordinate coordinate = new Coordinate(expectedQ, expectedR);
 		
-		assertNull(resultHexagon);
+		assertThrows(IllegalArgumentException.class, () -> hexagonGrid.getHexagonAt(coordinate));
 	}
 	
 

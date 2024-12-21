@@ -11,10 +11,12 @@ public abstract class HexagonGrid {
 	protected final BiMap<Coordinate, Hexagon> grid;
 
 	protected HexagonGrid(BiMap<Coordinate, Hexagon> grid) {
-		// TODO fail on empty grid?
 		this.grid = grid;
+		if (getAllHexagons().isEmpty()) {
+			throw new IllegalArgumentException("Grid must not be empty.");
+		}
 	}
-	
+
 	public abstract Hexagon getMiddleHexagon();
 
 	/**
@@ -31,21 +33,41 @@ public abstract class HexagonGrid {
 	 */
 	public List<Hexagon> getNeighborsOf(Hexagon hexagon) {
 		return Arrays.asList(HexagonDirection.values()).stream()
-				.map(direction -> getNeighborInDirection(hexagon, direction))
+				.map(direction -> getNeighborInDirectionIfItExists(hexagon, direction))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
 	}
 
+	// TODO this is used by the above method, and so the bottom two methods throw exceptions and null never escapes this class. Is this good??
+	// (I kind of feel like this method should be public, and the below method not exist lol)
+	private Hexagon getNeighborInDirectionIfItExists(Hexagon hexagon, HexagonDirection direction) {
+		Coordinate neighborCoordinate = HexagonDirection.getNeighborCoordinate(hexagon.getQ(), hexagon.getR(), direction);
+		if (grid.containsFirstValue(neighborCoordinate)) {
+			return getNeighborInDirection(hexagon, direction);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * @param hexagon
+	 * @param direction
+	 * @return The neighboring Hexagon in the given direction if it exists, otherwise throws an IllegalArgumentException 
+	 */
 	public Hexagon getNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
 		Coordinate neighborCoordinate = HexagonDirection.getNeighborCoordinate(hexagon.getQ(), hexagon.getR(), direction);
 		return getHexagonAt(neighborCoordinate);
 	}
 
+	/**
+	 * @param coordinate
+	 * @return The Hexagon at the given coordinates if it exists, otherwise throws an IllegalArgumentException 
+	 */
 	public Hexagon getHexagonAt(Coordinate coordinate) {
 		if (grid.containsFirstValue(coordinate)) {
 			return grid.getSecondValue(coordinate);
 		} else {
-			return null;
+			throw new IllegalArgumentException("Cannot get hexagon outside of the grid at: " + coordinate);
 		}
 	}
 }

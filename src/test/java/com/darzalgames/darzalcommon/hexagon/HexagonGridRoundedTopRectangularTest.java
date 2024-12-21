@@ -1,13 +1,20 @@
 package com.darzalgames.darzalcommon.hexagon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.Collection;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class HexagonGridRoundedTopRectangularTest {
+
+	@Test
+	void constructor_0x0_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> new HexagonGridRoundedTopRectangular(0, 0));
+	}
 
 	@ParameterizedTest
     @CsvSource({
