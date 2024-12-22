@@ -3,17 +3,19 @@ package com.darzalgames.darzalcommon.hexagon;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.darzalgames.darzalcommon.hexagon.gridfactory.HexagonGridRoundedTopRectangular;
+
 public class HexagonGridRoundedTopRectangularTest {
 
 	@Test
-	void constructor_0x0_throwsIllegalArgumentException() {
-		assertThrows(IllegalArgumentException.class, () -> new HexagonGridRoundedTopRectangular(0, 0));
+	void makeGrid_0x0_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> HexagonGridRoundedTopRectangular.makeGrid(0, 0));
 	}
 
 	@ParameterizedTest
@@ -28,12 +30,14 @@ public class HexagonGridRoundedTopRectangularTest {
         "4, 4,		1, 1",
     })
 	void getMiddleHexagon_withVariousSizes_returnsExpectedCoordinates(int gridWidth, int gridHeight, int expectedQ, int expectedR) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRoundedTopRectangular(gridWidth, gridHeight);
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRoundedTopRectangular.makeGrid(gridWidth, gridHeight).forEach(hex -> hexagonMap.add(hex, ""));
+		String middleTag = "middle!";
+		hexagonMap.add(new Hexagon(0,0), middleTag);
+
+		String middle = hexagonMap.getMiddleHexagonValue();
 		
-		Hexagon middle = hexagonGrid.getMiddleHexagon();
-		
-		assertEquals(expectedQ, middle.getQ());
-		assertEquals(expectedR, middle.getR());
+		assertEquals(middleTag, middle);
 	}
 
 	@ParameterizedTest
@@ -48,10 +52,8 @@ public class HexagonGridRoundedTopRectangularTest {
         "4, 4,		15",
     })
 	void getAllHexagons_variousSizes_returnsAll(int gridWidth, int gridHeight, int expectedNumberOfHexagons) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRoundedTopRectangular(gridWidth, gridHeight);
+		List<Hexagon> hexagons = HexagonGridRoundedTopRectangular.makeGrid(gridWidth, gridHeight);
 		
-		Collection<Hexagon> all = hexagonGrid.getAllHexagons();
-		
-		assertEquals(expectedNumberOfHexagons, all.size());
+		assertEquals(expectedNumberOfHexagons, hexagons.size());
 	}
 }

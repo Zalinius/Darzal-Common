@@ -4,91 +4,71 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import com.darzalgames.darzalcommon.data.Coordinate;
-
 class HexagonDirectionTest {
 
 	@Test
-	void getNeighborCoordinate_topLeft_hasCorrectCoordinates() {
+	void getNeighborHexagon_topLeft_hasCorrectHexagons() {
 		int startQ = 5;
 		int startR = -3;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.TOP_LEFT);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP_LEFT);
 
-		int expectedQ = startQ - 1;
-		int expectedR = startR;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(4, hexagon.getQ());
+		assertEquals(startR, hexagon.getR());
 	}
 
 	@Test
-	void getNeighborCoordinate_top_hasCorrectCoordinates() {
+	void getNeighborHexagon_top_hasCorrectHexagons() {
 		int startQ = 12;
 		int startR = 4;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.TOP);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP);
 
-		int expectedQ = startQ;
-		int expectedR = startR - 1;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(startQ, hexagon.getQ());
+		assertEquals(3, hexagon.getR());
 	}
 
 	@Test
-	void getNeighborCoordinate_topRight_hasCorrectCoordinates() {
+	void getNeighborHexagon_topRight_hasCorrectHexagons() {
 		int startQ = 0;
 		int startR = -8;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.TOP_RIGHT);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP_RIGHT);
 
-		int expectedQ = startQ + 1;
-		int expectedR = startR - 1;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(1, hexagon.getQ());
+		assertEquals(-9, hexagon.getR());
 	}
 
 	@Test
-	void getNeighborCoordinate_bottomRight_hasCorrectCoordinates() {
+	void getNeighborHexagon_bottomRight_hasCorrectHexagons() {
 		int startQ = -18;
 		int startR = 6;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.BOTTOM_RIGHT);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM_RIGHT);
 
-		int expectedQ = startQ + 1;
-		int expectedR = startR;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(-17, hexagon.getQ());
+		assertEquals(startR, hexagon.getR());
 	}
 
 	@Test
-	void getNeighborCoordinate_bottom_hasCorrectCoordinates() {
+	void getNeighborHexagon_bottom_hasCorrectHexagons() {
 		int startQ = -6;
 		int startR = 0;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.BOTTOM);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM);
 
-		int expectedQ = startQ;
-		int expectedR = startR + 1;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(startQ, hexagon.getQ());
+		assertEquals(1, hexagon.getR());
 	}
 
 	@Test
-	void getNeighborCoordinate_bottomLeft_hasCorrectCoordinates() {
+	void getNeighborHexagon_bottomLeft_hasCorrectHexagons() {
 		int startQ = 0;
 		int startR = -8;
 
-		Coordinate coordinate = HexagonDirection.getNeighborCoordinate(startQ, startR, HexagonDirection.BOTTOM_LEFT);
+		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM_LEFT);
 
-		int expectedQ = startQ - 1;
-		int expectedR = startR + 1;
-
-		assertEquals(expectedQ, coordinate.i);
-		assertEquals(expectedR, coordinate.j);
+		assertEquals(-1, hexagon.getQ());
+		assertEquals(-7, hexagon.getR());
 	}
 }

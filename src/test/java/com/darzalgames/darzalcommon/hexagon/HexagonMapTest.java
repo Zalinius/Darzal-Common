@@ -3,7 +3,7 @@ package com.darzalgames.darzalcommon.hexagon;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.List;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -12,9 +12,9 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import com.darzalgames.darzalcommon.data.Coordinate;
+import com.darzalgames.darzalcommon.hexagon.gridfactory.HexagonGridRectangular;
 
-class HexagonGridTest {
+class HexagonMapTest {
 
 	@ParameterizedTest
     @CsvSource({
@@ -24,9 +24,10 @@ class HexagonGridTest {
         "0, 1,		4", //Edge hexagon
     })
 	void getNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
 		
-		List<Hexagon> neighbors = hexagonGrid.getNeighborsOf(hexagonGrid.getHexagonAt(new Coordinate(hexagonQ, hexagonR)));
+		Set<Hexagon> neighbors = hexagonMap.getHexagonNeighborsOf(new Hexagon(hexagonQ, hexagonR));
 		
 		assertEquals(expectedNumberOfNeighbors, neighbors.size());
 		neighbors.forEach(Assertions::assertNotNull);
@@ -45,15 +46,15 @@ class HexagonGridTest {
         "2, 4",
         "4, -1",
     })
-	void getHexagonAt_withVariousValidCoordinates_returnsExpectedHexagon(int expectedQ, int expectedR) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
-		Hexagon expected = new Hexagon(expectedQ, expectedR);
+	void getValueAt_withVariousValidCoordinates_returnsExpectedValue(int expectedQ, int expectedR) {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
+		String expectedTag = "it's me!";
+		hexagonMap.add(new Hexagon(expectedQ, expectedR), expectedTag);
 		
-		Hexagon resultHexagon = hexagonGrid.getHexagonAt(new Coordinate(expectedQ, expectedR));
+		String result = hexagonMap.getValueAt(new Hexagon(expectedQ, expectedR));
 		
-		assertEquals(expected.getQ(), resultHexagon.getQ());
-		assertEquals(expected.getR(), resultHexagon.getR());
-		assertEquals(expected, resultHexagon);
+		assertEquals(expectedTag, result);
 	}
 
 	@ParameterizedTest
@@ -62,12 +63,13 @@ class HexagonGridTest {
         "4, 4",
         "-4, 7",
     })
-	void getHexagonAt_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
+	void getValueAt_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
 		
-		Coordinate coordinate = new Coordinate(expectedQ, expectedR);
+		Hexagon hexagon = new Hexagon(expectedQ, expectedR);
 		
-		assertThrows(IllegalArgumentException.class, () -> hexagonGrid.getHexagonAt(coordinate));
+		assertThrows(IllegalArgumentException.class, () -> hexagonMap.getValueAt(hexagon));
 	}
 	
 
@@ -84,12 +86,12 @@ class HexagonGridTest {
 	@ParameterizedTest
 	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
 	void getNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
-		HexagonGridRectangular hexagonGrid = new HexagonGridRectangular(6, 6);
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, hex.getQ() + " " + hex.getR()));
 		
-		Hexagon neighbor = hexagonGrid.getNeighborInDirection(new Hexagon(new Coordinate(hexagonQ, hexagonR)), testDirection);
+		String neighbor = hexagonMap.getNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 		
-		assertEquals(expectedNeighborHexagonQ, neighbor.getQ());
-		assertEquals(expectedNeighborHexagonR, neighbor.getR());
+		assertEquals(expectedNeighborHexagonQ + " " + expectedNeighborHexagonR, neighbor);
 	}
 	
 }

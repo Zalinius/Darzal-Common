@@ -1,6 +1,6 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import com.darzalgames.darzalcommon.data.Coordinate;
+import java.util.Objects;
 
 /**
  * A simple class representing a flat-top hexagon using axial coordinates
@@ -8,7 +8,8 @@ import com.darzalgames.darzalcommon.data.Coordinate;
  */
 public class Hexagon {
 
-	private final Coordinate coordinate;
+	private final int q;
+	private final int r;
 
 	/**
 	 * Creates a {@link Hexagon} at the given coordinates
@@ -16,28 +17,22 @@ public class Hexagon {
 	 * @param r R-axis coordinate (axial system)
 	 */
 	public Hexagon(int q, int r) {
-		this(new Coordinate(q, r));
+		this.q = q;
+		this.r = r;
 	}
-	/**
-	 * Creates a {@link Hexagon} at the given coordinates
-	 * @param coordinate An axial system coordinate (first value is the Q-axis and second value is the R-axis)
-	 */
-	public Hexagon(Coordinate coordinate) {
-		this.coordinate = coordinate;
-	}
-
+	
 	/**
 	 * @return The axial Q coordinate of the {@link Hexagon} (logical coordinate)
 	 */
 	public int getQ() {
-		return coordinate.i;
+		return q;
 	}
 
 	/**
 	 * @return The axial R coordinate of the {@link Hexagon} (logical coordinate)
 	 */
 	public int getR() {
-		return coordinate.j;
+		return r;
 	}
 
 	/**
@@ -50,30 +45,25 @@ public class Hexagon {
 	}
 
 	@Override
+	public int hashCode() {
+		return Objects.hash(q, r);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		// self check
 		if (this == obj)
 			return true;
-		// null check
 		if (obj == null)
 			return false;
-		// type check and cast
-		if (!(obj instanceof Hexagon))
+		if (getClass() != obj.getClass())
 			return false;
-		Hexagon otherHexagon = (Hexagon) obj;
-
-		// field comparison
-		return otherHexagon.coordinate.equals(this.coordinate);
+		Hexagon other = (Hexagon) obj;
+		return q == other.q && r == other.r;
 	}
 
-	@Override
-	public int hashCode() {
-		return coordinate.hashCode();
-	}
-	
 	@Override
 	public String toString() {
-		return coordinate.toString();
+		return "Hexagon [q=" + q + ", r=" + r + ", s=" + getS() + "]";
 	}
 
 }

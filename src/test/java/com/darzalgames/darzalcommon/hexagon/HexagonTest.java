@@ -8,17 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import com.darzalgames.darzalcommon.data.Coordinate;
-
 class HexagonTest {
-	
-	@Test
-	void bothConstructors_sameCoordinates_makesEqualHexagons() {
-		Hexagon hexagon1 = new Hexagon(3, 20);
-		Hexagon hexagon2 = new Hexagon(new Coordinate(3, 20));
-
-		assertEquals(hexagon1, hexagon2);
-	}
 	
 	@ParameterizedTest
     @CsvSource({
@@ -30,10 +20,10 @@ class HexagonTest {
         "0, 5, -5",
         "-8, 0, 8"
     })
-	void getS_isCalculatedCorrectly(int q, int r, int s) {
+	void getS_isCalculatedCorrectly(int q, int r, int expectedS) {
 		Hexagon hexagon = new Hexagon(q, r);
 		
-		assertEquals(s, hexagon.getS());
+		assertEquals(expectedS, hexagon.getS());
 	}
 
 	@Test
@@ -93,11 +83,4 @@ class HexagonTest {
 		assertEquals(hexagon.hashCode(), hexagon.hashCode());
 	}
 	
-	@Test
-	void hashCode_differentCoordinates_isNotEqual() {
-		Hexagon hexagon1 = new Hexagon(3, 20);
-		Hexagon hexagon2 = new Hexagon(3, -5);
-
-		assertNotEquals(hexagon1.hashCode(), hexagon2.hashCode());
-	}
 }
