@@ -12,6 +12,10 @@ public class HexagonGridCircular {
 	 * @return A list of flat-top {@link Hexagon Hexagons}, with the axial coordinate (0,0) in the bottom-left corner
 	 */
 	public static List<Hexagon> makeGrid(int radius) {
+		if(radius <= 0) {
+			throw new IllegalArgumentException("radius must be positive: " + radius);
+		}
+		
 		radius -= 1;
 		List<Hexagon> grid = new ArrayList<>();
 
@@ -22,10 +26,6 @@ public class HexagonGridCircular {
 		    for (int r = r1; r <= r2; r++) {
 				grid.add(new Hexagon(q, r));
 		    }
-		}
-		
-		if (grid.isEmpty()) {
-			throw new IllegalArgumentException("Grid must not be empty.");
 		}
 		
 		return grid;

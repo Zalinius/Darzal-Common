@@ -1,9 +1,9 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,28 +16,41 @@ public class HexagonGridCircularTest {
 	@Test
 	void makeGrid_0Radius_throwsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> HexagonGridCircular.makeGrid(0));
+		assertThrows(IllegalArgumentException.class, () -> HexagonGridCircular.makeGrid(-1));
+		assertDoesNotThrow(() -> HexagonGridCircular.makeGrid(1));
 	}
 
-	@ParameterizedTest
-    @CsvSource({
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "7",
-    })
-	void getMiddleHexagon_withVariousSizes_returnsCenterCoordinates(int radius) {
-		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridCircular.makeGrid(radius).forEach(hex -> hexagonMap.add(hex, ""));
-		String middleTag = "middle!";
-		hexagonMap.add(new Hexagon(0,0), middleTag);
+	@Test
+	void makeGrid_withRadius1_containsCorrectHexagons() throws Exception {
+		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0));
 		
-		String middle = hexagonMap.getMiddleHexagonValue();
+		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(1);
 		
-		assertEquals(middleTag, middle);
+		assertEquals(expectedHexagons.size(), hexagons.size());
+		assertTrue(expectedHexagons.containsAll(hexagons));
 	}
-	
+
+	@Test
+	void makeGrid_withRadius2_containsCorrectHexagons() throws Exception {
+		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0));
+		
+		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(2);
+		
+		assertEquals(expectedHexagons.size(), hexagons.size());
+		assertTrue(expectedHexagons.containsAll(hexagons));
+	}
+
+	@Test
+	void makeGrid_withRadius3_containsCorrectHexagons() throws Exception {
+		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0),
+				new Hexagon(0, -2), new Hexagon(1, -2), new Hexagon(2, -2), new Hexagon(-1, -1), new Hexagon(2, -1), new Hexagon(-2, 0), new Hexagon(2, 0), new Hexagon(-2, 1), 
+				new Hexagon(1, 1), new Hexagon(-2, 2), new Hexagon(-1, 2), new Hexagon(0, 2));
+		
+		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(3);
+		
+		assertEquals(expectedHexagons.size(), hexagons.size());
+		assertTrue(expectedHexagons.containsAll(hexagons));
+	}
 
 	@ParameterizedTest
     @CsvSource({
