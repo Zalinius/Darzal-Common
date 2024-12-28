@@ -9,7 +9,7 @@ public class HexagonGridCircular {
 	
 	/**
 	 * @param radius the number of hexagons along the circle's radius
-	 * @return A list of flat-top {@link Hexagon Hexagons}, with the axial coordinate (0,0) in the bottom-left corner
+	 * @return A list of flat-top {@link Hexagon Hexagons}, with the axial coordinate (0,0) in the center
 	 */
 	public static List<Hexagon> makeGrid(int radius) {
 		if(radius <= 0) {
@@ -31,4 +31,6 @@ public class HexagonGridCircular {
 		return grid;
 	}
 
+	private HexagonGridCircular() {}
+	
 }

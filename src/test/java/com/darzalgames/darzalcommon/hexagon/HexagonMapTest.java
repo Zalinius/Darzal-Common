@@ -2,11 +2,14 @@ package com.darzalgames.darzalcommon.hexagon;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -15,6 +18,56 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.darzalgames.darzalcommon.hexagon.gridfactory.HexagonGridRectangular;
 
 class HexagonMapTest {
+	
+	@Test
+	void getMiddleHexagonValue_rectangularGrid_containsExpectedTag() throws Exception {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
+		
+		hexagonMap.put(new Hexagon(0,0), "middle!");
+		
+		assertEquals("middle!", hexagonMap.getMiddleHexagonValue());
+	}
+	
+	@Test
+	void getAllHexagons_returnsAllHexagons() throws Exception {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, ""));
+		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				new Hexagon(0, -1), new Hexagon(1, -1), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(-1, 2));
+		
+		Collection<Hexagon> all = hexagonMap.getAllHexagons();
+		 
+		assertEquals(expectedHexagons.size(), all.size());
+		assertTrue(all.containsAll(expectedHexagons));
+	}
+
+	@Test	
+	void getAllValues_returnsAllValues() throws Exception {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, hex.toString()));
+		Set<String> expectedHexagons = Set.of(new Hexagon(0, 0).toString(), new Hexagon(0, 1).toString(),
+				new Hexagon(1, 0).toString(), new Hexagon(1, 1).toString(), new Hexagon(0, -1).toString(),
+				new Hexagon(1, -1).toString(), new Hexagon(-1, 0).toString(), new Hexagon(-1, 1).toString(), new Hexagon(-1, 2).toString());
+		
+		Collection<String> all = hexagonMap.getAllValues();
+		 
+		assertEquals(expectedHexagons.size(), all.size());
+		assertTrue(all.containsAll(expectedHexagons));
+	}
+	
+	@Test	
+	void getValueNeighborsOf_variousValues_returnsAllValues() throws Exception {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, hex.toString()));
+		Set<String> expectedHexagons = Set.of(new Hexagon(0, 1).toString(), new Hexagon(1, 0).toString(), new Hexagon(0, -1).toString(),
+				new Hexagon(1, -1).toString(), new Hexagon(-1, 0).toString(), new Hexagon(-1, 1).toString());
+		
+		Collection<String> neighbors = hexagonMap.getValueNeighborsOf(new Hexagon(0, 0));
+		 
+		assertEquals(6, neighbors.size());
+		assertTrue(neighbors.containsAll(expectedHexagons));
+	}
 
 	@ParameterizedTest
     @CsvSource({
@@ -25,7 +78,7 @@ class HexagonMapTest {
     })
 	void getNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.add(hex, ""));
+		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
 		
 		Set<Hexagon> neighbors = hexagonMap.getHexagonNeighborsOf(new Hexagon(hexagonQ, hexagonR));
 		
@@ -48,9 +101,9 @@ class HexagonMapTest {
     })
 	void getValueAt_withVariousValidCoordinates_returnsExpectedValue(int expectedQ, int expectedR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, ""));
 		String expectedTag = "it's me!";
-		hexagonMap.add(new Hexagon(expectedQ, expectedR), expectedTag);
+		hexagonMap.put(new Hexagon(expectedQ, expectedR), expectedTag);
 		
 		String result = hexagonMap.getValueAt(new Hexagon(expectedQ, expectedR));
 		
@@ -65,7 +118,7 @@ class HexagonMapTest {
     })
 	void getValueAt_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, ""));
 		
 		Hexagon hexagon = new Hexagon(expectedQ, expectedR);
 		
@@ -87,7 +140,7 @@ class HexagonMapTest {
 	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
 	void getNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, hex.getQ() + " " + hex.getR()));
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, hex.getQ() + " " + hex.getR()));
 		
 		String neighbor = hexagonMap.getNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 		

@@ -23,7 +23,7 @@ public class HexagonMath {
 	}
 
 	/**
-	 * Convert the flat-top hexagon's logical coordinates to pixel coordinates. The hex at coordinates (0, 0) is always located at position 6ps(0, 0)
+	 * Convert the flat-top hexagon's logical coordinates to pixel coordinates. The hex at coordinates (0, 0) is always located at position (0, 0)
 	 * @param height The height component in the height:width ratio
 	 * @param width The width component in the height:width ratio
 	 * @param q The Q-axis coordinate of the hexagon

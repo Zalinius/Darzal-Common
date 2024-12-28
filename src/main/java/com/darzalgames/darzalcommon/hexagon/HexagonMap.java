@@ -15,7 +15,7 @@ public class HexagonMap<E> {
 		return grid.get(new Hexagon(0, 0));
 	}
 	
-	public void add(Hexagon hexagon, E value) {
+	public void put(Hexagon hexagon, E value) {
 		grid.put(hexagon, value);
 	}
 
@@ -49,7 +49,7 @@ public class HexagonMap<E> {
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
 	 * @return A list of the neighboring values
 	 */
-	public List<E> getValueNeighborsOf(Hexagon hexagon) {
+	public Collection<E> getValueNeighborsOf(Hexagon hexagon) {
 		return getHexagonNeighborsOf(hexagon).stream().map(neighbor -> grid.get(neighbor)).collect(Collectors.toList());
 	}
 

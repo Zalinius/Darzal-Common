@@ -37,5 +37,6 @@ public class HexagonGridRectangular {
 		
 		return grid;
 	}
-	
+
+	private HexagonGridRectangular() {}
 }
