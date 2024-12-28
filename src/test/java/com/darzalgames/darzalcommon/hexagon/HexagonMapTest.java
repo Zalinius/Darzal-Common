@@ -18,14 +18,14 @@ class HexagonMapTest {
 
 	@ParameterizedTest
     @CsvSource({
-        "1, 1,		6", //Surrounded hexagon
-        "5, -2,		3", //Corner hexagon (top right)
-        "0, 0,		2", //Corner hexagon (top left)
-        "0, 1,		4", //Edge hexagon
+        "0, 0,		6", //Surrounded hexagon
+        "2, -2,		2", //Corner hexagon (top right)
+        "2, 0,		3", //Corner hexagon (bottom right)
+        "-1, 1,		4", //Edge hexagon
     })
 	void getNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.add(hex, ""));
+		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.add(hex, ""));
 		
 		Set<Hexagon> neighbors = hexagonMap.getHexagonNeighborsOf(new Hexagon(hexagonQ, hexagonR));
 		
