@@ -43,6 +43,20 @@ public class Hexagon {
 		// Axial coordinates are defined as such: "Since we have a constraint q + r + s = 0, we can calculate s = -q-r when we need it."
 		return -getQ() - getR();
 	}
+	
+	/**
+	 * @return The offset column coordinate of the {@link Hexagon}
+	 */
+	public int getColumn() {
+		return q;
+	}
+
+	/**
+	 * @return The offset row coordinate of the {@link Hexagon}
+	 */
+	public int getRow() {
+		return r + (q - (q&1)) / 2;
+	}
 
 	@Override
 	public int hashCode() {
@@ -64,6 +78,15 @@ public class Hexagon {
 	@Override
 	public String toString() {
 		return "Hexagon [q=" + q + ", r=" + r + ", s=" + getS() + "]";
+	}
+	
+	/**
+	 * Constructs a hexagon from offset coordinates (row & column)
+	 */
+	public static Hexagon makeHexagonFromOffsetCoordinates(int row, int column) {
+		int q = column;
+		int r = row - (column - (column&1)) / 2;
+		return new Hexagon(q, r);
 	}
 
 }

@@ -64,8 +64,8 @@ public class HexagonMap<E> {
 	}
 
 	/**
-	 * @param coordinate
-	 * @return The value at the given coordinates if it exists, otherwise throws an IllegalArgumentException 
+	 * @param hexagon
+	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException 
 	 */
 	public E getValueAt(Hexagon hexagon) {
 		if (grid.containsKey(hexagon)) {

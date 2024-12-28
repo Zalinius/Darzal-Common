@@ -12,6 +12,36 @@ class HexagonTest {
 	
 	@ParameterizedTest
     @CsvSource({
+        "0, 0,		0, 0",
+        "1, 1,		1, 1",
+        "2, -1,		2, 0",
+        "-1, 1,		-1, 0",
+    })
+	void axialToOffsetCoordinates_variousCoordinates_returnsTheCorrectlyConvertedCoordinates(int hexagonQ, int hexagonR, int expectedColumn, int expectedRow) {
+	
+		Hexagon result = new Hexagon(hexagonQ, hexagonR);
+		
+		assertEquals(expectedColumn, result.getColumn());
+		assertEquals(expectedRow, result.getRow());
+	}
+	
+	@ParameterizedTest
+    @CsvSource({
+        "0, 0,		0, 0",
+        "1, 1,		1, 1",
+        "2, 0,		2, -1",
+        "-1, 0,		-1, 1",
+    })
+	void offsetToAxialCoordinates_variousCoordinates_returnsTheCorrectlyConvertedCoordinates(int column, int row, int expectedQ, int expectedR) {
+	
+		Hexagon result = Hexagon.makeHexagonFromOffsetCoordinates(row, column);
+		
+		assertEquals(expectedQ, result.getQ());
+		assertEquals(expectedR, result.getR());
+	}
+	
+	@ParameterizedTest
+    @CsvSource({
         "0,  0,	0", // s = -q-r
         "3, -3, 0",
         "-5, -2, 7",

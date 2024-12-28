@@ -1,41 +1,8 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import com.darzalgames.darzalcommon.data.Coordinate;
 import com.darzalgames.darzalcommon.data.Tuple;
 
 public class HexagonMath {
-
-	/** https://www.redblobgames.com/grids/hexagons/#conversions
-	 * using flat-top odd-q
-	 * @param hexagon The hexagon to convert
-	 * @return New coordinates converted to the offset system
-	 */
-	public static Coordinate axialToOffsetCoordinates(Hexagon hexagon) {
-		return axialToOffsetCoordinates(hexagon.getQ(), hexagon.getR());
-	}
-	
-	/**
-	 * @param q The q-axis coordinate
-	 * @param r The r-axis coordinate
-	 * @return New coordinates converted to the offset system
-	 */
-	public static Coordinate axialToOffsetCoordinates(int q, int r) {
-		int col = q;
-		int row = r + (q - (q&1)) / 2;
-		return new Coordinate(col, row);
-	}
-
-	/**
-	 * @param column The column coordinate
-	 * @param row The row coordinate
-	 * @return New coordinates converted to the axial system
-	 */
-	public static Coordinate offsetToAxialCoordinates(int column, int row) {
-		int q = column;
-		int r = row - (column - (column&1)) / 2;
-		return new Coordinate(q, r);
-	}
-
 
 	/**
 	 * Convert the flat-top hexagon's logical coordinates to pixel coordinates
