@@ -81,7 +81,7 @@ public class Hexagon {
 	}
 	
 	/**
-	 * Constructs a hexagon from offset coordinates (row & column)
+	 * Constructs a hexagon from offset coordinates (row and column)
 	 */
 	public static Hexagon makeHexagonFromOffsetCoordinates(int row, int column) {
 		int q = column;
