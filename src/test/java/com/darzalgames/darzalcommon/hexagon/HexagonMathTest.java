@@ -18,7 +18,7 @@ class HexagonMathTest {
     })
 	void getScreenPosition_variousCoordinatesAndPixelRatio_returnsExpectedPosition(int hexagonQ, int hexagonR, float expectedX, float expectedY) {
 		
-		Tuple<Float, Float> position = HexagonMath.getScreenPosition(8, 7, hexagonQ, hexagonR, 8, 7);
+		Tuple<Float, Float> position = HexagonMath.getScreenPosition(hexagonQ, hexagonR, 8, 7);
 		
 		assertEquals(expectedX, position.e);
 		assertEquals(expectedY, position.f);
@@ -35,7 +35,7 @@ class HexagonMathTest {
 		float width = 3f/2;
 		float height = (float) (Math.sqrt(3)/2f);
 		
-		Tuple<Float, Float> position = HexagonMath.getScreenPosition(width, height, hexagonQ, hexagonR, width, height);
+		Tuple<Float, Float> position = HexagonMath.getScreenPosition(hexagonQ, hexagonR, width, height);
 		
 		assertEquals(expectedX, position.e);
 		assertEquals(expectedY, position.f);
@@ -51,7 +51,7 @@ class HexagonMathTest {
     })
 	void getScreenPositionOnStage_variousCoordinatesAndPixelRatio_returnsExpectedPosition(int hexagonQ, int hexagonR, float expectedX, float expectedY, int stageHeight) {
 		
-		Tuple<Float, Float> position = HexagonMath.getScreenPositionOnStage(8, 7, hexagonQ, hexagonR, 8, 7, stageHeight);
+		Tuple<Float, Float> position = HexagonMath.getScreenPositionOnStage(hexagonQ, hexagonR, 8, 7, stageHeight);
 		
 		assertEquals(expectedX, position.e);
 		assertEquals(expectedY, position.f);
