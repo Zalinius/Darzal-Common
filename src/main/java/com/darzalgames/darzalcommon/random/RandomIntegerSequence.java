@@ -53,8 +53,4 @@ public class RandomIntegerSequence implements IntegerSequence {
 		return next(lowerBound, upperBound);
 	}
 
-	@Override
-	public boolean flipCoin() {
-		return random.nextInt(2) == 0;
-	}
 }

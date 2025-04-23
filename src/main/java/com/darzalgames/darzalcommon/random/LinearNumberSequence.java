@@ -48,9 +48,4 @@ public class LinearNumberSequence implements IntegerSequence {
 		return true;
 	}
 	
-	@Override
-	public boolean flipCoin() {
-		return true;
-	}
-
 }

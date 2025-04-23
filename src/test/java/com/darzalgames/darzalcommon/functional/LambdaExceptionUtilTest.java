@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -52,7 +51,7 @@ class LambdaExceptionUtilTest {
 
 	@Test
 	void testFunction() throws MyTestException {
-		List<Integer> sizes = Stream.of("ciao", "hello").<Integer>map(rethrowFunction(this::transform)).collect(Collectors.toList());
+		List<Integer> sizes = Stream.of("ciao", "hello").<Integer>map(rethrowFunction(this::transform)).toList();
 		assertEquals(2, sizes.size());
 		assertEquals(4, sizes.get(0).intValue());
 		assertEquals(5, sizes.get(1).intValue());
@@ -68,7 +67,7 @@ class LambdaExceptionUtilTest {
 	@Test
 	void testFunctionRaisingException() throws MyTestException {
 		assertThrows(MyTestException.class, () ->
-		Stream.of("ciao", null, "hello").<Integer>map(rethrowFunction(this::transform)).collect(Collectors.toList()));
+		Stream.of("ciao", null, "hello").<Integer>map(rethrowFunction(this::transform)).toList());
 	}
 
 }

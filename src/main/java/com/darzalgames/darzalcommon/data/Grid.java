@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -139,25 +138,25 @@ public class Grid<E> implements Collection<E>{
 		return streamCoordinates()
 			  .filter(coordinate -> coordinate.taxiDistance(new Coordinate(i, j)) == 1)
 			  .filter(this::isInGrid)
-			  .collect(Collectors.toList());
+			  .toList();
 	}
 
 	public List<Coordinate> getAdjacentCoordinates(int i, int j){
 		return streamCoordinates()
 			  .filter(coordinate -> coordinate.kingDistance(new Coordinate(i, j)) == 1)
 			  .filter(this::isInGrid)
-			  .collect(Collectors.toList());
+			  .toList();
 	}
 
 	public List<E> getDirectlyAdjacentElements(int i, int j){
 		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(i, j);		
-		return coordinatesToGet.stream().map(this::get).collect(Collectors.toList());
+		return coordinatesToGet.stream().map(this::get).toList();
 
 	}
 
 	public List<E> getAdjacentElements(int i, int j){
 		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);		
-		return coordinatesToGet.stream().map(this::get).collect(Collectors.toList());
+		return coordinatesToGet.stream().map(this::get).toList();
 
 	}	
 

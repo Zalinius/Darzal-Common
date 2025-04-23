@@ -1,9 +1,13 @@
 package com.darzalgames.darzalcommon.data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
@@ -208,7 +212,7 @@ class GridTest {
 	void streamCoordinatess_onGrid_streamsCoordinates() throws Exception {
 		Grid<String> grid = new Grid<>(2, 3);
 		
-		List<Coordinate> coordinates = grid.streamCoordinates().collect(Collectors.toList());
+		List<Coordinate> coordinates = grid.streamCoordinates().toList();
 
 		assertEquals(6, coordinates.size());
 		assertTrue(coordinates.contains(new Coordinate(0, 0)));

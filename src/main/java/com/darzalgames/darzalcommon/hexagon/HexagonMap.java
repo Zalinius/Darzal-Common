@@ -50,7 +50,7 @@ public class HexagonMap<E> {
 	 * @return A list of the neighboring values
 	 */
 	public Collection<E> getValueNeighborsOf(Hexagon hexagon) {
-		return getHexagonNeighborsOf(hexagon).stream().map(neighbor -> grid.get(neighbor)).collect(Collectors.toList());
+		return getHexagonNeighborsOf(hexagon).stream().map(neighbor -> grid.get(neighbor)).toList();
 	}
 
 	/**

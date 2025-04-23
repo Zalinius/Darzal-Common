@@ -17,12 +17,18 @@ public interface IntegerSequence extends Iterator<Integer> {
 	int nextInt();
 	int nextInt(int upperBound);
 	/**
+	 * 
 	 * Returns a pseudorandom int between lowerBound(inclusive) and upperBound(exclusive)
+	 */
+	/**
+	 * 
+	 * @param lowerBound
+	 * @param upperBound
+	 * @return a pseudorandom int between lowerBound(inclusive) and upperBound(exclusive)
 	 */
 	int nextInt(int lowerBound, int upperBound);
 	
+	
 	@Override
 	boolean hasNext();
-
-	boolean flipCoin();
 }
