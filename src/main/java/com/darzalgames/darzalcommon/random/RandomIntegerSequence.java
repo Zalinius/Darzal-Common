@@ -2,8 +2,6 @@ package com.darzalgames.darzalcommon.random;
 
 import java.util.Random;
 
-import com.darzalgames.darzalcommon.functional.Do;
-
 /**
  * An infinite integer sequence which returns random integers.
  */
