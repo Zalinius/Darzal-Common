@@ -1,6 +1,4 @@
 
-@Library('zalinius-shared-library') _
-
 void setBuildStatus(String message, String state) {
   step([
       $class: "GitHubCommitStatusSetter",
@@ -31,22 +29,28 @@ pipeline {
                 SONAR_CREDS = credentials('sonar')
             }
             steps {
-                sonarScan()
+                sh 'mvn sonar:sonar -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONAR_CREDS' //Send test coverage to Sonarqube, and let it know there is a new version of main to cover
                 sh 'mvn --batch-mode clean install'  //Install publishes to the local jenkins Maven repo
 	        }
 	    }
     }
     
     post {
-        always  { testReport()}    
-        success { setBuildStatus("Build succeeded", "SUCCESS") }    
+
+        always {
+            junit '**/target/*-reports/TEST-*.xml'
+        }
+    
+        success {
+            setBuildStatus("Build succeeded", "SUCCESS");
+        }
         failure {
-            setBuildStatus("Build failed", "FAILURE")
+            setBuildStatus("Build failed", "FAILURE");
             script {
                 if (env.BRANCH_NAME == 'main') {
                     discordSend description: "main branch build failed", footer: "😬 😬 😬", link: env.BUILD_URL, result: currentBuild.currentResult, title: env.JOB_NAME, webhookURL: "${DISCORD_WEBHOOK}"
                 }
             }
-        }    
+        }
     }
 }
