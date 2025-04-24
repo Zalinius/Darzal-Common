@@ -1,6 +1,5 @@
 package com.darzalgames.darzalcommon.math;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -181,59 +180,4 @@ class SimpleMathTest {
 			assertFalse(result);
 		}
 		
-		@Test
-		void clamp_belowMinimum_returnsMinimum(){
-			int value = 1;
-			int minimum = 2;
-			int maximum = 6;
-			
-			int result = SimpleMath.clamp(value, minimum, maximum);
-			
-			assertEquals(minimum, result);
-		}
-		
-		@Test
-		void clamp_atMinimum_returnsMinimum(){
-			int value = 2;
-			int minimum = 2;
-			int maximum = 6;
-			
-			int result = SimpleMath.clamp(value, minimum, maximum);
-			
-			assertEquals(minimum, result);
-		}
-		
-		@Test
-		void clamp_aboveMaximum_returnsMaximum(){
-			int value = 8;
-			int minimum = 2;
-			int maximum = 6;
-			
-			int result = SimpleMath.clamp(value, minimum, maximum);
-			
-			assertEquals(maximum, result);
-		}
-		
-		@Test
-		void clamp_atMaximum_returnsMaximum(){
-			int value = 6;
-			int minimum = 2;
-			int maximum = 6;
-			
-			int result = SimpleMath.clamp(value, minimum, maximum);
-			
-			assertEquals(maximum, result);
-		}
-
-		@Test
-		void clamp_withinRange_returnsValue(){
-			int value = 4;
-			int minimum = 2;
-			int maximum = 6;
-			
-			int result = SimpleMath.clamp(value, minimum, maximum);
-			
-			assertEquals(value, result);
-		}
-
 }

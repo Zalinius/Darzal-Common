@@ -49,14 +49,14 @@ public class RandomExtended extends Random{
 		if(numerator < 0) {
 			throw new IllegalArgumentException("Numerator must not be negative:" + numerator);
 		}
-		if(denominator < 0) {
-			throw new IllegalArgumentException("Denominator must not be negative:" + denominator);
+		if(denominator <= 0) {
+			throw new IllegalArgumentException("Denominator must be positive:" + denominator);
 		}
 		
 		if(numerator >= denominator) {
 			return true;
 		}
-		else if(numerator <= 0) {
+		else if(numerator == 0) {
 			return false;
 		}
 		else {

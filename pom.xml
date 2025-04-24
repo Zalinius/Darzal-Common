@@ -5,26 +5,24 @@
 
 	<groupId>com.darzalgames</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.5.8</version>
+	<version>0.6.0</version>
 	<name>Darzal Common</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.release>11</maven.compiler.release>
-		<gwt.version>2.10.0</gwt.version>
-		<gwt.maven.version>2.10.0</gwt.maven.version>
+		<maven.compiler.release>21</maven.compiler.release>
 	</properties>
 
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.14.0</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -37,7 +35,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.4.1</version>
+				<version>3.11.2</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -47,17 +45,15 @@
 					</execution>
 				</executions>
 			</plugin>
-
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.0.0-M5</version>
+				<version>3.5.3</version>
 			</plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.7</version>
+				<version>0.8.13</version>
 				<executions>
 					<execution>
 						<goals>
@@ -73,27 +69,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- GWT Validation to ensure library is GWT compatible -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<version>${gwt.maven.version}</version>
-				<configuration>
-					<strict>true</strict>
-					<failOnError>true</failOnError>
-					<validateOnly>true</validateOnly>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<phase>test</phase>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
@@ -101,16 +76,8 @@
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>
-			<version>5.8.0-M1</version>
-			<type>pom.sha512</type>
+			<version>5.12.2</version>
 			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.gwtproject</groupId>
-			<artifactId>gwt-user</artifactId>
-			<version>${gwt.version}</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

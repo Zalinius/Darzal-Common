@@ -13,7 +13,7 @@ public class GetRandomValueFromCollection {
 		if (toGetFrom.isEmpty())
 			return null;
 		
-		int index = ints.nextInt(toGetFrom.size());
+		int index = ints.next(toGetFrom.size());
 		Iterator<T> it = toGetFrom.iterator();
 		while (index > 0)
 		{
@@ -28,7 +28,7 @@ public class GetRandomValueFromCollection {
 		if (toGetFrom.isEmpty())
 			return null;
 		
-		int index = ints.nextInt(toGetFrom.size());
+		int index = ints.next(toGetFrom.size());
 		return toGetFrom.get(index);
 	}
 

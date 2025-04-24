@@ -2,6 +2,9 @@ package com.darzalgames.darzalcommon.random;
 
 import java.util.Random;
 
+/**
+ * An infinite integer sequence which returns random integers.
+ */
 public class RandomIntegerSequence implements IntegerSequence {
 
 	private Random random;
@@ -29,8 +32,7 @@ public class RandomIntegerSequence implements IntegerSequence {
 		if(lowerBound > upperBound) {
 			throw new ArithmeticException("lowerBound must be less or equal than upper bound!");
 		}
-		double sample = random.nextDouble();
-		return (int) (lowerBound + (upperBound - lowerBound) * sample);
+		return random.nextInt(upperBound - lowerBound) + lowerBound;
 	}
 
 	@Override
@@ -38,23 +40,4 @@ public class RandomIntegerSequence implements IntegerSequence {
 		return true;
 	}
 
-	@Override
-	public int nextInt() {
-		return next();
-	}
-
-	@Override
-	public int nextInt(int upperBound) {
-		return next(upperBound);
-	}
-
-	@Override
-	public int nextInt(int lowerBound, int upperBound) {
-		return next(lowerBound, upperBound);
-	}
-
-	@Override
-	public boolean flipCoin() {
-		return random.nextInt(2) == 0;
-	}
 }
