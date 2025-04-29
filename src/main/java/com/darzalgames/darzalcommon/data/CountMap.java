@@ -1,36 +1,33 @@
 package com.darzalgames.darzalcommon.data;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A convenience map whose value type is always Integers. Useful for keeping counts of stuff.
- * Conveniently, it's functions never return null values, nor can they throw Exceptions
- * All keys are valid, and counts without a key can be gotten and modified
- * @param <K> The key type for the map
+ * Conveniently, the values are always returned as integer primitives, and cannot return null, nor can they throw Exceptions
+ * All keys are valid (including null), and counts without a key can be gotten and modified safely
+ * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
  */
-public class CountMap<K> implements Iterable<K>{
+public class CountMap<K> implements Collection<K>{
 
-	private Map<K, Integer> data;
+	private final Map<K, Integer> data;
 
 	private static final int DEFAULT = 0;
-	
+
 	/**
 	 * Creates a blank CountMap
 	 */
 	public CountMap() {
-		this.data = new HashMap<>();
+		data = new HashMap<>();
 	}
 
 	/**
-	 * Creates a new Count Map with the same entries as the other
-	 * @param other The map whose entries should be copied
+	 * Creates a CountMap, initialized with all the values of the provided collection
+	 * @param collection An existing non null collection
 	 */
-	public CountMap(CountMap<K> other) {
-		this.data = new HashMap<>(other.data);
+	public CountMap(Collection<K> collection) {
+		this();
+		addAll(collection);
 	}
 
 	/**
@@ -38,24 +35,31 @@ public class CountMap<K> implements Iterable<K>{
 	 * @param key The key associated with the count
 	 * @return The count of the key, or 0 if the key is not present
 	 */
-	public int get(K key) {
+	public int get(Object key) {
 		return data.getOrDefault(key, DEFAULT);
 	}
-	
+
 	/**
 	 * Increments the count associated with a key
 	 * @param key The key to increment
 	 */
-	public void increment(K key) {
+	@Override
+	public boolean add(K key) {
 		data.put(key, get(key)+1);
+		return true;
 	}
 
 	/**
 	 * Decrements the count associated with a key
 	 * @param key The key to decrement
 	 */
-	public void decrement(K key) {
-		data.put(key, get(key)-1);
+	@Override
+	public boolean remove(Object key) {
+		if(data.containsKey(key)) {
+		}
+		K castKey = (K) key;
+		data.put(castKey, get(key)-1);
+		return true;
 	}
 
 	/**
@@ -65,10 +69,11 @@ public class CountMap<K> implements Iterable<K>{
 	public void reset(K key) {
 		data.put(key, DEFAULT);
 	}
-	
+
 	/**
 	 * Resets the count associated with all keys to 0
 	 */
+	@Override
 	public void clear() {
 		data.clear();
 	}
@@ -78,16 +83,16 @@ public class CountMap<K> implements Iterable<K>{
 	 * @param key The key to increase
 	 * @param amount The amount to increase by
 	 */
-	public void increaseBy(K key, int amount) {
+	public void addMany(K key, int amount) {
 		data.put(key, get(key)+amount);
 	}
-	
+
 	/**
 	 * Decreases the count associated with a key
 	 * @param key The key to decrease
 	 * @param amount The amount to decrease by
 	 */
-	public void decreaseBy(K key, int amount) {
+	public void removeMany(K key, int amount) {
 		data.put(key, get(key)-amount);
 	}
 
@@ -97,22 +102,79 @@ public class CountMap<K> implements Iterable<K>{
 	public Set<K> keySet(){
 		return data.keySet();
 	}
-	
+
 	@Override
 	public Iterator<K> iterator() {
 		return data.keySet().iterator();
 	}
-	
+
 	/**
 	 * @return A collection of all the tracked counts, in no particular order
 	 */
 	public Collection<Integer> values() {
 		return data.values();
 	}
-	
+
 	@Override
 	public String toString() {
 		return data.toString();
+	}
+
+	@Override
+	public boolean addAll(Collection<? extends K> c) {
+		c.forEach(this::add);
+		return true;
+	}
+
+	/**
+	 * Returns True if the key is present in the count map
+	 */
+	@Override
+	public boolean contains(Object o) {
+		return data.containsKey(o);
+	}
+
+	@Override
+	public boolean containsAll(Collection<?> c) {
+		return c.stream().allMatch(data::containsKey);
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return size() == 0;
+	}
+
+	@Override
+	public boolean removeAll(Collection<?> c) {
+		c.forEach(this::remove);
+		return true;
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return data.keySet().retainAll(c);
+	}
+
+	@Override
+	public int size() {
+		return data.size();
+	}
+
+	/**
+	 * @return The various counts totaled together
+	 */
+	public int total() {
+		return data.values().stream().reduce(0, Integer::sum);
+	}
+
+	@Override
+	public Object[] toArray() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] arg0) {
+		throw new UnsupportedOperationException();
 	}
 
 }
