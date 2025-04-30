@@ -1,36 +1,35 @@
 package com.darzalgames.darzalcommon.data;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A convenience map whose value type is always Integers. Useful for keeping counts of stuff.
- * Conveniently, it's functions never return null values, nor can they throw Exceptions
- * All keys are valid, and counts without a key can be gotten and modified
- * @param <K> The key type for the map
+ * Conveniently, the values are always returned as integer primitives, and cannot return null, nor can they throw Exceptions
+ * All keys are valid (including null), and counts without a key can be gotten and modified safely
+ * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
  */
 public class CountMap<K> implements Iterable<K>{
 
-	private Map<K, Integer> data;
+	private final Map<K, Integer> data;
 
 	private static final int DEFAULT = 0;
-	
+
 	/**
 	 * Creates a blank CountMap
 	 */
 	public CountMap() {
-		this.data = new HashMap<>();
+		data = new HashMap<>();
 	}
 
 	/**
-	 * Creates a new Count Map with the same entries as the other
-	 * @param other The map whose entries should be copied
+	 * Creates a CountMap, initialized with all the values of the provided collection
+	 * @param collection An existing non null collection
+	 * @throws NullPointerException if collection is null
 	 */
-	public CountMap(CountMap<K> other) {
-		this.data = new HashMap<>(other.data);
+	public CountMap(Collection<K> collection) {
+		this();
+		Objects.requireNonNull(collection, "collection must not be null");
+		incrementAll(collection);
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class CountMap<K> implements Iterable<K>{
 	public int get(K key) {
 		return data.getOrDefault(key, DEFAULT);
 	}
-	
+
 	/**
 	 * Increments the count associated with a key
 	 * @param key The key to increment
@@ -59,29 +58,30 @@ public class CountMap<K> implements Iterable<K>{
 	}
 
 	/**
-	 * Resets the count associated with a key to 0
-	 * @param key The key to reset
+	 * Increments the counts associated with each key in a collection
+	 * @param keys The collection of keys to increment. Duplicate keys will be incremented multiple times
 	 */
-	public void reset(K key) {
-		data.put(key, DEFAULT);
-	}
-	
-	/**
-	 * Resets the count associated with all keys to 0
-	 */
-	public void clear() {
-		data.clear();
+	public void incrementAll(Collection<K> keys) {
+		keys.forEach(this::increment);
 	}
 
 	/**
-	 * Increases the count associated with a key
+	 * Decrements the counts associated with each key in a collection
+	 * @param keys The collection of keys to decrement. Duplicate keys will be decremented multiple times
+	 */
+	public void decrementAll(Collection<K> keys) {
+		keys.forEach(this::decrement);
+	}
+
+	/**
+	 * Increases the count associated with a key by an amount
 	 * @param key The key to increase
 	 * @param amount The amount to increase by
 	 */
 	public void increaseBy(K key, int amount) {
 		data.put(key, get(key)+amount);
 	}
-	
+
 	/**
 	 * Decreases the count associated with a key
 	 * @param key The key to decrease
@@ -92,24 +92,80 @@ public class CountMap<K> implements Iterable<K>{
 	}
 
 	/**
-	 * @return A set of all the keys in use in the map
+	 * Checks if a key has a count associated with it in the count map
+	 * @param key whose presence is to checked
+	 * @return true if and only if this keys is being tracked in the count map
+	 */
+	public boolean containsKey(K key) {
+		return data.containsKey(key);
+	}
+
+	/**
+	 * Resets the count associated with a key to 0, and removes its key from the CountMap
+	 * @param key The key to reset
+	 */
+	public void reset(K key) {
+		data.remove(key);
+	}
+
+	/**
+	 * Resets the count associated with all keys to 0, and removes them from the CountMap
+	 * This operation is identical to creating a new CountMap
+	 */
+	public void clear() {
+		data.clear();
+	}
+
+	/**
+	 * Gets the number of key-count pairs
+	 * @return The number of keys-count pairs being tracked in the count map
+	 */
+	public int size() {
+		return data.size();
+	}
+
+	/**
+	 * Returns true if there are no key-count pairs in the count map
+	 * @return True if there are no key-count pairs in the count map, false otherwise
+	 */
+	public boolean isEmpty() {
+		return data.isEmpty();
+	}
+
+	/**
+	 * Returns the sum of all the counts in the count map
+	 * @return The various counts totaled together
+	 */
+	public int total() {
+		return data.values().stream().reduce(0, Integer::sum);
+	}
+
+	/**
+	 * Returns the count map's keyset
+	 * @return A set of all the keys in with counts tracked in the count map
 	 */
 	public Set<K> keySet(){
 		return data.keySet();
 	}
-	
+
+
+	/**
+	 * Returns an iterator for all the keys in use in the map
+	 * @return an iterator of the keys that have counts associated with them
+	 */
 	@Override
 	public Iterator<K> iterator() {
 		return data.keySet().iterator();
 	}
-	
+
 	/**
+	 * Returns all the counts in the map
 	 * @return A collection of all the tracked counts, in no particular order
 	 */
 	public Collection<Integer> values() {
 		return data.values();
 	}
-	
+
 	@Override
 	public String toString() {
 		return data.toString();
