@@ -1,6 +1,5 @@
 package com.darzalgames.darzalcommon.random;
 
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 /**
@@ -20,9 +19,6 @@ public class RandomIntegerSequence implements IntegerSequence {
 
 	@Override
 	public Integer next() {
-		if (!hasNext()) { // will never happen, but it gets the linter off my back
-			throw new NoSuchElementException();
-		}
 		return random.nextInt();
 	}
 
