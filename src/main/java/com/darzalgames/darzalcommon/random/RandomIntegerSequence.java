@@ -7,16 +7,16 @@ import java.util.Random;
  */
 public class RandomIntegerSequence implements IntegerSequence {
 
-	private Random random;
-	
+	private final Random random;
+
 	public RandomIntegerSequence() {
-		this.random = new Random();
+		random = new Random();
 	}
-	
+
 	public RandomIntegerSequence(long seed) {
-		this.random = new Random(seed);
+		random = new Random(seed);
 	}
-	
+
 	@Override
 	public Integer next() {
 		return random.nextInt();

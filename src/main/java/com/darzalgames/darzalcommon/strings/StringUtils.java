@@ -1,7 +1,10 @@
 package com.darzalgames.darzalcommon.strings;
 
 public class StringUtils {
-	
+
+	private StringUtils() {
+	}
+
 	/**
 	 * @param string A string to test
 	 * @return True if the string only contains whitespace characters, false otherwise
