@@ -9,50 +9,50 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class HexagonTest {
-	
+
 	@ParameterizedTest
-    @CsvSource({
-        "0, 0,		0, 0",
-        "1, 1,		1, 1",
-        "2, -1,		2, 0",
-        "-1, 1,		-1, 0",
-    })
+	@CsvSource({
+		"0, 0,		0, 0",
+		"1, 1,		1, 1",
+		"2, -1,		2, 0",
+		"-1, 1,		-1, 0",
+	})
 	void axialToOffsetCoordinates_variousCoordinates_returnsTheCorrectlyConvertedCoordinates(int hexagonQ, int hexagonR, int expectedColumn, int expectedRow) {
-	
+
 		Hexagon result = new Hexagon(hexagonQ, hexagonR);
-		
+
 		assertEquals(expectedColumn, result.getColumn());
 		assertEquals(expectedRow, result.getRow());
 	}
-	
+
 	@ParameterizedTest
-    @CsvSource({
-        "0, 0,		0, 0",
-        "1, 1,		1, 1",
-        "2, 0,		2, -1",
-        "-1, 0,		-1, 1",
-    })
+	@CsvSource({
+		"0, 0,		0, 0",
+		"1, 1,		1, 1",
+		"2, 0,		2, -1",
+		"-1, 0,		-1, 1",
+	})
 	void offsetToAxialCoordinates_variousCoordinates_returnsTheCorrectlyConvertedCoordinates(int column, int row, int expectedQ, int expectedR) {
-	
+
 		Hexagon result = Hexagon.makeHexagonFromOffsetCoordinates(row, column);
-		
+
 		assertEquals(expectedQ, result.getQ());
 		assertEquals(expectedR, result.getR());
 	}
-	
+
 	@ParameterizedTest
-    @CsvSource({
-        "0,  0,	0", // s = -q-r
-        "3, -3, 0",
-        "-5, -2, 7",
-        "4, 9, -13",
-        "-8, 1, 7",
-        "0, 5, -5",
-        "-8, 0, 8"
-    })
+	@CsvSource({
+		"0,  0,	0", // s = -q-r
+		"3, -3, 0",
+		"-5, -2, 7",
+		"4, 9, -13",
+		"-8, 1, 7",
+		"0, 5, -5",
+		"-8, 0, 8"
+	})
 	void getS_isCalculatedCorrectly(int q, int r, int expectedS) {
 		Hexagon hexagon = new Hexagon(q, r);
-		
+
 		assertEquals(expectedS, hexagon.getS());
 	}
 
@@ -63,7 +63,7 @@ class HexagonTest {
 
 		assertEquals(hexagon1, hexagon2);
 	}
-	
+
 	@Test
 	void equals_differentCoordinates_isFalse() {
 		Hexagon hexagon1 = new Hexagon(3, 20);
@@ -78,22 +78,22 @@ class HexagonTest {
 
 		assertEquals(hexagon1, hexagon1);
 	}
-	
+
 	@Test
 	void equals_withNull_isFalse() {
 		Hexagon hexagon1 = new Hexagon(3, 20);
-		
+
 		boolean nullComparisonResult = hexagon1.equals(null);
 
 		assertFalse(nullComparisonResult);
 	}
-	
+
 	@Test
 	void equals_withNonHexagon_isFalse() {
 		Hexagon hexagon1 = new Hexagon(3, 20);
-		
+
 		@SuppressWarnings("unlikely-arg-type")
-		boolean stringComparisonResult = hexagon1.equals("hexagon");
+		boolean stringComparisonResult = "hexagon".equals(hexagon1);
 
 		assertFalse(stringComparisonResult);
 	}
@@ -112,5 +112,38 @@ class HexagonTest {
 
 		assertEquals(hexagon.hashCode(), hexagon.hashCode());
 	}
-	
+
+	@ParameterizedTest
+	@CsvSource({
+		"0, 0,		0, 0,	0",
+		"1, 1,		1, 1,	0",
+		"2, 1,		2, 0,	1",
+		"1, 0,		1, 1,	-1",
+		"1, 0,		2, 0,	-1",
+		"2, 0,		1, 0,	1",
+		"-2, 0,		-1, 0,	-1",
+	})
+	void leftToRightTopToBottomComparator_variousOffsetCoordinateComparisons_providesExpectedValue(int hexagon1Column, int hexagon1Row, int hexagon2Column, int hexagon2Row, int expectedComparison) {
+		Hexagon hexagon1 = Hexagon.makeHexagonFromOffsetCoordinates(hexagon1Row, hexagon1Column);
+		Hexagon hexagon2 = Hexagon.makeHexagonFromOffsetCoordinates(hexagon2Row, hexagon2Column);
+
+		assertEquals(expectedComparison, Hexagon.leftToRightTopToBottomComparator.compare(hexagon1, hexagon2));
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+		"0, 0,		0, 0,	0",
+		"1, 1,		1, 1,	0",
+		"-1, 0,		-1, 1,	-1",
+		"1, 0,		1, -1,	1",
+		"-2, 2,		-1, 2,	-1",
+		"1, 1,		0, 1,	1",
+	})
+	void leftToRightTopToBottomComparator_variousAxialCoordinateComparisons_providesExpectedValue(int hexagon1Q, int hexagon1R, int hexagon2Q, int hexagon2R, int expectedComparison) {
+		Hexagon hexagon1 = new Hexagon(hexagon1Q, hexagon1R);
+		Hexagon hexagon2 = new Hexagon(hexagon2Q, hexagon2R);
+
+		assertEquals(expectedComparison, Hexagon.leftToRightTopToBottomComparator.compare(hexagon1, hexagon2));
+	}
+
 }
