@@ -96,7 +96,7 @@ public class Hexagon {
 	}
 
 
-	public static final Comparator<Hexagon> leftToRightTopToBottomComparator = (hexagon1, hexagon2) -> {
+	public static final Comparator<Hexagon> topToBottomLeftToRightComparator = (hexagon1, hexagon2) -> {
 		int firstComparison = Float.compare(hexagon1.getColumn(), hexagon2.getColumn());
 		if (firstComparison != 0) {
 			return firstComparison;

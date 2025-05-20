@@ -123,11 +123,11 @@ class HexagonTest {
 		"2, 0,		1, 0,	1",
 		"-2, 0,		-1, 0,	-1",
 	})
-	void leftToRightTopToBottomComparator_variousOffsetCoordinateComparisons_providesExpectedValue(int hexagon1Column, int hexagon1Row, int hexagon2Column, int hexagon2Row, int expectedComparison) {
+	void topToBottomLeftToRightComparator_variousOffsetCoordinateComparisons_providesExpectedValue(int hexagon1Column, int hexagon1Row, int hexagon2Column, int hexagon2Row, int expectedComparison) {
 		Hexagon hexagon1 = Hexagon.makeHexagonFromOffsetCoordinates(hexagon1Row, hexagon1Column);
 		Hexagon hexagon2 = Hexagon.makeHexagonFromOffsetCoordinates(hexagon2Row, hexagon2Column);
 
-		assertEquals(expectedComparison, Hexagon.leftToRightTopToBottomComparator.compare(hexagon1, hexagon2));
+		assertEquals(expectedComparison, Hexagon.topToBottomLeftToRightComparator.compare(hexagon1, hexagon2));
 	}
 
 	@ParameterizedTest
@@ -139,11 +139,11 @@ class HexagonTest {
 		"-2, 2,		-1, 2,	-1",
 		"1, 1,		0, 1,	1",
 	})
-	void leftToRightTopToBottomComparator_variousAxialCoordinateComparisons_providesExpectedValue(int hexagon1Q, int hexagon1R, int hexagon2Q, int hexagon2R, int expectedComparison) {
+	void topToBottomLeftToRightComparator_variousAxialCoordinateComparisons_providesExpectedValue(int hexagon1Q, int hexagon1R, int hexagon2Q, int hexagon2R, int expectedComparison) {
 		Hexagon hexagon1 = new Hexagon(hexagon1Q, hexagon1R);
 		Hexagon hexagon2 = new Hexagon(hexagon2Q, hexagon2R);
 
-		assertEquals(expectedComparison, Hexagon.leftToRightTopToBottomComparator.compare(hexagon1, hexagon2));
+		assertEquals(expectedComparison, Hexagon.topToBottomLeftToRightComparator.compare(hexagon1, hexagon2));
 	}
 
 }
