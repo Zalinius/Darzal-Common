@@ -1,5 +1,6 @@
 package com.darzalgames.darzalcommon.hexagon;
 
+import java.util.Comparator;
 import java.util.Objects;
 
 /**
@@ -84,12 +85,23 @@ public class Hexagon {
 	}
 
 	/**
-	 * Constructs a hexagon from offset coordinates (row and column)
+	 * @param row offset coordinates row number
+	 * @param column offset coordinates column number
+	 * @return a @Hexagon built from the provided coordinates, compatible with all coordinate systems
 	 */
 	public static Hexagon makeHexagonFromOffsetCoordinates(int row, int column) {
 		int q = column;
 		int r = row - (column - (column&1)) / 2;
 		return new Hexagon(q, r);
 	}
+
+
+	public static final Comparator<Hexagon> topToBottomLeftToRightComparator = (hexagon1, hexagon2) -> {
+		int firstComparison = Float.compare(hexagon1.getColumn(), hexagon2.getColumn());
+		if (firstComparison != 0) {
+			return firstComparison;
+		}
+		return Float.compare(hexagon1.getRow(), hexagon2.getRow());
+	};
 
 }
