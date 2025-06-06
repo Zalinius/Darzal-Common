@@ -42,7 +42,7 @@ public class RandomExtended extends Random{
 
 	/**
 	 * Returns a random boolean, who's chance of being true is the fractional odds passed in,
-	 * @param numerator the weight to attribute to the change return true
+	 * @param numerator the weight to attribute to the chance of returning true
 	 * @param denominator the total weight of the odds
 	 * @return Returns true or false randomly, based on the odds passed in
 	 */
