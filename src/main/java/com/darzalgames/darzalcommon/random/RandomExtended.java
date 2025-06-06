@@ -11,7 +11,7 @@ import com.darzalgames.darzalcommon.functional.Do;
  * Can give you angles and subsets and such
  */
 public class RandomExtended extends Random{
-	
+
 	/**
 	 * All internal state is capture by the parent class
 	 */
@@ -26,23 +26,24 @@ public class RandomExtended extends Random{
 
 	/**
 	 * Creates a RandomExtended with a the specified long seed
-     * @param seed the initial long seed
+	 * @param seed the initial long seed
 	 */
 	public RandomExtended(long seed) {
 		super(seed);
 	}
-	
+
 	/**
+	 * Returns a boolean simulating a coin flip
 	 * @return a boolean with 50/50 odds of being true or false
 	 */
 	public boolean nextCoinFlip() {
 		return nextChance(1, 2);
 	}
-	
+
 	/**
-	 * Returns a random boolean, who's chance of being true is the fractional odds passed in, 
-	 * @param numerator
-	 * @param denominator
+	 * Returns a random boolean, who's chance of being true is the fractional odds passed in,
+	 * @param numerator the weight to attribute to the chance of returning true
+	 * @param denominator the total weight of the odds
 	 * @return Returns true or false randomly, based on the odds passed in
 	 */
 	public boolean nextChance(int numerator, int denominator) {
@@ -52,7 +53,7 @@ public class RandomExtended extends Random{
 		if(denominator <= 0) {
 			throw new IllegalArgumentException("Denominator must be positive:" + denominator);
 		}
-		
+
 		if(numerator >= denominator) {
 			return true;
 		}
@@ -66,6 +67,7 @@ public class RandomExtended extends Random{
 	}
 
 	/**
+	 * Gets a random unit-circle angle in radians
 	 * @return a random double radian between 0.0(inclusive) and 2pi(exclusive)
 	 */
 	public double nextRadian() {
@@ -73,13 +75,15 @@ public class RandomExtended extends Random{
 	}
 
 	/**
+	 * Gets a random unit cirle angle in degrees
 	 * @return a random double degree between 0.0(inclusive) and 360.0(exclusive)
 	 */
 	public double nextDegree() {
 		return 360.0 * super.nextDouble();
 	}
-	
+
 	/**
+	 * Gets a random unit-circle angle in radians
 	 * @return a random float radian between 0.0f(inclusive) and 2pi(exclusive)
 	 */
 	public float nextRadianF() {
@@ -87,12 +91,13 @@ public class RandomExtended extends Random{
 	}
 
 	/**
+	 * Gets a random unit cirle angle in degrees
 	 * @return a random float degree between 0.0f(inclusive) and 360.0f(exclusive)
 	 */
 	public float nextDegreeF() {
 		return 360.0f * super.nextFloat();
 	}
-	
+
 	/**
 	 * Returns a random subset
 	 * @param <E> The generic type of the subset
@@ -121,12 +126,12 @@ public class RandomExtended extends Random{
 				}
 				++i;
 			}
-			
+
 			randomSubset.add(toRemove);
 			setToPickFrom.remove(toRemove);
 		});
-		
-		return randomSubset;		
+
+		return randomSubset;
 	}
-	
+
 }
