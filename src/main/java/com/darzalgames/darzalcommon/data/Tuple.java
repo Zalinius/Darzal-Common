@@ -11,8 +11,9 @@ public class Tuple <E,F> {
 
 	public final E e;
 	public final F f;
-	
+
 	/**
+	 * Creates a tuple with the two specified values
 	 * @param e the first value
 	 * @param f the second value
 	 */
@@ -33,7 +34,7 @@ public class Tuple <E,F> {
 	public F getF() {
 		return f;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Tuple: [" + e + ", " + f + "]";
@@ -46,15 +47,18 @@ public class Tuple <E,F> {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Tuple<?, ?> other = (Tuple<?, ?>) obj;
 		return Objects.equals(e, other.e) && Objects.equals(f, other.f);
-	}	
-	
-	
+	}
+
+
 }
