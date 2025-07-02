@@ -3,7 +3,6 @@ package com.darzalgames.darzalcommon.data;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -371,26 +370,86 @@ class VariableHeightGridTest {
 	}
 
 	@Test
-	void remove_throwsUnsupportedOperationException() {
+	void remove_existingObject_removesItFromTheGridAndReturnsTrue() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
 
-		assertThrows(UnsupportedOperationException.class, () -> grid.remove(""));
+		boolean changed = grid.remove("b");
+
+		assertTrue(changed);
+		assertEquals(2, grid.size());
 	}
 
 	@Test
-	void removeAll_throwsUnsupportedOperationException() {
+	void remove_existingDuplicateObject_removesOneCopyFromTheGridAndReturnsTrue() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
-		Collection<String> c = List.of("");
+		grid.add("a");
+		grid.add("b");
+		grid.add("b");
 
-		assertThrows(UnsupportedOperationException.class, () -> grid.removeAll(c));
+		boolean changed = grid.remove("b");
+
+		assertTrue(changed);
+		assertTrue(grid.contains("b"));
+		assertEquals(2, grid.size());
 	}
 
 	@Test
-	void retainAll_throwsUnsupportedOperationException() {
+	void remove_nonexistingObject_returnsFalse() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
-		Collection<String> c = List.of("");
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
 
-		assertThrows(UnsupportedOperationException.class, () -> grid.retainAll(c));
+		boolean changed = grid.remove("x");
+
+		assertFalse(changed);
+		assertEquals(3, grid.size());
+	}
+
+	@Test
+	void remove_Null_returnsFalse() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		boolean changed = grid.remove(null);
+
+		assertFalse(changed);
+		assertEquals(3, grid.size());
+	}
+
+	@Test
+	void removeAll_removesValidValues() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		boolean changed = grid.removeAll(List.of("a", "x"));
+
+		assertTrue(changed);
+		assertFalse(grid.contains("a"));
+		assertEquals(2, grid.size());
+	}
+
+	@Test
+	void retainAll_retainsValidValues() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("a");
+		grid.add("a");
+		grid.add("b");
+		grid.add("b");
+		grid.add("c");
+
+		boolean changed = grid.retainAll(List.of("a", "x"));
+
+		assertTrue(changed);
+		assertTrue(grid.contains("a"));
+		assertEquals(2, grid.size());
 	}
 }
 

@@ -190,7 +190,7 @@ public class VariableHeightGrid<E> implements Collection<E>{
 
 	@Override
 	public boolean remove(Object o) {
-		throw new UnsupportedOperationException();
+		return inside.remove(o);
 	}
 
 	@Override
@@ -205,12 +205,12 @@ public class VariableHeightGrid<E> implements Collection<E>{
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		throw new UnsupportedOperationException();
+		return inside.removeAll(c);
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		throw new UnsupportedOperationException();
+		return inside.retainAll(c);
 	}
 
 	@Override
