@@ -1,19 +1,19 @@
 package com.darzalgames.darzalcommon.data;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 /**
- * A generic rectangular grid data structure of a fixed size
+ * A rectangular grid data structure of a fixed width and variable height.
+ * Can be added to and removed from like a list, and won't keep empty entries between others.
  * @param <E> The Generic type the grid contains
  */
 public class VariableHeightGrid<E> implements Collection<E>{
 
-	private List<E> inside;
-	public final int width;
+	private final List<E> inside;
+	private final int width;
 
 	/**
-	 * Creates a grid of a fixed width and height, with values NOT initialized
+	 * Creates a grid of a fixed width and variable (calculated) height
 	 * @param width The width of the grid
 	 */
 	public VariableHeightGrid(int width) {
@@ -21,7 +21,7 @@ public class VariableHeightGrid<E> implements Collection<E>{
 	}
 
 	/**
-	 * Creates a grid of a fixed width and height, with values initialized using a function
+	 * Creates a grid of a fixed width and variable (calculated) height, initialized with a collection of values
 	 * @param width The width of the grid
 	 * @param initialValues The values to place in the grid initially
 	 */
@@ -31,23 +31,8 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		addAll(initialValues);
 	}
 
-	/**
-	 * @param row The row coordinate, which runs along the height
-	 * @param column The column coordinate, which runs along the width
-	 * @return True if the coordinate pair is in the grid, false otherwise
-	 */
-	public boolean isInGrid(int row, int column) {
-		return row >= 0 && row < getHeight()
-				&& column >= 0 && column < width;
-	}
-
-	public boolean isInGrid(Coordinate coordinate) {
-		return isInGrid(coordinate.i, coordinate.j);
-	}
-
-	public boolean hasEntryAt(int row, int column) {
-		int index = computeLinearPosition(row, column);
-		return isInGrid(row, column) && index < inside.size() && inside.get(index) != null;
+	public int getWidth() {
+		return width;
 	}
 
 	public int getHeight() {
@@ -59,65 +44,32 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return rowCount;
 	}
 
-	/**
-	 * @return The total size of the grid
-	 */
 	@Override
 	public int size() {
 		return inside.size();
 	}
 
-	public E get(int row, int column) {
-		if(!hasEntryAt(row, column)) {
-			return null;
+	public boolean hasEntryAt(int row, int column) {
+		if (column < 0 || column >= width || row < 0) {
+			return false;
 		}
-		else {
-			return getFromList(row, column);
-		}
+		int index = computeLinearPosition(row, column);
+		return index < inside.size() && inside.get(index) != null;
 	}
-	public E get(Coordinate coordinate) {
-		return get(coordinate.i, coordinate.j);
+
+	public E get(int row, int column) {
+		int position = computeLinearPosition(row, column);
+		return inside.get(position);
 	}
 
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
 		if(linearPosition == -1) {
-			return null;
+			throw new IllegalArgumentException(e + " is not in the grid!");
 		}
 		else {
 			return computeCoordinatePosition(linearPosition);
 		}
-	}
-
-	public List<Coordinate> getDirectlyAdjacentCoordinates(int row, int column){
-		return streamCoordinates()
-				.filter(coordinate -> coordinate.taxiDistance(new Coordinate(row, column)) == 1)
-				.filter(this::isInGrid)
-				.toList();
-	}
-
-	public List<Coordinate> getAdjacentCoordinates(int row, int column){
-		return streamCoordinates()
-				.filter(coordinate -> coordinate.kingDistance(new Coordinate(row, column)) == 1)
-				.filter(this::isInGrid)
-				.toList();
-	}
-
-	public List<E> getDirectlyAdjacentElements(int row, int column){
-		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(row, column);
-		return coordinatesToGet.stream().map(this::get).toList();
-
-	}
-
-	public List<E> getAdjacentElements(int row, int column){
-		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(row, column);
-		return coordinatesToGet.stream().map(this::get).toList();
-
-	}
-
-	private E getFromList(int row, int column) {
-		int position = computeLinearPosition(row, column);
-		return inside.get(position);
 	}
 
 	private int computeLinearPosition(int row, int column) {
@@ -136,25 +88,15 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		StringBuilder sb = new StringBuilder();
 		for (int j = 0; j < getHeight(); j++) {
 			for (int i = 0; i < width; i++) {
-				sb.append(get(i, j));
-				sb.append(" ");
+				if (hasEntryAt(i, j)) {
+					sb.append(get(i, j));
+					sb.append(" ");
+				}
 			}
 			sb.append("\n");
 		}
 
 		return sb.toString().trim();
-	}
-
-
-	public Stream<Coordinate> streamCoordinates(){
-		List<Coordinate> coordinates = new ArrayList<>();
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < getHeight(); j++) {
-				coordinates.add(new Coordinate(i, j));
-			}
-		}
-
-		return coordinates.stream();
 	}
 
 
