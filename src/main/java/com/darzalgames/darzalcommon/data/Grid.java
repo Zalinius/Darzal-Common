@@ -13,7 +13,7 @@ public class Grid<E> implements Collection<E>{
 	private List<E> inside;
 	public final int width;
 	public final int height;
-	public final E   defaultValue;
+	public final E defaultValue;
 
 	/**
 	 * Creates a grid of a fixed width and height, with values NOT initialized
@@ -87,6 +87,17 @@ public class Grid<E> implements Collection<E>{
 	public boolean hasEntryAt(int i, int j) {
 		int index = computeLinearPosition(i, j);
 		return isInGrid(i, j) && index < inside.size() && inside.get(index) != null;
+	}
+
+	public boolean isFull() {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				if (!hasEntryAt(i, j)) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -237,7 +248,7 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean add(E e) {
-		throw new UnsupportedOperationException();
+		return inside.add(e);
 	}
 
 	@Override
@@ -252,12 +263,17 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		return inside.addAll(c);
+		boolean changed = false;
+		Iterator<? extends E> iterator = c.iterator();
+		while (iterator.hasNext() && !isFull()) {
+			changed |= inside.add(iterator.next());
+		}
+		return changed;
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		return inside.removeAll(c);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

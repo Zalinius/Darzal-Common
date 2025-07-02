@@ -2,6 +2,8 @@ package com.darzalgames.darzalcommon.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -293,5 +295,218 @@ class GridTest {
 				Arguments.of(-1, 2),
 				Arguments.of(2, -1)
 				);
+	}
+
+	@Test
+	void hasEntryAt_validEmptyCoordinates_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+
+		assertFalse(grid.hasEntryAt(0, 0));
+	}
+
+	@Test
+	void hasEntryAt_validFilledCoordinates_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("hi");
+
+		assertTrue(grid.hasEntryAt(0, 0));
+	}
+
+	@Test
+	void hasEntryAt_coordinatesOutsideOfGrid_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+
+		assertFalse(grid.hasEntryAt(6, 6));
+	}
+
+	@Test
+	void hasEntryAt_coordinatesBeyondInnerListButInsideOfGrid_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("a");
+		grid.add("b");
+
+		assertFalse(grid.hasEntryAt(1, 1));
+	}
+
+
+	@Test
+	void containsAll_withValidEntries_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		grid.set(0, 0, "a");
+		grid.set(0, 1, "b");
+		grid.set(1, 1, "c");
+
+		boolean result = grid.containsAll(List.of("a", "b", "c"));
+
+		assertTrue(result);
+	}
+
+	@Test
+	void containsAll_withInvalidEntries_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		grid.set(0, 0, "a");
+		grid.set(0, 1, "b");
+		grid.set(1, 1, "c");
+
+		boolean result = grid.containsAll(List.of("X", "b", "c"));
+
+		assertFalse(result);
+	}
+
+	@Test
+	void containsAll_withEmptyCollectionOnFullGrid_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		grid.set(0, 0, "a");
+		grid.set(0, 1, "b");
+		grid.set(1, 0, "c");
+		grid.set(1, 1, "d");
+
+		boolean result = grid.containsAll(new ArrayList<>());
+
+		assertTrue(result);
+		assertFalse(grid.contains(""));
+	}
+
+	@Test
+	void containsAll_withDefaultOnNotFullGrid_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		grid.set(0, 0, "a");
+		grid.set(0, 1, "b");
+
+		boolean result = grid.containsAll(List.of(""));
+
+		assertTrue(result);
+	}
+
+	@Test
+	void containsAll_withEmptyStringCollectionOnFullGrid_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		grid.set(0, 0, "a");
+		grid.set(0, 1, "b");
+		grid.set(1, 0, "c");
+		grid.set(1, 1, "d");
+
+		boolean result = grid.containsAll(List.of(""));
+
+		assertFalse(result);
+	}
+
+	@Test
+	void addAll_appendsToExistingValues() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("a");
+		grid.add("b");
+
+		boolean changed = grid.addAll(List.of("r", "t"));
+
+		assertTrue(changed);
+		assertTrue(grid.containsAll(List.of("a", "b", "r", "t")));
+		assertFalse(grid.contains(""));
+	}
+
+	@Test
+	void addAll_beyondGridSize_truncates() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		boolean changed = grid.addAll(List.of("r", "t"));
+
+		assertTrue(changed);
+		assertTrue(grid.containsAll(List.of("a", "b", "c", "r")));
+		assertFalse(grid.contains("t"));
+	}
+
+	@Test
+	void addAll_emptyList_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		boolean changed = grid.addAll(new ArrayList<>());
+
+		assertFalse(changed);
+	}
+
+	@Test
+	void addAll_whenGridIsFull_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+		grid.add("d");
+
+		boolean changed = grid.addAll(List.of("r", "t"));
+
+		assertFalse(changed);
+	}
+
+	@Test
+	void isFull_whenEmpty_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+
+		assertFalse(grid.isFull());
+	}
+
+	@Test
+	void isFull_whenPartiallyFilled_returnsFalse() {
+		Grid<String> grid = new Grid<>(2, 2);
+
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		assertFalse(grid.isFull());
+	}
+
+	@Test
+	void isFull_whenFilled_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2);
+
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+		grid.add("d");
+
+		assertTrue(grid.isFull());
+	}
+
+	@Test
+	void isFull_whenConstructedWithDefaultValue_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2, "default");
+
+		assertTrue(grid.isFull());
+	}
+
+	@Test
+	void isFull_whenConstructedWithInitializer_returnsTrue() {
+		Grid<String> grid = new Grid<>(2, 2, (i, j) -> String.valueOf(i*j));
+
+		assertTrue(grid.isFull());
+	}
+
+	@Test
+	void remove_throwsUnsupportedOperationException() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+
+		assertThrows(UnsupportedOperationException.class, () -> grid.remove(""));
+	}
+
+	@Test
+	void removeAll_throwsUnsupportedOperationException() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		Collection<String> c = List.of("");
+
+		assertThrows(UnsupportedOperationException.class, () -> grid.removeAll(c));
+	}
+
+	@Test
+	void retainAll_throwsUnsupportedOperationException() {
+		Grid<String> grid = new Grid<>(2, 2, "");
+		Collection<String> c = List.of("");
+
+		assertThrows(UnsupportedOperationException.class, () -> grid.retainAll(c));
 	}
 }
