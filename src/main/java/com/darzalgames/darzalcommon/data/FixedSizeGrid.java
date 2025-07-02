@@ -8,21 +8,20 @@ import java.util.stream.Stream;
  * A generic rectangular grid data structure of a fixed size
  * @param <E> The Generic type the grid contains
  */
-public class Grid<E> implements Collection<E>{
+public class FixedSizeGrid<E> implements Collection<E>{
 
 	private List<E> inside;
 	public final int width;
 	public final int height;
-	public final E defaultValue;
+	public final E   defaultValue;
 
 	/**
-	 * Creates a grid of a fixed width and height, with values NOT initialized
+	 * Creates a grid of a fixed width and height, with values initialized to null
 	 * @param width The width of the grid
 	 * @param height The height of the grid
 	 */
-	public Grid(int width, int height) {
+	public FixedSizeGrid(int width, int height) {
 		this(width, height, (i, j) -> null, null);
-		clear();
 	}
 
 	/**
@@ -31,7 +30,7 @@ public class Grid<E> implements Collection<E>{
 	 * @param height The height of the grid
 	 * @param defaultValue The value returned for coordinates outside the grid
 	 */
-	public Grid(int width, int height, E defaultValue) {
+	public FixedSizeGrid(int width, int height, E defaultValue) {
 		this(width, height, (i, j) -> defaultValue, defaultValue);
 	}
 
@@ -41,7 +40,7 @@ public class Grid<E> implements Collection<E>{
 	 * @param height The height of the grid
 	 * @param initializer The initialization function, which uses the i and j coordinates as input
 	 */
-	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
+	public FixedSizeGrid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
 		this(width, height, initializer, null);
 	}
 
@@ -53,7 +52,7 @@ public class Grid<E> implements Collection<E>{
 	 * @param initializer The initialization function, which uses the i and j coordinates as input
 	 * @param defaultValue The value returned for coordinates outside the grid
 	 */
-	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer, E defaultValue) {
+	public FixedSizeGrid(int width, int height, BiFunction<Integer, Integer, E> initializer, E defaultValue) {
 		inside = new ArrayList<>(width*height);
 		for (int i = 0; i < width*height; i++) {
 			inside.add(null);
@@ -84,22 +83,6 @@ public class Grid<E> implements Collection<E>{
 		return isInGrid(coordinate.i, coordinate.j);
 	}
 
-	public boolean hasEntryAt(int i, int j) {
-		int index = computeLinearPosition(i, j);
-		return isInGrid(i, j) && index < inside.size() && inside.get(index) != null;
-	}
-
-	public boolean isFull() {
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				if (!hasEntryAt(i, j)) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-
 	/**
 	 * @return The total size of the grid
 	 */
@@ -127,7 +110,7 @@ public class Grid<E> implements Collection<E>{
 	}
 
 	public E get(int i, int j) {
-		if(!hasEntryAt(i, j)) {
+		if(!isInGrid(i, j)) {
 			return defaultValue;
 		}
 		else {
@@ -193,7 +176,6 @@ public class Grid<E> implements Collection<E>{
 		return new Coordinate(i, j);
 	}
 
-
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
@@ -248,7 +230,7 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean add(E e) {
-		return inside.add(e);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -263,12 +245,7 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		boolean changed = false;
-		Iterator<? extends E> iterator = c.iterator();
-		while (iterator.hasNext() && !isFull()) {
-			changed |= inside.add(iterator.next());
-		}
-		return changed;
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -283,7 +260,7 @@ public class Grid<E> implements Collection<E>{
 
 	@Override
 	public void clear() {
-		inside.clear();
+		throw new UnsupportedOperationException();
 	}
 
 }
