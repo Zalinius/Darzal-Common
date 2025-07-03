@@ -31,14 +31,20 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		addAll(initialValues);
 	}
 
+	/**
+	 * @return the fixed number of objects in a full row (i.e. the number of columns)
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * @return the number of rows, which can change as the entries change
+	 */
 	public int getHeight() {
-		int remainder = inside.size()%width;
 		int rowCount = inside.size()/width;
-		if (remainder != 0) {
+		int remainder = inside.size()%width;
+		if (remainder > 0) {
 			rowCount++;
 		}
 		return rowCount;
@@ -57,11 +63,20 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return index < inside.size() && inside.get(index) != null;
 	}
 
+	/** NOTE: check {@link VariableHeightGrid#hasEntryAt(int, int)} first, or risk an IndexOutOfBoundsException. Ye have been warned!
+	 * @param row (vertical)
+	 * @param column (horizontal)
+	 * @return The E at the specified row and column
+	 */
 	public E get(int row, int column) {
 		int position = computeLinearPosition(row, column);
 		return inside.get(position);
 	}
 
+	/** NOTE: check {@link VariableHeightGrid#contains(Object)} first, or risk an IllegalArgumentException. Avast!
+	 * @param e the object to check
+	 * @return The coordinate of the provided object
+	 */
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
 		if(linearPosition == -1) {
@@ -86,11 +101,11 @@ public class VariableHeightGrid<E> implements Collection<E>{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (int j = 0; j < getHeight(); j++) {
-			for (int i = 0; i < width; i++) {
-				if (hasEntryAt(i, j)) {
-					sb.append(get(i, j));
-					sb.append(" ");
+		for (int row = 0; row < getHeight(); row++) {
+			for (int column = 0; column < width; column++) {
+				if (hasEntryAt(row, column)) {
+					sb.append(get(row, column));
+					sb.append("\t");
 				}
 			}
 			sb.append("\n");
