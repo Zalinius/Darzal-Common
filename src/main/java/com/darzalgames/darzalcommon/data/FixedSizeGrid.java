@@ -1,10 +1,6 @@
 package com.darzalgames.darzalcommon.data;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.stream.Stream;
 
@@ -12,19 +8,19 @@ import java.util.stream.Stream;
  * A generic rectangular grid data structure of a fixed size
  * @param <E> The Generic type the grid contains
  */
-public class Grid<E> implements Collection<E>{
+public class FixedSizeGrid<E> implements Collection<E>{
 
 	private List<E> inside;
 	public final int width;
 	public final int height;
 	public final E   defaultValue;
-	
+
 	/**
 	 * Creates a grid of a fixed width and height, with values initialized to null
 	 * @param width The width of the grid
 	 * @param height The height of the grid
 	 */
-	public Grid(int width, int height) {
+	public FixedSizeGrid(int width, int height) {
 		this(width, height, (i, j) -> null, null);
 	}
 
@@ -34,8 +30,8 @@ public class Grid<E> implements Collection<E>{
 	 * @param height The height of the grid
 	 * @param defaultValue The value returned for coordinates outside the grid
 	 */
-	public Grid(int width, int height, E defaultValue) {
-		this(width, height, (i, j) -> null, defaultValue);
+	public FixedSizeGrid(int width, int height, E defaultValue) {
+		this(width, height, (i, j) -> defaultValue, defaultValue);
 	}
 
 	/**
@@ -44,7 +40,7 @@ public class Grid<E> implements Collection<E>{
 	 * @param height The height of the grid
 	 * @param initializer The initialization function, which uses the i and j coordinates as input
 	 */
-	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
+	public FixedSizeGrid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
 		this(width, height, initializer, null);
 	}
 
@@ -56,7 +52,7 @@ public class Grid<E> implements Collection<E>{
 	 * @param initializer The initialization function, which uses the i and j coordinates as input
 	 * @param defaultValue The value returned for coordinates outside the grid
 	 */
-	public Grid(int width, int height, BiFunction<Integer, Integer, E> initializer, E defaultValue) {
+	public FixedSizeGrid(int width, int height, BiFunction<Integer, Integer, E> initializer, E defaultValue) {
 		inside = new ArrayList<>(width*height);
 		for (int i = 0; i < width*height; i++) {
 			inside.add(null);
@@ -64,7 +60,7 @@ public class Grid<E> implements Collection<E>{
 		this.width = width;
 		this.height = height;
 		this.defaultValue = defaultValue;
-		
+
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				set(i, j, initializer.apply(i, j));
@@ -75,8 +71,8 @@ public class Grid<E> implements Collection<E>{
 
 
 	/**
-	 * @param i The i coordinate, which runs along the width 
-	 * @param j The j coordinate, which runs along the height 
+	 * @param i The i coordinate, which runs along the width
+	 * @param j The j coordinate, which runs along the height
 	 * @return True if the coordinate pair is in the grid, false otherwise
 	 */
 	public boolean isInGrid(int i, int j) {
@@ -90,10 +86,11 @@ public class Grid<E> implements Collection<E>{
 	/**
 	 * @return The total size of the grid
 	 */
+	@Override
 	public int size() {
 		return width*height;
 	}
-	
+
 	/**
 	 * @return The number of non null entries
 	 */
@@ -123,7 +120,7 @@ public class Grid<E> implements Collection<E>{
 	public E get(Coordinate coordinate) {
 		return get(coordinate.i, coordinate.j);
 	}
-	
+
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
 		if(linearPosition == -1) {
@@ -133,52 +130,51 @@ public class Grid<E> implements Collection<E>{
 			return computeCoordinatePosition(linearPosition);
 		}
 	}
-	
+
 	public List<Coordinate> getDirectlyAdjacentCoordinates(int i, int j){
 		return streamCoordinates()
-			  .filter(coordinate -> coordinate.taxiDistance(new Coordinate(i, j)) == 1)
-			  .filter(this::isInGrid)
-			  .toList();
+				.filter(coordinate -> coordinate.taxiDistance(new Coordinate(i, j)) == 1)
+				.filter(this::isInGrid)
+				.toList();
 	}
 
 	public List<Coordinate> getAdjacentCoordinates(int i, int j){
 		return streamCoordinates()
-			  .filter(coordinate -> coordinate.kingDistance(new Coordinate(i, j)) == 1)
-			  .filter(this::isInGrid)
-			  .toList();
+				.filter(coordinate -> coordinate.kingDistance(new Coordinate(i, j)) == 1)
+				.filter(this::isInGrid)
+				.toList();
 	}
 
 	public List<E> getDirectlyAdjacentElements(int i, int j){
-		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(i, j);		
+		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(i, j);
 		return coordinatesToGet.stream().map(this::get).toList();
 
 	}
 
 	public List<E> getAdjacentElements(int i, int j){
-		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);		
+		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);
 		return coordinatesToGet.stream().map(this::get).toList();
 
-	}	
+	}
 
 	private E getFromList(int i, int j) {
 		int position = computeLinearPosition(i, j);
 		return inside.get(position);
 	}
 	private void setToList(int i, int j, E value) {
-		int position = computeLinearPosition(i, j);		
+		int position = computeLinearPosition(i, j);
 		inside.set(position, value);
 	}
 
 	private int computeLinearPosition(int i, int j) {
 		return i + j*width;
 	}
-	
+
 	private Coordinate computeCoordinatePosition(int linearPosition) {
 		int i = linearPosition % width;
 		int j = linearPosition / width;
 		return new Coordinate(i, j);
 	}
-	
 
 	@Override
 	public String toString() {
@@ -190,11 +186,11 @@ public class Grid<E> implements Collection<E>{
 			}
 			sb.append("\n");
 		}
-		
+
 		return sb.toString().trim();
 	}
-	
-	
+
+
 	public Stream<Coordinate> streamCoordinates(){
 		List<Coordinate> coordinates = new ArrayList<>();
 		for (int i = 0; i < width; i++) {
@@ -203,9 +199,9 @@ public class Grid<E> implements Collection<E>{
 			}
 		}
 
-		return coordinates.stream();		
+		return coordinates.stream();
 	}
-	
+
 
 	@Override
 	public boolean isEmpty() {
@@ -266,13 +262,5 @@ public class Grid<E> implements Collection<E>{
 	public void clear() {
 		throw new UnsupportedOperationException();
 	}
-	
+
 }
-
-
-
-
-
-
-
-
