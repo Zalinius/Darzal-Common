@@ -1,6 +1,7 @@
 package com.darzalgames.darzalcommon.functional;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 /**
  * Represents a predicate (boolean-valued function) of two arguments.  This is
