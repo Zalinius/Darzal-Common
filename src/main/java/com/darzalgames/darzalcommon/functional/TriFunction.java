@@ -7,7 +7,7 @@ import java.util.function.Function;
  * Represents a function that accepts three arguments and produces a result.
  * This is the three-arity specialization of {@link Function}.
  *
- * <p>This is a <a href="package-summary.html">functional interface</a>
+ * <p>This is a {@link FunctionalInterface}
  * whose functional method is {@link #apply(Object, Object, Object)}.
  *
  * @param <T> the type of the first argument to the function
