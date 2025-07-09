@@ -50,6 +50,24 @@ public class SimpleMath {
 		}
 	}
 
+	/**
+	 * Checks if a value is between two other values (exclusive)
+	 * The bounds may be given in either order
+	 * @param bound1 the first bound
+	 * @param bound2 the second bound
+	 * @param value the value to test
+	 * @return True if and only if the value is between the two bounds, and not equal to the bounds
+	 */
+	public static boolean isBetweenExclusive(float bound1, float bound2, float value) {
+		if(bound1 > bound2) {
+			float newBound1 = bound2;
+			float newBound2 = bound1;
+			return isBetween(newBound1, newBound2, value);
+		}
+		else {
+			return value > bound1 && value < bound2;
+		}
+	}
 
 	/**
 	 * Checks if a string represents an integer

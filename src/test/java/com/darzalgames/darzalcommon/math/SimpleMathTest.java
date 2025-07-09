@@ -176,6 +176,83 @@ class SimpleMathTest {
 	}
 
 	@Test
+	void isBetweenExclusive_onLeftBound_returnsFalse(){
+		int left = 0;
+		int right = 5;
+		int input = 0;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertFalse(result);
+	}
+
+	@Test
+	void isBetweenExclusive_onRightBound_returnsFalse(){
+		int left = 0;
+		int right = 5;
+		int input = 5;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertFalse(result);
+	}
+
+	@Test
+	void isBetweenExclusive_withinBounds_returnsTrue(){
+		int left = 0;
+		int right = 5;
+		int input = 2;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertTrue(result);
+	}
+
+	@Test
+	void isBetweenExclusive_outsideLeftOfBounds_returnsFalse(){
+		int left = 0;
+		int right = 5;
+		int input = -3;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertFalse(result);
+	}
+
+	@Test
+	void isBetweenExclusive_outsideRightOfBounds_returnsFalse(){
+		int left = 0;
+		int right = 5;
+		int input = 8;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertFalse(result);
+	}
+
+	@Test
+	void isBetweenExclusive_withinReversedBounds_returnsTrue(){
+		int left = 5;
+		int right = 0;
+		int input = 2;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertTrue(result);
+	}
+
+	@Test
+	void isBetweenExclusive_outsideReversedBounds_returnsFalse(){
+		int left = 5;
+		int right = 0;
+		int input = -3;
+
+		boolean result = SimpleMath.isBetweenExclusive(left, right, input);
+
+		assertFalse(result);
+	}
+
+	@Test
 	void isMultiple_onMultipleOddInts_returnsTrue(){
 		int value = 9;
 		int base = 3;
