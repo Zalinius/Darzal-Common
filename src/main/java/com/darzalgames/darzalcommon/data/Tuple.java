@@ -23,12 +23,14 @@ public class Tuple <E,F> {
 	}
 
 	/**
+	 * Gets the first value of the tuple
 	 * @return The value of the first type
 	 */
 	public E getE() {
 		return e;
 	}
 	/**
+	 * Gets the second value of the tuple
 	 * @return The value of the second type
 	 */
 	public F getF() {

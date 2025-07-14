@@ -7,7 +7,7 @@ import java.util.Objects;
  * Instances of this class are immutable
  */
 public class Coordinate {
-	
+
 	/**
 	 * The i (or horizontal) coordinate
 	 */
@@ -16,7 +16,7 @@ public class Coordinate {
 	 * The j (or vertical) coordinate
 	 */
 	public final int j;
-	
+
 	/**
 	 * Creates a coordinate centered at the origin
 	 */
@@ -55,7 +55,7 @@ public class Coordinate {
 	public int getJ() {
 		return j;
 	}
-	
+
 	/**
 	 * @return A tuple of integers corresponding to this coordinate.
 	 */
@@ -75,35 +75,38 @@ public class Coordinate {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Coordinate other = (Coordinate) obj;
 		return i == other.i && j == other.j;
 	}
-	
+
 	/**
 	 * Returns the taxi distance between this coordinate and another.
 	 * The taxi distance is the shortest path distance between two coordinates, using only vertical and horizontal moves.
 	 * @param coordinate The other coordinate
-	 * @return The taxi distance, a non negative integer. 
+	 * @return The taxi distance, a non negative integer.
 	 */
 	public int taxiDistance(Coordinate coordinate) {
 		return Math.abs(i - coordinate.i) + Math.abs(j - coordinate.j);
 	}
-	
+
 	/**
 	 * Returns the king distance between this coordinate and another.
 	 * The king distance is the shortest path distance between two coordinates, where diagonal crossings are allowed.
 	 * @param coordinate The other coordinate
-	 * @return The king distance, a non negative integer. 
+	 * @return The king distance, a non negative integer.
 	 */
 	public int kingDistance(Coordinate coordinate) {
 		return Math.max(Math.abs(i - coordinate.i), Math.abs(j - coordinate.j));
 	}
-	
+
 
 }

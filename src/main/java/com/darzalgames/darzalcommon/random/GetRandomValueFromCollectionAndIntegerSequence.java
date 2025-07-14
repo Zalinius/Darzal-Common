@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-public class GetRandomValueFromCollection {
+public class GetRandomValueFromCollectionAndIntegerSequence {
 
-	private GetRandomValueFromCollection() {}
+	private GetRandomValueFromCollectionAndIntegerSequence() {}
 
 	public static <T> T next(Collection<T> toGetFrom, IntegerSequence ints)
 	{

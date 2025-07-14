@@ -24,11 +24,14 @@ public class SimpleMath {
 		return value % 2 == 1 || value % 2 == -1;
 	}
 
+	/**
+	 * Checks if a value is an integer multiple of an integer divisor
+	 * @param value The value checked
+	 * @param base the divisor
+	 * @return true if the value is a multiple. false otherwise
+	 */
 	public static boolean isMultiple(int value, int base) {
 		return value % base == 0;
-	}
-	public static boolean isMultiple(float value, int base) {
-		return isMultiple((int) value, base);
 	}
 
 	/**

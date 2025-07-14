@@ -28,7 +28,7 @@ class GetRandomValueFromCollectionTest {
 		allNames.add("testSix");
 		
 		Do.xTimes(3000, ()->{
-			String randomName = GetRandomValueFromCollection.nextUnique(allNames, usedNames, intSeq);
+			String randomName = GetRandomValueFromCollectionAndIntegerSequence.nextUnique(allNames, usedNames, intSeq);
 			assertFalse(usedNames.contains(randomName));
 		});
 	}
