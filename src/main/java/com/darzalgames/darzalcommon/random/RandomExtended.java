@@ -1,8 +1,6 @@
 package com.darzalgames.darzalcommon.random;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import com.darzalgames.darzalcommon.functional.Do;
 
@@ -96,6 +94,15 @@ public class RandomExtended extends Random{
 	 */
 	public float nextDegreeF() {
 		return 360.0f * super.nextFloat();
+	}
+
+	public <E> E getRandomElement(Collection<E> collection) {
+		if(collection.isEmpty()) {
+			throw new IllegalArgumentException("Collection must not be empty");
+		}
+
+		List<E> collectionCopy = new ArrayList<>(collection);
+		return collectionCopy.get(nextInt(collectionCopy.size()));
 	}
 
 	/**
