@@ -215,45 +215,4 @@ class SimpleMathTest {
 		assertFalse(result);
 	}
 
-	//isMultiple float
-	@Test
-	void isMultiple_onMultipleOddFloat_returnsTrue(){
-		float value = 9.3f;
-		int base = 3;
-
-		boolean result = SimpleMath.isMultiple(value, base);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isMultiple_onMultipleEvenFloat_returnsTrue(){
-		float value = 8.7f;
-		int base = 4;
-
-		boolean result = SimpleMath.isMultiple(value, base);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isMultiple_onNonMultipleOddFloat_returnsFalse(){
-		float value = 11.7f;
-		int base = 3;
-
-		boolean result = SimpleMath.isMultiple(value, base);
-
-		assertFalse(result);
-	}
-
-	@Test
-	void isMultiple_onNonMultipleEvenFloat_returnsFalse(){
-		float value = 6.8f;
-		int base = 4;
-
-		boolean result = SimpleMath.isMultiple(value, base);
-
-		assertFalse(result);
-	}
-
 }

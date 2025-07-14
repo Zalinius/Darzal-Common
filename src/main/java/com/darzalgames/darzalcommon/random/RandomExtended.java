@@ -1,10 +1,9 @@
 package com.darzalgames.darzalcommon.random;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import com.darzalgames.darzalcommon.functional.Do;
+
 
 /**
  * An extension to the Java Random class with some convenience functions for GameDev.
@@ -96,6 +95,22 @@ public class RandomExtended extends Random{
 	 */
 	public float nextDegreeF() {
 		return 360.0f * super.nextFloat();
+	}
+
+	/**
+	 * Returns a random element from a collection
+	 * @param <E> The generic type of the collection
+	 * @param collection The input collection. It is not modified by this function call
+	 * @return A random value taken from the input collection
+	 * @throws IllegalArgumentException if the collection is empty
+	 */
+	public <E> E getRandomElement(Collection<E> collection) {
+		if(collection.isEmpty()) {
+			throw new IllegalArgumentException("Collection must not be empty");
+		}
+
+		List<E> collectionCopy = new ArrayList<>(collection);
+		return collectionCopy.get(nextInt(collectionCopy.size()));
 	}
 
 	/**
