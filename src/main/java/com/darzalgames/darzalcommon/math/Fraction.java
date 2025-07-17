@@ -7,8 +7,9 @@ import java.util.Objects;
  */
 public class Fraction {
 
-	private final int numerator;
-	private final int denominator;
+	//TODO make these private at version 0.7.0
+	public final int numerator;
+	public final int denominator;
 
 	/**
 	 * Creates a fraction with a value of 0
