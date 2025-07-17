@@ -1,6 +1,7 @@
 package com.darzalgames.darzalcommon.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
@@ -11,6 +12,13 @@ import org.junit.jupiter.api.Test;
 import com.darzalgames.darzalcommon.functional.Do;
 
 class LoopingIteratorTest {
+
+	@Test
+	void constructor_withEmptyIterable_throwsIllegalArgumentException() {
+		List<Integer> emptyList = List.of();
+
+		assertThrows(IllegalArgumentException.class, () -> new LoopingIterator<>(emptyList));
+	}
 
 	@Test
 	void hasNext_alwaysTrue() {

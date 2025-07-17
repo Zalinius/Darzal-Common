@@ -14,6 +14,7 @@ public class LoopingIterator<E> implements Iterator<E> {
 	/**
 	 * Constructs a Looping iterator for the given iterable
 	 * @param baseIterable The iterable which will be iterated repeatedly
+	 * @throws IllegalArgumentException if the baseIterable has no elements
 	 */
 	public LoopingIterator(Iterable<E> baseIterable) {
 		this.baseIterable = baseIterable;
