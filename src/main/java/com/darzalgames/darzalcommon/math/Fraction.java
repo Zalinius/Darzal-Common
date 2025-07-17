@@ -6,13 +6,10 @@ import java.util.Objects;
  * A class to represent exact fractions.
  */
 public class Fraction {
-	/**
-	 * The numerator of the fraction
-	 */
+
+	//TODO can this become a record?
+	//TODO make these private at version 0.7.0
 	public final int numerator;
-	/**
-	 * The denominator of the fraction, guaranteed to be non-zero
-	 */
 	public final int denominator;
 
 	/**
@@ -49,6 +46,38 @@ public class Fraction {
 
 		this.numerator = numerator / greatestCommonDivisor;
 		this.denominator = denominator / greatestCommonDivisor;
+	}
+
+	/**
+	 * The numerator of the fraction. May be 0 or negative
+	 * @return the numerator as an integer
+	 */
+	public int numerator() {
+		return numerator;
+	}
+
+	/**
+	 * The denominator of the fraction, guaranteed to be a positive integer
+	 * @return the denominator as an integer
+	 */
+	public int denominator() {
+		return denominator;
+	}
+
+	/**
+	 * Computes this fraction's value as a float
+	 * @return this fraction as a float
+	 */
+	public float toFloat() {
+		return (float)numerator / (float)denominator;
+	}
+
+	/**
+	 * Computes this fraction's value as a double
+	 * @return this fraction as a double
+	 */
+	public double toDouble()  {
+		return (double)numerator / (double)denominator;
 	}
 
 	/**
@@ -112,6 +141,8 @@ public class Fraction {
 	public Fraction negate() {
 		return new Fraction(-numerator, denominator);
 	}
+
+
 
 	/**
 	 * Adds two fractions together
