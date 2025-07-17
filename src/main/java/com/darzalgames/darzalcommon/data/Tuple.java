@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class Tuple <E,F> {
 
+	//TODO can this become a record?
 	//TODO make these private at version 0.7.0
 	public final E e;
 	public final F f;
