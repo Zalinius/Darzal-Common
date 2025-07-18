@@ -2,10 +2,12 @@ package com.darzalgames.darzalcommon.math;
 
 import java.util.Objects;
 
+import javax.naming.OperationNotSupportedException;
+
 /**
  * A class to represent exact fractions.
  */
-public class Fraction {
+public class Fraction implements Comparable<Fraction> {
 
 	//TODO can this become a record?
 	//TODO make these private at version 0.7.0
@@ -142,6 +144,14 @@ public class Fraction {
 		return new Fraction(-numerator, denominator);
 	}
 
+	public boolean isGreaterThan(Fraction other) {
+		return compareTo(other) > 0;
+	}
+
+	public boolean isLesserThan(Fraction other) {
+		return compareTo(other) < 0;
+	}
+
 
 
 	/**
@@ -188,6 +198,27 @@ public class Fraction {
 		return new Fraction(f1.numerator*f2.denominator, f1.denominator*f2.numerator );
 	}
 
+	public static Fraction remainder(Fraction dividend, Fraction divisor) throws OperationNotSupportedException {
+		if(divisor.isZero()) {
+			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
+		}
+		if(dividend.isNegative() || divisor.isNegative()) {
+			throw new OperationNotSupportedException("negative remainders not implemented lol");
+		}
+
+		int lowestCommonDenominator = lowestCommonDenominator(dividend, divisor);
+
+		int dividendNumeratorOnLCD = dividend.numerator * (lowestCommonDenominator / dividend.denominator);
+		int divisorNumeratorOnLCD = divisor.numerator * (lowestCommonDenominator / divisor.denominator);
+
+		return new Fraction(dividendNumeratorOnLCD % divisorNumeratorOnLCD, lowestCommonDenominator);
+	}
+
+	public static int lowestCommonDenominator(Fraction f1, Fraction f2) {
+		int d1 = f1.denominator;
+		int d2 = f2.denominator;
+		return d1 / GCD.gcd(d1, d2) * d2;
+	}
 
 	@Override
 	public String toString(){
@@ -213,5 +244,17 @@ public class Fraction {
 		Fraction other = (Fraction) obj;
 		return denominator == other.denominator && numerator == other.numerator;
 	}
+
+	@Override
+	public int compareTo(Fraction other) {
+		int lowestCommonDenominator = lowestCommonDenominator(this, other);
+
+		int thisNumeratorOnLCD = numerator * (lowestCommonDenominator / denominator);
+		int otherNumeratorOnLCD = other.numerator * (lowestCommonDenominator / other.denominator);
+
+		return thisNumeratorOnLCD - otherNumeratorOnLCD;
+	}
+
+
 
 }

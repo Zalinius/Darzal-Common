@@ -2,6 +2,8 @@ package com.darzalgames.darzalcommon.math;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.naming.OperationNotSupportedException;
+
 import org.junit.jupiter.api.Test;
 
 class FractionTest {
@@ -155,12 +157,43 @@ class FractionTest {
 	}
 
 	@Test
-	void isInteger_onFractionFraction_isFalse() throws Exception {
+	void isInteger_onFractionalFraction_isFalse() throws Exception {
 		Fraction defaultFraction = new Fraction(1, 2);
 
 		assertFalse(defaultFraction.isInteger());
 	}
 
+	@Test
+	void isGreaterThan_onSmallerFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 3);
+
+		assertTrue(f1.isGreaterThan(f2));
+	}
+
+	@Test
+	void isGreaterThan_onLargerFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertFalse(f1.isGreaterThan(f2));
+	}
+
+	@Test
+	void isLesserThan_onGreaterFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertTrue(f1.isLesserThan(f2));
+	}
+
+	@Test
+	void isLesserThan_onSmallerFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 3);
+
+		assertFalse(f1.isLesserThan(f2));
+	}
 
 
 	@Test
@@ -213,6 +246,89 @@ class FractionTest {
 		Fraction f2 = new Fraction(0, 12);
 
 		assertThrows(ArithmeticException.class, () -> Fraction.divide(f1, f2));
+	}
+
+	@Test
+	void remainder_fractionByZero_throwsArithmeticException() {
+		Fraction f1 = new Fraction(5,  7);
+		Fraction f2 = new Fraction(0, 12);
+
+		assertThrows(ArithmeticException.class, () -> Fraction.remainder(f1, f2));
+	}
+
+	@Test
+	void remainder_withDividendMultipleOfDivisor_returnsZeroFraction() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(10,  7);
+		Fraction f2 = new Fraction(5, 7);
+
+		assertTrue(Fraction.remainder(f1, f2).isZero());
+	}
+
+	@Test
+	void remainder_withTwoFractionsWithCommonBase_returnsRemainder() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(10,  7);
+		Fraction f2 = new Fraction(3, 7);
+
+		assertEquals(new Fraction(1, 7), Fraction.remainder(f1, f2));
+	}
+
+	@Test
+	void remainder_withTwoFractionsWithDifferentBases_returnsRemainder() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(10,  7);
+		Fraction f2 = new Fraction(3, 8);
+
+		assertEquals(new Fraction(17, 56), Fraction.remainder(f1, f2));
+	}
+
+	@Test
+	void lowestCommondDenominator_forSimpleMultiplicationCase_isCorrect() {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 3);
+
+		assertEquals(6, Fraction.lowestCommonDenominator(f1, f2));
+		assertEquals(6, Fraction.lowestCommonDenominator(f2, f1));
+	}
+
+	@Test
+	void lowestCommondDenominator_forMultiplicationThenSimplicationCase_isCorrect() {
+		Fraction f1 = new Fraction(1, 6);
+		Fraction f2 = new Fraction(1, 21);
+
+		assertEquals(42, Fraction.lowestCommonDenominator(f1, f2));
+		assertEquals(42, Fraction.lowestCommonDenominator(f2, f1));
+	}
+
+	@Test
+	void compareTo_onEqualFractions_returns0() {
+		Fraction f1 = new Fraction(1, 6);
+		Fraction f2 = new Fraction(1, 6);
+
+		assertEquals(0, f1.compareTo(f2));
+		assertEquals(0, f2.compareTo(f1));
+	}
+
+	@Test
+	void compareTo_onDifferentFractions_returnsNegativeValueWhenFirstIsSmaller() {
+		Fraction f1 = new Fraction(0, 6);
+		Fraction f2 = new Fraction(1, 6);
+
+		assertTrue(0 > f1.compareTo(f2));
+	}
+
+	@Test
+	void compareTo_onDifferentFractions_returnsPositiveValueWhenFirstIsBigger() {
+		Fraction f1 = new Fraction(1, 6);
+		Fraction f2 = new Fraction(0, 6);
+
+		assertTrue(0 < f1.compareTo(f2));
+	}
+
+	@Test
+	void compareTo_onDifferentFractions_returnsInvertedValueWhenCallOrderInversed() {
+		Fraction f1 = new Fraction(1, 6);
+		Fraction f2 = new Fraction(0, 6);
+
+		assertEquals(-f1.compareTo(f2), f2.compareTo(f1));
 	}
 
 }
