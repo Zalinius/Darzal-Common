@@ -26,7 +26,7 @@ public record Coordinate(
 	}
 
 	/**
-	 * Gets this Coordinate as a Tuple<Integer,Integer>
+	 * Gets this Coordinate as an Integer Tuple
 	 * @return A tuple of integers corresponding to this coordinate.
 	 */
 	public Tuple<Integer, Integer> toTuple(){
