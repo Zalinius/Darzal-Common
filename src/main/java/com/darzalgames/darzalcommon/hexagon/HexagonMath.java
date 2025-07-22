@@ -16,8 +16,8 @@ public class HexagonMath {
 	 */
 	public static Tuple<Float, Float> getScreenPositionOnStage(int q, int r, float hexagonWidth, float hexagonHeight, float stageHeight) {
 		Tuple<Float, Float> position = getScreenPosition(q, r, hexagonWidth, hexagonHeight);
-		float y = stageHeight - position.f - hexagonHeight; // This math works from a top-left system and actors work from bottom-left, so we subtract from the screen height
-		return new Tuple<>(position.e, y);
+		float y = stageHeight - position.f() - hexagonHeight; // This math works from a top-left system and actors work from bottom-left, so we subtract from the screen height
+		return new Tuple<>(position.e(), y);
 	}
 
 	/**
