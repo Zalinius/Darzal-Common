@@ -8,21 +8,21 @@ class FractionTest {
 
 
 	@Test
-	void defaultConstructor_constructsZeroFraction() throws Exception {
+	void defaultConstructor_constructsZeroFraction() {
 		Fraction defaultFraction = new Fraction();
 
 		assertTrue(defaultFraction.isZero());
 	}
 
 	@Test
-	void singleIntConstructor_constructsIntegerFraction() throws Exception {
+	void singleIntConstructor_constructsIntegerFraction() {
 		Fraction defaultFraction = new Fraction(2);
 
 		assertTrue(defaultFraction.isInteger());
 	}
 
 	@Test
-	void construct_fractionWith0Denominator_throwsArithmeticException() throws Exception {
+	void construct_fractionWith0Denominator_throwsArithmeticException() {
 		int numerator = 1;
 		int denominator = 0;
 
@@ -30,7 +30,7 @@ class FractionTest {
 	}
 
 	@Test
-	void construct_unreducedArguments_becomeReduced() throws Exception {
+	void construct_unreducedArguments_becomeReduced() {
 		Fraction unreducedInputsFraction = new Fraction(2, 4);
 
 		assertEquals(1, unreducedInputsFraction.numerator());
@@ -38,7 +38,7 @@ class FractionTest {
 	}
 
 	@Test
-	void construct_negativeArguments_becomePositive() throws Exception {
+	void construct_negativeArguments_becomePositive() {
 		Fraction negativeInputsFraction = new Fraction(-1, -2);
 
 		assertEquals(1, negativeInputsFraction.numerator());
@@ -75,14 +75,14 @@ class FractionTest {
 	}
 
 	@Test
-	void invert_fractionWith0Numerator_throwsArithmeticException() throws Exception {
+	void invert_fractionWith0Numerator_throwsArithmeticException() {
 		Fraction fraction = new Fraction(0, 1);
 
 		assertThrows(ArithmeticException.class, () -> fraction.invert());
 	}
 
 	@Test
-	void invert_nonZeroFraction_invertsNumeratorAndDenominator() throws Exception {
+	void invert_nonZeroFraction_invertsNumeratorAndDenominator() {
 		Fraction fraction = new Fraction(2, 3);
 
 		Fraction result = fraction.invert();
@@ -92,7 +92,7 @@ class FractionTest {
 	}
 
 	@Test
-	void scale_nonZeroFractionByZero_returnsZeroFraction() throws Exception {
+	void scale_nonZeroFractionByZero_returnsZeroFraction() {
 		Fraction fraction = new Fraction(2, 3);
 
 		Fraction result = fraction.scale(0);
@@ -101,7 +101,7 @@ class FractionTest {
 	}
 
 	@Test
-	void scale_nonZeroFractionByInteger_returnsScaledFraction() throws Exception {
+	void scale_nonZeroFractionByInteger_returnsScaledFraction() {
 		Fraction fraction = new Fraction(2, 3);
 
 		Fraction result = fraction.scale(4);
@@ -112,7 +112,7 @@ class FractionTest {
 
 
 	@Test
-	void negate_positiveFraction_becomesNegative() throws Exception {
+	void negate_positiveFraction_becomesNegative() {
 		Fraction fraction = new Fraction(2, 3);
 
 		Fraction result = fraction.negate();
@@ -122,7 +122,7 @@ class FractionTest {
 	}
 
 	@Test
-	void negate_negativeFraction_becomesPositive() throws Exception {
+	void negate_negativeFraction_becomesPositive() {
 		Fraction fraction = new Fraction(-2, 3);
 
 		Fraction result = fraction.negate();
@@ -132,7 +132,7 @@ class FractionTest {
 	}
 
 	@Test
-	void negate_zeroFraction_staysZero() throws Exception {
+	void negate_zeroFraction_staysZero() {
 		Fraction fraction = new Fraction(0, 3);
 
 		Fraction result = fraction.negate();
@@ -142,27 +142,27 @@ class FractionTest {
 
 
 	@Test
-	void isPositive_onAZeroFraction_isFalse() throws Exception {
+	void isPositive_onAZeroFraction_isFalse() {
 		Fraction defaultFraction = new Fraction();
 
 		assertFalse(defaultFraction.isPositive());
 	}
 	@Test
-	void isNegative_onAZeroFraction_isFalse() throws Exception {
+	void isNegative_onAZeroFraction_isFalse() {
 		Fraction defaultFraction = new Fraction();
 
 		assertFalse(defaultFraction.isNegative());
 	}
 
 	@Test
-	void isInteger_onFractionalFraction_isFalse() throws Exception {
+	void isInteger_onFractionalFraction_isFalse() {
 		Fraction defaultFraction = new Fraction(1, 2);
 
 		assertFalse(defaultFraction.isInteger());
 	}
 
 	@Test
-	void isGreaterThan_onSmallerFraction_isTrue() throws Exception {
+	void isGreaterThan_onSmallerFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 3);
 
@@ -170,7 +170,7 @@ class FractionTest {
 	}
 
 	@Test
-	void isGreaterThan_onEqualFraction_isFalse() throws Exception {
+	void isGreaterThan_onEqualFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -178,7 +178,7 @@ class FractionTest {
 	}
 
 	@Test
-	void isGreaterThan_onLargerFraction_isFalse() throws Exception {
+	void isGreaterThan_onLargerFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -186,7 +186,7 @@ class FractionTest {
 	}
 
 	@Test
-	void isGreaterThanOrEqual_onSmallerFraction_isTrue() throws Exception {
+	void isGreaterThanOrEqual_onSmallerFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 3);
 
@@ -194,7 +194,7 @@ class FractionTest {
 	}
 
 	@Test
-	void isGreaterThanOrEqual_onEqualFraction_isTrue() throws Exception {
+	void isGreaterThanOrEqual_onEqualFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -202,7 +202,7 @@ class FractionTest {
 	}
 
 	@Test
-	void isGreaterThanOrEqual_onLargerFraction_isFalse() throws Exception {
+	void isGreaterThanOrEqual_onLargerFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -210,7 +210,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThan_onGreaterFraction_isTrue() throws Exception {
+	void islessThan_onGreaterFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -218,7 +218,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThan_onEqualFraction_isFalse() throws Exception {
+	void islessThan_onEqualFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -226,7 +226,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThan_onSmallerFraction_isFalse() throws Exception {
+	void islessThan_onSmallerFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 3);
 
@@ -234,7 +234,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThanOrEqual_onGreaterFraction_isTrue() throws Exception {
+	void islessThanOrEqual_onGreaterFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -242,7 +242,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThanOrEqual_onEqualFraction_isTrue() throws Exception {
+	void islessThanOrEqual_onEqualFraction_isTrue() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -250,7 +250,7 @@ class FractionTest {
 	}
 
 	@Test
-	void islessThanOrEqual_onSmallerFraction_isFalse() throws Exception {
+	void islessThanOrEqual_onSmallerFraction_isFalse() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 3);
 
@@ -258,7 +258,7 @@ class FractionTest {
 	}
 
 	@Test
-	void add_twoFractions_isCorrect() throws Exception {
+	void add_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -269,7 +269,7 @@ class FractionTest {
 	}
 
 	@Test
-	void subtract_twoFractions_isCorrect() throws Exception {
+	void subtract_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
 
@@ -280,7 +280,7 @@ class FractionTest {
 	}
 
 	@Test
-	void multiply_twoFractions_isCorrect() throws Exception {
+	void multiply_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(7, 12);
 
@@ -291,7 +291,7 @@ class FractionTest {
 	}
 
 	@Test
-	void divide_twoFractions_isCorrect() throws Exception {
+	void divide_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(7, 12);
 
@@ -302,7 +302,7 @@ class FractionTest {
 	}
 
 	@Test
-	void divide_fractionByZero_throwsArithmeticException() throws Exception {
+	void divide_fractionByZero_throwsArithmeticException() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(0, 12);
 
