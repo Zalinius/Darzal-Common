@@ -23,7 +23,7 @@ class RandomExtendedTest {
 		randomExtended = new RandomExtended();
 	}
 
-	void nextRadian__returnsAValueBetween0And2Pi() throws Exception {
+	void nextRadian__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextRadian();
 			assertTrue(0.0 <= result);
@@ -31,7 +31,7 @@ class RandomExtendedTest {
 		});
 	}
 
-	void nextDegree__returnsAValueBetween0And360() throws Exception {
+	void nextDegree__returnsAValueBetween0And360() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextDegree();
 			assertTrue(0.0 <= result);
@@ -39,7 +39,7 @@ class RandomExtendedTest {
 		});
 	}
 
-	void nextRadianF__returnsAValueBetween0And2Pi() throws Exception {
+	void nextRadianF__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			float result = randomExtended.nextRadianF();
 			assertTrue(0.0f <= result);
@@ -47,7 +47,7 @@ class RandomExtendedTest {
 		});
 	}
 
-	void nextDegreeF__returnsAValueBetween0And360() throws Exception {
+	void nextDegreeF__returnsAValueBetween0And360() {
 		Do.xTimes(RUNS, () -> {
 			float result = randomExtended.nextDegreeF();
 			assertTrue(0.0f <= result);
@@ -55,7 +55,7 @@ class RandomExtendedTest {
 		});
 	}
 
-	void nextChance_withZeroNumerator_returnsAlwaysFalse() throws Exception {
+	void nextChance_withZeroNumerator_returnsAlwaysFalse() {
 		int numerator = 0;
 		int denominator = 7;
 
@@ -63,7 +63,7 @@ class RandomExtendedTest {
 		assertFalse(result);
 	}
 
-	void nextChance_withNumeratorEqualToDenominator_returnsAlwaysTrue() throws Exception {
+	void nextChance_withNumeratorEqualToDenominator_returnsAlwaysTrue() {
 		int numerator = 7;
 		int denominator = 7;
 
@@ -74,7 +74,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void nextChance_withNegativeNumerator_throwsIllegalArgumentException() throws Exception {
+	void nextChance_withNegativeNumerator_throwsIllegalArgumentException() {
 		int numerator = -2;
 		int denominator = 7;
 
@@ -82,7 +82,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void nextChance_withNegativeDenominator_throwsIllegalArgumentException() throws Exception {
+	void nextChance_withNegativeDenominator_throwsIllegalArgumentException() {
 		int numerator = 2;
 		int denominator = -7;
 
@@ -105,7 +105,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSet_returnsAProperSubsetOfCorrectSize() throws Exception {
+	void randomSubset_withSet_returnsAProperSubsetOfCorrectSize() {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 3;
 
@@ -117,7 +117,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = -1;
 
@@ -125,7 +125,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 9;
 
@@ -133,7 +133,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_with0SubsetSize_returnsEmptySet() throws Exception {
+	void randomSubset_with0SubsetSize_returnsEmptySet() {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 0;
 
@@ -143,7 +143,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() throws Exception {
+	void randomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() {
 		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 8;
 
@@ -154,7 +154,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() throws Exception {
+	void randomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new HashSet<>(Arrays.asList());
 		int subsetSize = 8;
 
@@ -162,7 +162,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() throws Exception {
+	void randomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() {
 		Set<Integer> set = new HashSet<>(Arrays.asList());
 		int subsetSize = 0;
 

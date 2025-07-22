@@ -36,7 +36,7 @@ public class RandomExtended extends Random{
 	 * @return a boolean with 50/50 odds of being true or false
 	 */
 	public boolean nextCoinFlip() {
-		return nextChance(1, 2);
+		return nextBoolean();
 	}
 
 	/**
@@ -52,17 +52,8 @@ public class RandomExtended extends Random{
 		if(denominator <= 0) {
 			throw new IllegalArgumentException("Denominator must be positive:" + denominator);
 		}
-
-		if(numerator >= denominator) {
-			return true;
-		}
-		else if(numerator == 0) {
-			return false;
-		}
-		else {
-			int targetToMeetOrBeat = numerator-1;
-			return targetToMeetOrBeat >= nextInt(denominator);
-		}
+		int targetToMeetOrBeat = numerator-1;
+		return targetToMeetOrBeat >= nextInt(denominator);
 	}
 
 	/**

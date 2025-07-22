@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A class to represent exact fractions.
  */
-public class Fraction {
+public class Fraction implements Comparable<Fraction> {
 
 	//TODO can this become a record?
 	//TODO make these private at version 0.7.0
@@ -142,6 +142,41 @@ public class Fraction {
 		return new Fraction(-numerator, denominator);
 	}
 
+	/**
+	 * Checks if this fraction is greater than another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is strictly greater than the other, false otherwise
+	 */
+	public boolean isGreaterThan(Fraction other) {
+		return compareTo(other) > 0;
+	}
+
+	/**
+	 * Checks if this fraction is greater or equal to another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is greater or equal to the other, false otherwise
+	 */
+	public boolean isGreaterThanOrEqual(Fraction other) {
+		return compareTo(other) >= 0;
+	}
+
+	/**
+	 * Checks if this fraction is less than another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is strictly smaller than the other, false otherwise
+	 */
+	public boolean isLessThan(Fraction other) {
+		return compareTo(other) < 0;
+	}
+
+	/**
+	 * Checks if this fraction is less or equal to another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is less or equal to the other, false otherwise
+	 */
+	public boolean isLessThanOrEqual(Fraction other) {
+		return compareTo(other) <= 0;
+	}
 
 
 	/**
@@ -188,6 +223,61 @@ public class Fraction {
 		return new Fraction(f1.numerator*f2.denominator, f1.denominator*f2.numerator );
 	}
 
+	/**
+	 * Computes how many times a fraction can wholly divide another fraction
+	 * @param dividend the fraction to divide
+	 * @param divisor the fraction to divide by
+	 * @return The integer/whole number of times the divisor fits into the dividend
+	 */
+	public static int integerDivision(Fraction dividend, Fraction divisor) {
+		if(divisor.isZero()) {
+			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
+		}
+		if(dividend.isNegative() || divisor.isNegative()) {
+			throw new UnsupportedOperationException("negative integer division not implemented lol");
+		}
+
+		int lowestCommonDenominator = lowestCommonDenominator(dividend, divisor);
+
+		int dividendNumeratorOnLCD = dividend.numerator * (lowestCommonDenominator / dividend.denominator);
+		int divisorNumeratorOnLCD = divisor.numerator * (lowestCommonDenominator / divisor.denominator);
+
+		return dividendNumeratorOnLCD / divisorNumeratorOnLCD;
+	}
+
+	/**
+	 * Computes the remainder from  wholly dividing a fraction with another fraction
+	 * @param dividend the fraction to divide
+	 * @param divisor the fraction to divide by
+	 * @return The remainder from the integer division. remainder is within [0, divisor[
+	 */
+	public static Fraction integerRemainder(Fraction dividend, Fraction divisor) {
+		if(divisor.isZero()) {
+			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
+		}
+		if(dividend.isNegative() || divisor.isNegative()) {
+			throw new UnsupportedOperationException("negative integer remainder not implemented lol");
+		}
+
+		int lowestCommonDenominator = lowestCommonDenominator(dividend, divisor);
+
+		int dividendNumeratorOnLCD = dividend.numerator * (lowestCommonDenominator / dividend.denominator);
+		int divisorNumeratorOnLCD = divisor.numerator * (lowestCommonDenominator / divisor.denominator);
+
+		return new Fraction(dividendNumeratorOnLCD % divisorNumeratorOnLCD, lowestCommonDenominator);
+	}
+
+	/**
+	 * Computes the lowest common denominator for both fractions
+	 * @param f1 the first fraction
+	 * @param f2 the first fraction
+	 * @return the smallest positive integer denominator common to both fractions
+	 */
+	public static int lowestCommonDenominator(Fraction f1, Fraction f2) {
+		int d1 = f1.denominator;
+		int d2 = f2.denominator;
+		return d1 / GCD.gcd(d1, d2) * d2;
+	}
 
 	@Override
 	public String toString(){
@@ -212,6 +302,16 @@ public class Fraction {
 		}
 		Fraction other = (Fraction) obj;
 		return denominator == other.denominator && numerator == other.numerator;
+	}
+
+	@Override
+	public int compareTo(Fraction other) {
+		int lowestCommonDenominator = lowestCommonDenominator(this, other);
+
+		int thisNumeratorOnLCD = numerator * (lowestCommonDenominator / denominator);
+		int otherNumeratorOnLCD = other.numerator * (lowestCommonDenominator / other.denominator);
+
+		return thisNumeratorOnLCD - otherNumeratorOnLCD;
 	}
 
 }

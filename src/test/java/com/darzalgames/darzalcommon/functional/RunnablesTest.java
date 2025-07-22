@@ -5,11 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.Test;
 
 class RunnablesTest {
-	
+
 	@Test
-	void nullRunnable_whenRun_doesntThrow() throws Exception {
+	void nullRunnable_whenRun_doesntThrow() {
 		Runnable nullRunnable = Runnables.nullRunnable();
-		
+
 		assertDoesNotThrow(nullRunnable::run);
 	}
 

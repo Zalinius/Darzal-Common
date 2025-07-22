@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CountMapTest {
 
 	@Test
-	void noArgConstructor_createsEmptySize0CountMap() throws Exception {
+	void noArgConstructor_createsEmptySize0CountMap() {
 		CountMap<Integer> countMap = new CountMap<>();
 
 		assertTrue(countMap.isEmpty());
@@ -17,7 +17,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void constructor_withExistingCollection_createsCountMapWithCorrectCounts() throws Exception {
+	void constructor_withExistingCollection_createsCountMapWithCorrectCounts() {
 		Collection<String> initialStrings = Arrays.asList("apple", "banana", "banana", null);
 
 		CountMap<String> countMap = new CountMap<>(initialStrings);
@@ -29,12 +29,12 @@ class CountMapTest {
 	}
 
 	@Test
-	void constructor_withExistingNullCollection_throwsNullPointerException() throws Exception {
+	void constructor_withExistingNullCollection_throwsNullPointerException() {
 		assertThrows(NullPointerException.class, () -> new CountMap<>(null));
 	}
 
 	@Test
-	void get_onUnusedCountMapKey_returns0() throws Exception {
+	void get_onUnusedCountMapKey_returns0() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -44,7 +44,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void get_onNullKeyAndEmptyMap_returns0() throws Exception {
+	void get_onNullKeyAndEmptyMap_returns0() {
 		CountMap<Integer> countMap = new CountMap<>();
 
 		int result = countMap.get(null);
@@ -52,7 +52,7 @@ class CountMapTest {
 		assertEquals(0, result);
 	}
 	@Test
-	void increment_withCountMapKey_incrementsCountForKey() throws Exception {
+	void increment_withCountMapKey_incrementsCountForKey() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -63,7 +63,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void increment_withNullCountMapKey_incrementsCountForNullKey() throws Exception {
+	void increment_withNullCountMapKey_incrementsCountForNullKey() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = null;
 
@@ -74,7 +74,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void decrement_withCountMapKey_decrementsCountForKey() throws Exception {
+	void decrement_withCountMapKey_decrementsCountForKey() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -85,7 +85,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void reset_withCountMapKeyAfterIncrement_resetsCountForKeyTo0AndRemovesKey() throws Exception {
+	void reset_withCountMapKeyAfterIncrement_resetsCountForKeyTo0AndRemovesKey() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -97,7 +97,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void incrementAndDecrement_withCountMapKey_setsCountForKeyTo0AndButKeepsKey() throws Exception {
+	void incrementAndDecrement_withCountMapKey_setsCountForKeyTo0AndButKeepsKey() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -110,7 +110,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void clear_withCountMapKeysAfterIncrement_resetsAllCountsTo0AndKeysAreNotPresent() throws Exception {
+	void clear_withCountMapKeysAfterIncrement_resetsAllCountsTo0AndKeysAreNotPresent() {
 		CountMap<String> countMap = new CountMap<>();
 		String keyA = "apple";
 		String keyB = "banana";
@@ -129,7 +129,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void increaseBy_withCountMapKeyAndValue_incrementsCountForKeyByValue() throws Exception {
+	void increaseBy_withCountMapKeyAndValue_incrementsCountForKeyByValue() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -140,7 +140,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void decreaseBy_withCountMapKeyAndValue_decrementsCountForKeyByValue() throws Exception {
+	void decreaseBy_withCountMapKeyAndValue_decrementsCountForKeyByValue() {
 		CountMap<String> countMap = new CountMap<>();
 		String key = "apple";
 
@@ -151,7 +151,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void keySet_returnsPreviouslyUsedKeys() throws Exception {
+	void keySet_returnsPreviouslyUsedKeys() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increment("apple");
@@ -164,7 +164,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void iterator_returnsIteratorWithPreviouslyUsedKeys() throws Exception {
+	void iterator_returnsIteratorWithPreviouslyUsedKeys() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increment("apple");
@@ -182,7 +182,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void values_returnsCountsOfKeys() throws Exception {
+	void values_returnsCountsOfKeys() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increment("a");
@@ -197,7 +197,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void containsKey_returnsTrueIfKeyPresent() throws Exception {
+	void containsKey_returnsTrueIfKeyPresent() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increment("apple");
@@ -210,7 +210,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void total_onCountMap_sumsCountsInCountMap() throws Exception {
+	void total_onCountMap_sumsCountsInCountMap() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increment(null);
@@ -222,7 +222,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void incrementAll_incrementsTheCountsOfManyKeys() throws Exception {
+	void incrementAll_incrementsTheCountsOfManyKeys() {
 		CountMap<String> countMap = new CountMap<>();
 		List<String> keysToIncrement = Arrays.asList(null, "apple", "apple", "pear");
 
@@ -235,7 +235,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void decrementAll_decrementsTheCountsOfManyKeys() throws Exception {
+	void decrementAll_decrementsTheCountsOfManyKeys() {
 		CountMap<String> countMap = new CountMap<>();
 		List<String> keysToDecrement = Arrays.asList(null, "apple", "apple", "pear");
 
@@ -248,7 +248,7 @@ class CountMapTest {
 	}
 
 	@Test
-	void toString_createsStringWithTrackedKeysAndCounts() throws Exception {
+	void toString_createsStringWithTrackedKeysAndCounts() {
 		CountMap<String> countMap = new CountMap<>();
 
 		countMap.increaseBy("apple", 7);
