@@ -267,6 +267,12 @@ public class Fraction implements Comparable<Fraction> {
 		return new Fraction(dividendNumeratorOnLCD % divisorNumeratorOnLCD, lowestCommonDenominator);
 	}
 
+	/**
+	 * Computes the lowest common denominator for both fractions
+	 * @param f1 the first fraction
+	 * @param f2 the first fraction
+	 * @return the smallest positive integer denominator common to both fractions
+	 */
 	public static int lowestCommonDenominator(Fraction f1, Fraction f2) {
 		int d1 = f1.denominator;
 		int d2 = f2.denominator;
@@ -307,7 +313,5 @@ public class Fraction implements Comparable<Fraction> {
 
 		return thisNumeratorOnLCD - otherNumeratorOnLCD;
 	}
-
-
 
 }

@@ -4,6 +4,7 @@ public class GCD {
 	//prevent instantiation of this class
 	private GCD() {}
 
+	//TODO move to SimpleMath for version 0.7.0
 	public static int gcd(int x, int y){
 		x = Math.abs(x);
 		y = Math.abs(y);
