@@ -172,6 +172,14 @@ class FractionTest {
 	}
 
 	@Test
+	void isGreaterThan_onEqualFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertFalse(f1.isGreaterThan(f2));
+	}
+
+	@Test
 	void isGreaterThan_onLargerFraction_isFalse() throws Exception {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
@@ -180,21 +188,76 @@ class FractionTest {
 	}
 
 	@Test
-	void isLesserThan_onGreaterFraction_isTrue() throws Exception {
-		Fraction f1 = new Fraction(1, 3);
-		Fraction f2 = new Fraction(1, 2);
-
-		assertTrue(f1.isLesserThan(f2));
-	}
-
-	@Test
-	void isLesserThan_onSmallerFraction_isFalse() throws Exception {
+	void isGreaterThanOrEqual_onSmallerFraction_isTrue() throws Exception {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(1, 3);
 
-		assertFalse(f1.isLesserThan(f2));
+		assertTrue(f1.isGreaterThanOrEqual(f2));
 	}
 
+	@Test
+	void isGreaterThanOrEqual_onEqualFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertTrue(f1.isGreaterThanOrEqual(f2));
+	}
+
+	@Test
+	void isGreaterThanOrEqual_onLargerFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertFalse(f1.isGreaterThanOrEqual(f2));
+	}
+
+	@Test
+	void islessThan_onGreaterFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertTrue(f1.isLessThan(f2));
+	}
+
+	@Test
+	void islessThan_onEqualFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertFalse(f1.isLessThan(f2));
+	}
+
+	@Test
+	void islessThan_onSmallerFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 3);
+
+		assertFalse(f1.isLessThan(f2));
+	}
+
+	@Test
+	void islessThanOrEqual_onGreaterFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertTrue(f1.isLessThanOrEqual(f2));
+	}
+
+	@Test
+	void islessThanOrEqual_onEqualFraction_isTrue() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 2);
+
+		assertTrue(f1.isLessThanOrEqual(f2));
+	}
+
+	@Test
+	void islessThanOrEqual_onSmallerFraction_isFalse() throws Exception {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(1, 3);
+
+		assertFalse(f1.isLessThanOrEqual(f2));
+	}
 
 	@Test
 	void add_twoFractions_isCorrect() throws Exception {
@@ -249,35 +312,75 @@ class FractionTest {
 	}
 
 	@Test
-	void remainder_fractionByZero_throwsArithmeticException() {
+	void integerDivision_fractionByZero_throwsArithmeticException() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(0, 12);
 
-		assertThrows(ArithmeticException.class, () -> Fraction.remainder(f1, f2));
+		assertThrows(ArithmeticException.class, () -> Fraction.integerDivision(f1, f2));
 	}
 
 	@Test
-	void remainder_withDividendMultipleOfDivisor_returnsZeroFraction() throws OperationNotSupportedException {
+	void integerDivision_withZeroDividend_returnsZero() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(0);
+		Fraction f2 = new Fraction(5, 7);
+
+		assertEquals(0, Fraction.integerDivision(f1, f2));
+	}
+
+	@Test
+	void integerDivision_withDividendSmallerThanDivisor_returnsZero() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(1, 2);
+		Fraction f2 = new Fraction(5, 7);
+
+		assertEquals(0, Fraction.integerDivision(f1, f2));
+	}
+
+	@Test
+	void integerDivision_withDividendExactMultipleOfDivisor_returnsThatMultiple() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(20, 7);
+		Fraction f2 = new Fraction(5, 7);
+
+		assertEquals(4, Fraction.integerDivision(f1, f2));
+	}
+
+	@Test
+	void integerDivision_withDividendPartialMultipleOfDivisor_returnsIntegerPartOfThatMultiple() throws OperationNotSupportedException {
+		Fraction f1 = new Fraction(22, 7);
+		Fraction f2 = new Fraction(5, 7);
+
+		assertEquals(4, Fraction.integerDivision(f1, f2));
+	}
+
+	@Test
+	void integerRemainder_fractionByZero_throwsArithmeticException() {
+		Fraction f1 = new Fraction(5,  7);
+		Fraction f2 = new Fraction(0, 12);
+
+		assertThrows(ArithmeticException.class, () -> Fraction.integerRemainder(f1, f2));
+	}
+
+	@Test
+	void integerRemainder_withDividendMultipleOfDivisor_returnsZeroFraction() throws OperationNotSupportedException {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(5, 7);
 
-		assertTrue(Fraction.remainder(f1, f2).isZero());
+		assertTrue(Fraction.integerRemainder(f1, f2).isZero());
 	}
 
 	@Test
-	void remainder_withTwoFractionsWithCommonBase_returnsRemainder() throws OperationNotSupportedException {
+	void integerRemainder_withTwoFractionsWithCommonBase_returnsRemainder() throws OperationNotSupportedException {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(3, 7);
 
-		assertEquals(new Fraction(1, 7), Fraction.remainder(f1, f2));
+		assertEquals(new Fraction(1, 7), Fraction.integerRemainder(f1, f2));
 	}
 
 	@Test
-	void remainder_withTwoFractionsWithDifferentBases_returnsRemainder() throws OperationNotSupportedException {
+	void integerRemainder_withTwoFractionsWithDifferentBases_returnsRemainder() throws OperationNotSupportedException {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(3, 8);
 
-		assertEquals(new Fraction(17, 56), Fraction.remainder(f1, f2));
+		assertEquals(new Fraction(17, 56), Fraction.integerRemainder(f1, f2));
 	}
 
 	@Test

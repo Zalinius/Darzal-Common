@@ -2,8 +2,6 @@ package com.darzalgames.darzalcommon.math;
 
 import java.util.Objects;
 
-import javax.naming.OperationNotSupportedException;
-
 /**
  * A class to represent exact fractions.
  */
@@ -144,14 +142,41 @@ public class Fraction implements Comparable<Fraction> {
 		return new Fraction(-numerator, denominator);
 	}
 
+	/**
+	 * Checks if this fraction is greater than another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is strictly greater than the other, false otherwise
+	 */
 	public boolean isGreaterThan(Fraction other) {
 		return compareTo(other) > 0;
 	}
 
-	public boolean isLesserThan(Fraction other) {
+	/**
+	 * Checks if this fraction is greater or equal to another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is greater or equal to the other, false otherwise
+	 */
+	public boolean isGreaterThanOrEqual(Fraction other) {
+		return compareTo(other) >= 0;
+	}
+
+	/**
+	 * Checks if this fraction is less than another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is strictly smaller than the other, false otherwise
+	 */
+	public boolean isLessThan(Fraction other) {
 		return compareTo(other) < 0;
 	}
 
+	/**
+	 * Checks if this fraction is less or equal to another
+	 * @param other the fraction to compare to
+	 * @return true if this fraction is less or equal to the other, false otherwise
+	 */
+	public boolean isLessThanOrEqual(Fraction other) {
+		return compareTo(other) <= 0;
+	}
 
 
 	/**
@@ -198,12 +223,40 @@ public class Fraction implements Comparable<Fraction> {
 		return new Fraction(f1.numerator*f2.denominator, f1.denominator*f2.numerator );
 	}
 
-	public static Fraction remainder(Fraction dividend, Fraction divisor) throws OperationNotSupportedException {
+	/**
+	 * Computes how many times a fraction can wholly divide another fraction
+	 * @param dividend the fraction to divide
+	 * @param divisor the fraction to divide by
+	 * @return The integer/whole number of times the divisor fits into the dividend
+	 */
+	public static int integerDivision(Fraction dividend, Fraction divisor) {
 		if(divisor.isZero()) {
 			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
 		}
 		if(dividend.isNegative() || divisor.isNegative()) {
-			throw new OperationNotSupportedException("negative remainders not implemented lol");
+			throw new UnsupportedOperationException("negative integer division not implemented lol");
+		}
+
+		int lowestCommonDenominator = lowestCommonDenominator(dividend, divisor);
+
+		int dividendNumeratorOnLCD = dividend.numerator * (lowestCommonDenominator / dividend.denominator);
+		int divisorNumeratorOnLCD = divisor.numerator * (lowestCommonDenominator / divisor.denominator);
+
+		return dividendNumeratorOnLCD / divisorNumeratorOnLCD;
+	}
+
+	/**
+	 * Computes the remainder from  wholly dividing a fraction with another fraction
+	 * @param dividend the fraction to divide
+	 * @param divisor the fraction to divide by
+	 * @return The remainder from the integer division. remainder is within [0, divisor[
+	 */
+	public static Fraction integerRemainder(Fraction dividend, Fraction divisor) {
+		if(divisor.isZero()) {
+			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
+		}
+		if(dividend.isNegative() || divisor.isNegative()) {
+			throw new UnsupportedOperationException("negative integer remainder not implemented lol");
 		}
 
 		int lowestCommonDenominator = lowestCommonDenominator(dividend, divisor);
