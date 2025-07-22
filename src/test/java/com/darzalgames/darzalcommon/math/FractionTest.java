@@ -2,8 +2,6 @@ package com.darzalgames.darzalcommon.math;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import javax.naming.OperationNotSupportedException;
-
 import org.junit.jupiter.api.Test;
 
 class FractionTest {
@@ -320,7 +318,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerDivision_withZeroDividend_returnsZero() throws OperationNotSupportedException {
+	void integerDivision_withZeroDividend_returnsZero() {
 		Fraction f1 = new Fraction(0);
 		Fraction f2 = new Fraction(5, 7);
 
@@ -328,7 +326,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerDivision_withDividendSmallerThanDivisor_returnsZero() throws OperationNotSupportedException {
+	void integerDivision_withDividendSmallerThanDivisor_returnsZero() {
 		Fraction f1 = new Fraction(1, 2);
 		Fraction f2 = new Fraction(5, 7);
 
@@ -336,7 +334,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerDivision_withDividendExactMultipleOfDivisor_returnsThatMultiple() throws OperationNotSupportedException {
+	void integerDivision_withDividendExactMultipleOfDivisor_returnsThatMultiple() {
 		Fraction f1 = new Fraction(20, 7);
 		Fraction f2 = new Fraction(5, 7);
 
@@ -344,7 +342,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerDivision_withDividendPartialMultipleOfDivisor_returnsIntegerPartOfThatMultiple() throws OperationNotSupportedException {
+	void integerDivision_withDividendPartialMultipleOfDivisor_returnsIntegerPartOfThatMultiple() {
 		Fraction f1 = new Fraction(22, 7);
 		Fraction f2 = new Fraction(5, 7);
 
@@ -360,7 +358,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerRemainder_withDividendMultipleOfDivisor_returnsZeroFraction() throws OperationNotSupportedException {
+	void integerRemainder_withDividendMultipleOfDivisor_returnsZeroFraction() {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(5, 7);
 
@@ -368,7 +366,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerRemainder_withTwoFractionsWithCommonBase_returnsRemainder() throws OperationNotSupportedException {
+	void integerRemainder_withTwoFractionsWithCommonBase_returnsRemainder() {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(3, 7);
 
@@ -376,7 +374,7 @@ class FractionTest {
 	}
 
 	@Test
-	void integerRemainder_withTwoFractionsWithDifferentBases_returnsRemainder() throws OperationNotSupportedException {
+	void integerRemainder_withTwoFractionsWithDifferentBases_returnsRemainder() {
 		Fraction f1 = new Fraction(10,  7);
 		Fraction f2 = new Fraction(3, 8);
 
