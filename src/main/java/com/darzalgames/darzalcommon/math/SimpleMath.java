@@ -82,4 +82,29 @@ public class SimpleMath {
 		return true;
 	}
 
+	/**
+	 * Computes the greatest common divisor for two integers
+	 * @param x the first integer
+	 * @param y the second integer
+	 * @return their greatest common divisor
+	 */
+	public static int greatestCommonDivisor(int x, int y){
+		x = Math.abs(x);
+		y = Math.abs(y);
+		if(x<y) {
+			int temp = y;
+			y = x;
+			x = temp;
+		}
+
+		return gcdRecursiveCall(x,y);
+	}
+
+	private static int gcdRecursiveCall(int x, int y){
+		if(y==0) {
+			return x;
+		}
+		return (gcdRecursiveCall(y, x%y));
+	}
+
 }
