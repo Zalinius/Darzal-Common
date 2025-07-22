@@ -29,7 +29,7 @@ public class Coordinate {
 	 * @param tuple a non-null tuple of non-null integers
 	 */
 	public Coordinate(Tuple<Integer, Integer> tuple) {
-		this(tuple.e, tuple.f);
+		this(tuple.e(), tuple.f());
 	}
 
 	/**
