@@ -10,16 +10,11 @@ class CoordinateTest {
 	void accessors_bothValues_works() {
 		Coordinate coordinate = new Coordinate(4, 2);
 
-		int firstResult = coordinate.i;
-		double secondResult = coordinate.j;
-		int firstGetResult = coordinate.getI();
-		double secondGetResult = coordinate.getJ();
-
+		int firstResult = coordinate.i();
+		double secondResult = coordinate.j();
 
 		assertEquals(4, firstResult);
 		assertEquals(2, secondResult);
-		assertEquals(4, firstGetResult);
-		assertEquals(2, secondGetResult);
 	}
 
 	@Test
