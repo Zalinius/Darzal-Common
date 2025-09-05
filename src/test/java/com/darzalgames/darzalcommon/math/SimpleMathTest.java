@@ -293,4 +293,37 @@ class SimpleMathTest {
 		assertEquals(expectedResult, result);
 	}
 
+	@Test
+	void canParseToInteger() {
+		assertTrue(SimpleMath.canParseToInteger("0"));
+		assertTrue(SimpleMath.canParseToInteger("001"));
+		assertTrue(SimpleMath.canParseToInteger("-287"));
+		assertTrue(SimpleMath.canParseToInteger("2888"));
+		assertTrue(SimpleMath.canParseToInteger("2147483647"));
+
+		assertFalse(SimpleMath.canParseToInteger(null));
+		assertFalse(SimpleMath.canParseToInteger(""));
+		assertFalse(SimpleMath.canParseToInteger("ten"));
+		assertFalse(SimpleMath.canParseToInteger("-28.3"));
+		assertFalse(SimpleMath.canParseToInteger("0.0"));
+		assertFalse(SimpleMath.canParseToInteger("2147483648"));
+	}
+
+	@Test
+	void canParseToFloat() {
+		assertTrue(SimpleMath.canParseToFloat("0"));
+		assertTrue(SimpleMath.canParseToFloat("0.0"));
+		assertTrue(SimpleMath.canParseToFloat("001"));
+		assertTrue(SimpleMath.canParseToFloat("-287"));
+		assertTrue(SimpleMath.canParseToFloat("2888"));
+		assertTrue(SimpleMath.canParseToFloat("2147483647"));
+		assertTrue(SimpleMath.canParseToFloat("3.4028235E38"));
+		assertTrue(SimpleMath.canParseToFloat("3.14159"));
+		assertTrue(SimpleMath.canParseToFloat("-3.14159f"));
+
+		assertFalse(SimpleMath.canParseToFloat(null));
+		assertFalse(SimpleMath.canParseToFloat(""));
+		assertFalse(SimpleMath.canParseToFloat("ten"));
+	}
+
 }

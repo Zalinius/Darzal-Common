@@ -74,6 +74,9 @@ public class SimpleMath {
 	 * @return true if the string can safely be parsed to a float
 	 */
 	public static boolean canParseToFloat(String string) {
+		if(string == null) {
+			return false;
+		}
 		try {
 			Float.parseFloat(string);
 		} catch (NumberFormatException e) {
