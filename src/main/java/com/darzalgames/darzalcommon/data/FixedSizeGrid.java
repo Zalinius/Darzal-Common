@@ -125,7 +125,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	/**
 	 * Sets the value at a given coordinate
 	 * @param coordinate The coordinate in the grid
-	 * @param value
+	 * @param value The new value to set at the given coordinate
 	 * @return the value previously at that coordinate, or null otherwise
 	 */
 	public E set(Coordinate coordinate, E value) {

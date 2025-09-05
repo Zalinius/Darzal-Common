@@ -3,6 +3,8 @@ package com.darzalgames.darzalcommon.data;
 /**
  * A class representing an integer Cartesian Coordinate.
  * Instances of this class are immutable
+ * @param i the i coordinate
+ * @param j the j coordinate
  */
 public record Coordinate(
 		/** The i (or horizontal) coordinate */

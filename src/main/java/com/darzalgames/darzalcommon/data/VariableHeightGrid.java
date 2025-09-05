@@ -1,13 +1,14 @@
 package com.darzalgames.darzalcommon.data;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 /**
  * A rectangular grid data structure of a fixed width and variable height.
  * Can be added to and removed from like a list, and won't keep empty entries between others.
  * @param <E> The Generic type the grid contains
  */
-public class VariableHeightGrid<E> implements Collection<E>{
+public class VariableHeightGrid<E> implements Iterable<E>{
 
 	private final List<E> inside;
 	private final int width;
@@ -32,6 +33,7 @@ public class VariableHeightGrid<E> implements Collection<E>{
 	}
 
 	/**
+	 * Gets the fixed width of the grid
 	 * @return the fixed number of objects in a full row (i.e. the number of columns)
 	 */
 	public int getWidth() {
@@ -39,6 +41,7 @@ public class VariableHeightGrid<E> implements Collection<E>{
 	}
 
 	/**
+	 * Gets the current height of the grid
 	 * @return the number of rows, which can change as the entries change
 	 */
 	public int getHeight() {
@@ -50,11 +53,17 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return rowCount;
 	}
 
-	@Override
 	public int size() {
 		return inside.size();
 	}
 
+	/**
+	 * Checks if a non-null entry is present at the given row and column
+	 * This method will not throw if the row and column are invalid
+	 * @param row the row to check
+	 * @param column the column to check
+	 * @return true if there is a non-null entry at the specified position, false otherwise
+	 */
 	public boolean hasEntryAt(int row, int column) {
 		if (column < 0 || column >= width || row < 0) {
 			return false;
@@ -63,19 +72,25 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return index < inside.size() && inside.get(index) != null;
 	}
 
-	/** NOTE: check {@link VariableHeightGrid#hasEntryAt(int, int)} first, or risk an IndexOutOfBoundsException. Ye have been warned!
+	/**
+	 * Gets the value at the specified position <br>
+	 * Call {@link VariableHeightGrid#hasEntryAt(int, int)} to validate that such an entry exist first
 	 * @param row (vertical)
 	 * @param column (horizontal)
 	 * @return The E at the specified row and column
+	 * @throws IndexOutOfBoundsException if the the row and column are outside the bounds of the grid
 	 */
 	public E get(int row, int column) {
 		int position = computeLinearPosition(row, column);
 		return inside.get(position);
 	}
 
-	/** NOTE: check {@link VariableHeightGrid#contains(Object)} first, or risk an IllegalArgumentException. Avast!
+	/**
+	 * Returns the coordinates of the first occurrence of the specified element <br>
+	 * Call {@link VariableHeightGrid#hasEntryAt(int, int)} to validate that such an entry exist first
 	 * @param e the object to check
 	 * @return The coordinate of the provided object
+	 * @throws IllegalArgumentException if the element is not present in the grid
 	 */
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
@@ -114,13 +129,19 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return sb.toString().trim();
 	}
 
-
-	@Override
+	/**
+	 * Checks if the grid is empty
+	 * @return true if the grid contains no elements
+	 */
 	public boolean isEmpty() {
 		return inside.isEmpty();
 	}
 
-	@Override
+	/**
+	 * Checks if the grid contains an element
+	 * @param o the element to check
+	 * @return true if the grid contains the element
+	 */
 	public boolean contains(Object o) {
 		return inside.contains(o);
 	}
@@ -130,47 +151,30 @@ public class VariableHeightGrid<E> implements Collection<E>{
 		return inside.iterator();
 	}
 
-	@Override
-	public Object[] toArray() {
-		return inside.toArray();
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		return inside.toArray(a);
-	}
-
-	@Override
 	public boolean add(E e) {
 		return inside.add(e);
 	}
 
-	@Override
 	public boolean remove(Object o) {
 		return inside.remove(o);
 	}
 
-	@Override
 	public boolean containsAll(Collection<?> c) {
 		return inside.containsAll(c);
 	}
 
-	@Override
 	public boolean addAll(Collection<? extends E> c) {
 		return inside.addAll(c);
 	}
 
-	@Override
 	public boolean removeAll(Collection<?> c) {
 		return inside.removeAll(c);
 	}
 
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		return inside.retainAll(c);
+	public Stream<E> stream() {
+		return inside.stream();
 	}
 
-	@Override
 	public void clear() {
 		inside.clear();
 	}

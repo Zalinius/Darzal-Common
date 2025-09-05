@@ -54,8 +54,8 @@ public class HexagonMap<E> {
 	}
 
 	/**
-	 * @param hexagon
-	 * @param direction
+	 * @param hexagon The starting point for searching for a neighbor
+	 * @param direction the direction to search in
 	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */
 	public E getNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
@@ -64,7 +64,7 @@ public class HexagonMap<E> {
 	}
 
 	/**
-	 * @param hexagon
+	 * @param hexagon the hexagon address of the desired value
 	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException
 	 */
 	public E getValueAt(Hexagon hexagon) {

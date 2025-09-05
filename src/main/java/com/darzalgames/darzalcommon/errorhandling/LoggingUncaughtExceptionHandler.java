@@ -7,6 +7,9 @@ import java.time.ZoneId;
 
 import com.darzalgames.darzalcommon.time.FileFriendlyTimeFormatter;
 
+/**
+ * An abstract UncaughtException handler with timestamping facilities
+ */
 public abstract class LoggingUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
 	@Override
@@ -14,9 +17,9 @@ public abstract class LoggingUncaughtExceptionHandler implements UncaughtExcepti
 		TimestampedThrowable log = new TimestampedThrowable(throwable, Instant.now());
 		try (PrintStream printStream = getPrintStream(log)) {
 			printStream.println(FileFriendlyTimeFormatter.dateTimeFileFriendlyFormat(log.timestamp, ZoneId.systemDefault()));
-			log.printStackTrace(printStream);	
+			log.printStackTrace(printStream);
 		}
-		throwable.printStackTrace();	
+		throwable.printStackTrace();
 	}
 
 	protected abstract PrintStream getPrintStream(TimestampedThrowable report);

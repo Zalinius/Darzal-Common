@@ -96,31 +96,6 @@ class VariableHeightGridTest {
 		assertEquals(new Coordinate(0, 1), result);
 	}
 
-
-	@Test
-	void toArray_onGrid_returnsExpectedArray() {
-		VariableHeightGrid<Integer> grid = new VariableHeightGrid<>(3);
-		Do.xTimes(6, () -> grid.add(-1));
-
-		Object[] result = grid.toArray();
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer.equals(-1));
-
-		assertEquals(6, grid.size());
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
-	}
-
-	@Test
-	void toArrayWithType_onGrid_returnsExpectedArray() {
-		VariableHeightGrid<Integer> grid = new VariableHeightGrid<>(1, List.of(-1, -1, -1));
-
-		Integer[] result = grid.toArray(new Integer[0]);
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer == -1);
-
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
-	}
-
 	@Test
 	void stream_onGrid_streams() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
@@ -343,20 +318,5 @@ class VariableHeightGridTest {
 		assertEquals(2, grid.size());
 	}
 
-	@Test
-	void retainAll_retainsValidValues() {
-		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
-		grid.add("a");
-		grid.add("a");
-		grid.add("b");
-		grid.add("b");
-		grid.add("c");
-
-		boolean changed = grid.retainAll(List.of("a", "x"));
-
-		assertTrue(changed);
-		assertTrue(grid.contains("a"));
-		assertEquals(2, grid.size());
-	}
 }
 
