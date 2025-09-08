@@ -76,7 +76,7 @@ class HexagonMapTest {
 		"2, 0,		3", //Corner hexagon (bottom right)
 		"-1, 1,		4", //Edge hexagon
 	})
-	void getNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
+	void getHexagonNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
 
@@ -99,13 +99,13 @@ class HexagonMapTest {
 		"2, 4",
 		"4, -1",
 	})
-	void getValueAt_withVariousValidCoordinates_returnsExpectedValue(int expectedQ, int expectedR) {
+	void get_withVariousValidCoordinates_returnsExpectedValue(int expectedQ, int expectedR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, ""));
 		String expectedTag = "it's me!";
 		hexagonMap.put(new Hexagon(expectedQ, expectedR), expectedTag);
 
-		String result = hexagonMap.getValueAt(new Hexagon(expectedQ, expectedR));
+		String result = hexagonMap.get(new Hexagon(expectedQ, expectedR));
 
 		assertEquals(expectedTag, result);
 	}
@@ -116,13 +116,13 @@ class HexagonMapTest {
 		"4, 4",
 		"-4, 7",
 	})
-	void getValueAt_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
+	void get_withOutOfBoundsCoordinates_throwsIllegalArgumentException(int expectedQ, int expectedR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, ""));
 
 		Hexagon hexagon = new Hexagon(expectedQ, expectedR);
 
-		assertThrows(IllegalArgumentException.class, () -> hexagonMap.getValueAt(hexagon));
+		assertThrows(IllegalArgumentException.class, () -> hexagonMap.get(hexagon));
 	}
 
 
@@ -138,11 +138,11 @@ class HexagonMapTest {
 	}
 	@ParameterizedTest
 	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
-	void getNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
+	void getValueNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, hex.getQ() + " " + hex.getR()));
 
-		String neighbor = hexagonMap.getNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
+		String neighbor = hexagonMap.getValueNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 
 		assertEquals(expectedNeighborHexagonQ + " " + expectedNeighborHexagonR, neighbor);
 	}

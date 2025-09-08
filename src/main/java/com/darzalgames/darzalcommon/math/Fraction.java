@@ -7,10 +7,8 @@ import java.util.Objects;
  */
 public class Fraction implements Comparable<Fraction> {
 
-	//TODO can this become a record?
-	//TODO make these private at version 0.7.0
-	public final int numerator;
-	public final int denominator;
+	private final int numerator;
+	private final int denominator;
 
 	/**
 	 * Creates a fraction with a value of 0
@@ -42,7 +40,7 @@ public class Fraction implements Comparable<Fraction> {
 			denominator = -denominator;
 		}
 
-		int greatestCommonDivisor = GCD.gcd(numerator, denominator);
+		int greatestCommonDivisor = SimpleMath.greatestCommonDivisor(numerator, denominator);
 
 		this.numerator = numerator / greatestCommonDivisor;
 		this.denominator = denominator / greatestCommonDivisor;
@@ -276,7 +274,7 @@ public class Fraction implements Comparable<Fraction> {
 	public static int lowestCommonDenominator(Fraction f1, Fraction f2) {
 		int d1 = f1.denominator;
 		int d2 = f2.denominator;
-		return d1 / GCD.gcd(d1, d2) * d2;
+		return d1 / SimpleMath.greatestCommonDivisor(d1, d2) * d2;
 	}
 
 	@Override

@@ -23,6 +23,17 @@ class RandomExtendedTest {
 		randomExtended = new RandomExtended();
 	}
 
+	@Test
+	void constructorWithSeed_behavesLikeBasicRandomObjectWithSameSeed() {
+		RandomExtended randomExtended = new RandomExtended(0);
+		Random random = new Random(0);
+
+		assertEquals(random.nextInt(), randomExtended.nextInt());
+		assertEquals(random.nextFloat(), randomExtended.nextFloat());
+		assertEquals(random.nextBoolean(), randomExtended.nextCoinFlip());
+	}
+
+	@Test
 	void nextRadian__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextRadian();
@@ -31,6 +42,7 @@ class RandomExtendedTest {
 		});
 	}
 
+	@Test
 	void nextDegree__returnsAValueBetween0And360() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextDegree();
@@ -39,6 +51,7 @@ class RandomExtendedTest {
 		});
 	}
 
+	@Test
 	void nextRadianF__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			float result = randomExtended.nextRadianF();
@@ -47,6 +60,7 @@ class RandomExtendedTest {
 		});
 	}
 
+	@Test
 	void nextDegreeF__returnsAValueBetween0And360() {
 		Do.xTimes(RUNS, () -> {
 			float result = randomExtended.nextDegreeF();
@@ -55,6 +69,7 @@ class RandomExtendedTest {
 		});
 	}
 
+	@Test
 	void nextChance_withZeroNumerator_returnsAlwaysFalse() {
 		int numerator = 0;
 		int denominator = 7;
@@ -63,6 +78,7 @@ class RandomExtendedTest {
 		assertFalse(result);
 	}
 
+	@Test
 	void nextChance_withNumeratorEqualToDenominator_returnsAlwaysTrue() {
 		int numerator = 7;
 		int denominator = 7;

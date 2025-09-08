@@ -2,6 +2,9 @@ package com.darzalgames.darzalcommon.hexagon;
 
 import com.darzalgames.darzalcommon.data.Tuple;
 
+/**
+ * A collection of pure functions related to hexagon math
+ */
 public class HexagonMath {
 
 	/**
@@ -16,8 +19,8 @@ public class HexagonMath {
 	 */
 	public static Tuple<Float, Float> getScreenPositionOnStage(int q, int r, float hexagonWidth, float hexagonHeight, float stageHeight) {
 		Tuple<Float, Float> position = getScreenPosition(q, r, hexagonWidth, hexagonHeight);
-		float y = stageHeight - position.f - hexagonHeight; // This math works from a top-left system and actors work from bottom-left, so we subtract from the screen height
-		return new Tuple<>(position.e, y);
+		float y = stageHeight - position.f() - hexagonHeight; // This math works from a top-left system and actors work from bottom-left, so we subtract from the screen height
+		return new Tuple<>(position.e(), y);
 	}
 
 	/**

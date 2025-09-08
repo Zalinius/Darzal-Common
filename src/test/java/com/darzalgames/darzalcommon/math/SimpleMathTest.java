@@ -1,9 +1,12 @@
 package com.darzalgames.darzalcommon.math;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class SimpleMathTest {
 
@@ -98,34 +101,9 @@ class SimpleMathTest {
 		assertTrue(result);
 	}
 
-	@Test
-	void isBetween_onLeftBound_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 0;
-
-		boolean result = SimpleMath.isBetween(left, right, input);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isBetween_onRightBound_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 5;
-
-		boolean result = SimpleMath.isBetween(left, right, input);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isBetween_withinBounds_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 2;
-
+	@ParameterizedTest
+	@CsvSource(value = {"0,5,0", "0,5,5", "0,5,2"})
+	void isBetween_whenValueIsBetweenBounds_returnsTrue(int left, int right, int input) {
 		boolean result = SimpleMath.isBetween(left, right, input);
 
 		assertTrue(result);
@@ -213,6 +191,114 @@ class SimpleMathTest {
 		boolean result = SimpleMath.isMultiple(value, base);
 
 		assertFalse(result);
+	}
+
+	//Note: this is part of the mathematical definition of GCD
+	@Test
+	void gcd_0and0_is0() {
+		int result = SimpleMath.greatestCommonDivisor(0, 0);
+
+		assertEquals(0, result);
+	}
+
+	@Test
+	void gcd_0andAPositiveInteger_isThePositiveInteger() {
+		int result = SimpleMath.greatestCommonDivisor(0, 4);
+
+		assertEquals(4, result);
+	}
+
+	@Test
+	void gcd_0andANegativeInteger_isTheAbsoluteValueOfTheNegativeInteger() {
+		int result = SimpleMath.greatestCommonDivisor(0, -4);
+
+		assertEquals(4, result);
+	}
+
+	@Test
+	void gcd_twoPositiveNumbers_isPositive() {
+		int result = SimpleMath.greatestCommonDivisor(2, 4);
+
+		assertTrue(result > 0);
+	}
+
+	@Test
+	void gcd_onePositiveNumberOneNegativeNumber_isPositive() {
+		int result1 = SimpleMath.greatestCommonDivisor(-2, 4);
+		int result2 = SimpleMath.greatestCommonDivisor(2, -4);
+
+		assertTrue(result1 > 0);
+		assertTrue(result2 > 0);
+	}
+
+	@Test
+	void gcd_twoNegativeNumbers_isPositive() {
+		int result = SimpleMath.greatestCommonDivisor(-2, -4);
+
+		assertTrue(result > 0);
+	}
+
+	@Test
+	void gcd_twoIdenticalNumbers_isThatNumber() {
+		int result = SimpleMath.greatestCommonDivisor(7, 7);
+
+		assertEquals(7, result);
+	}
+
+
+	@Test
+	void gcd_twoPrimeNumbers_is1() {
+		int result = SimpleMath.greatestCommonDivisor(7, 11);
+
+		assertEquals(1, result);
+	}
+
+	@Test
+	void gcd_twoRelativelyPrimeNumbers_is1() {
+		int result = SimpleMath.greatestCommonDivisor(8, 15);
+
+		assertEquals(1, result);
+	}
+
+	@ParameterizedTest
+	@CsvSource({"2,4,2", "12,15,3", "63,28,7"})
+	void gcd_twoIntegers_returnsTheirGCD(int a, int b, int expectedResult) {
+		int result = SimpleMath.greatestCommonDivisor(a, b);
+
+		assertEquals(expectedResult, result);
+	}
+
+	@Test
+	void canParseToInteger() {
+		assertTrue(SimpleMath.canParseToInteger("0"));
+		assertTrue(SimpleMath.canParseToInteger("001"));
+		assertTrue(SimpleMath.canParseToInteger("-287"));
+		assertTrue(SimpleMath.canParseToInteger("2888"));
+		assertTrue(SimpleMath.canParseToInteger("2147483647"));
+
+		assertFalse(SimpleMath.canParseToInteger(null));
+		assertFalse(SimpleMath.canParseToInteger(""));
+		assertFalse(SimpleMath.canParseToInteger("ten"));
+		assertFalse(SimpleMath.canParseToInteger("-28.3"));
+		assertFalse(SimpleMath.canParseToInteger("0.0"));
+		assertFalse(SimpleMath.canParseToInteger("2147483648"));
+	}
+
+	@Test
+	void canParseToFloat() {
+		assertTrue(SimpleMath.canParseToFloat("0"));
+		assertTrue(SimpleMath.canParseToFloat("0.0"));
+		assertTrue(SimpleMath.canParseToFloat("001"));
+		assertTrue(SimpleMath.canParseToFloat("-287"));
+		assertTrue(SimpleMath.canParseToFloat("2888"));
+		assertTrue(SimpleMath.canParseToFloat("2147483647"));
+		assertTrue(SimpleMath.canParseToFloat("3.4028235E38"));
+		assertTrue(SimpleMath.canParseToFloat("3.14159"));
+		assertTrue(SimpleMath.canParseToFloat("-3.14159f"));
+
+		assertFalse(SimpleMath.canParseToFloat(null));
+		assertFalse(SimpleMath.canParseToFloat(""));
+		assertFalse(SimpleMath.canParseToFloat("ten"));
 	}
 
 }

@@ -350,6 +350,15 @@ class FractionTest {
 	}
 
 	@Test
+	void integerDivision_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
+		Fraction f1 = new Fraction(-5,  7);
+		Fraction f2 = new Fraction(1, 12);
+
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerDivision(f1, f2));
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerDivision(f2, f1));
+	}
+
+	@Test
 	void integerRemainder_fractionByZero_throwsArithmeticException() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(0, 12);
@@ -379,6 +388,15 @@ class FractionTest {
 		Fraction f2 = new Fraction(3, 8);
 
 		assertEquals(new Fraction(17, 56), Fraction.integerRemainder(f1, f2));
+	}
+
+	@Test
+	void integerRemainder_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
+		Fraction f1 = new Fraction(-5,  7);
+		Fraction f2 = new Fraction(1, 12);
+
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerRemainder(f1, f2));
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerRemainder(f2, f1));
 	}
 
 	@Test
@@ -430,6 +448,61 @@ class FractionTest {
 		Fraction f2 = new Fraction(0, 6);
 
 		assertEquals(-f1.compareTo(f2), f2.compareTo(f1));
+	}
+
+	@Test
+	void equals_onEqualFractions_true() {
+		Fraction f1 = new Fraction(2, 5);
+		Fraction f2 = new Fraction(4, 10);
+
+		assertEquals(f1, f2);
+	}
+
+	@Test
+	void equals_onSelf_true() {
+		Fraction f = new Fraction(2, 5);
+
+		assertEquals(f, f);
+	}
+
+	@Test
+	void equals_onNull_false() {
+		Fraction f = new Fraction(2, 5);
+		Fraction nullF = null;
+
+		assertNotEquals(f, nullF);
+	}
+
+	@Test
+	void equals_onDifferentNumerators_false() {
+		Fraction f1 = new Fraction(2, 5);
+		Fraction f2 = new Fraction(3, 5);
+
+		assertNotEquals(f1, f2);
+	}
+
+	@Test
+	void equals_onDifferentDenominators_false() {
+		Fraction f1 = new Fraction(2, 5);
+		Fraction f2 = new Fraction(2, 7);
+
+		assertNotEquals(f1, f2);
+	}
+
+	@Test
+	void equals_onIncompatibleClasses_false() {
+		Fraction f = new Fraction(5, 5);
+		Integer i = 1;
+
+		assertNotEquals(f, i);
+	}
+
+	@Test
+	void hashCodes_onEqualFractions_areEqual() {
+		Fraction f1 = new Fraction(2, 5);
+		Fraction f2 = new Fraction(4, 10);
+
+		assertEquals(f1.hashCode(), f2.hashCode());
 	}
 
 }

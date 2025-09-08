@@ -2,8 +2,7 @@ package com.darzalgames.darzalcommon.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -15,13 +14,26 @@ import org.junit.jupiter.params.provider.MethodSource;
 class FixedSizeGridTest {
 
 	@Test
+	void width_returnsGridWidth() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
+
+		assertEquals(5, grid.width());
+	}
+
+	@Test
+	void heigth_returnsGridHeight() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
+
+		assertEquals(7, grid.height());
+	}
+
+	@Test
 	void size_of5x7grid_is35() {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7, -1);
 
 		int result = grid.size();
 
 		assertEquals(35, result);
-		assertFalse(grid.isEmpty());
 	}
 
 	@Test
@@ -34,54 +46,28 @@ class FixedSizeGridTest {
 	}
 
 	@Test
-	void set_outsideOfGrid_throwsIllegalArgumentException() {
+	void get_outsideOfGrid_throwsIndexOutOfBoundsException() {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
 
-		assertThrows(IllegalArgumentException.class, () -> grid.set(6, 8, 23));
+		assertThrows(IndexOutOfBoundsException.class, () -> grid.get(6, 8));
 	}
 
 	@Test
-	void contains_onObjectNotInGrid_returnsFalse() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(4, 7);
-		Integer integer = 5;
+	void set_outsideOfGrid_throwsIndexOutOfBoundsException() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
 
-		boolean result = grid.contains(integer);
-
-		assertFalse(result);
+		assertThrows(IndexOutOfBoundsException.class, () -> grid.set(6, 8, 23));
 	}
 
 	@Test
-	void contains_afterSettingByCoordinate_returnsTrue() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(4, 7, -1);
-		Integer integer = 5;
-		grid.set(new Coordinate(2, 3), integer);
+	void set_whenCoordinateAlreadyHasValue_returnsOldValue() {
+		final int defaultValue = 69;
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7, defaultValue);
 
-		boolean result = grid.contains(integer);
+		int replacedValue = grid.set(new Coordinate(2, 3), 420);
 
-		assertTrue(result);
-	}
-
-	@Test
-	void contains_onObjectInGridOnce_returnsTrue() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(4, 7, -1);
-		Integer integer = 5;
-		grid.set(2,  3, integer);
-
-		boolean result = grid.contains(integer);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void contains_onObjectInGridMultipleTimes_returnsTrue() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(4, 7, -1);
-		Integer integer = 5;
-		grid.set(2, 3, integer);
-		grid.set(3, 6, integer);
-
-		boolean result = grid.contains(integer);
-
-		assertTrue(result);
+		assertEquals(69, replacedValue);
+		assertEquals(420, grid.get(2, 3));
 	}
 
 	@Test
@@ -190,8 +176,8 @@ class FixedSizeGridTest {
 
 
 	@Test
-	void constructorWithInitializerAndDefaultValue_whenGivenInitializerLambdaAndDefault_initializedValues() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i+","+j), "default");
+	void constructorWithInitializer_whenGivenInitializer_initializesValues() {
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i+","+j));
 
 		assertEquals(6, grid.size());
 
@@ -201,38 +187,13 @@ class FixedSizeGridTest {
 		assertEquals("1,1", grid.get(1, 1));
 		assertEquals("0,2", grid.get(0, 2));
 		assertEquals("1,2", grid.get(1, 2));
-
-		assertFalse(grid.isInGrid(3, 4));
-		assertEquals("default", grid.get(3, 4));
-	}
-
-	@Test
-	void toArray_onGrid_returnsExpectedArray() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 4, -1);
-
-		Object[] result = grid.toArray();
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer.equals(-1));
-
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
-	}
-
-	@Test
-	void toArrayWithType_onGrid_returnsExpectedArray() {
-		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 4, -1);
-
-		Integer[] result = grid.toArray(new Integer[0]);
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer == -1);
-
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
 	}
 
 	@Test
 	void stream_onGrid_streams() {
 		FixedSizeGrid<String> grid = new FixedSizeGrid<>(3, 4, (i, j) -> "a");
 
-		String result = grid.stream().map(String::toUpperCase).reduce("", (a,b) -> a+b);
+		String result = grid.streamElements().map(String::toUpperCase).reduce("", (a,b) -> a+b);
 
 		assertEquals("AAAAAAAAAAAA", result);
 	}
@@ -250,6 +211,21 @@ class FixedSizeGridTest {
 		assertTrue(coordinates.contains(new Coordinate(1, 1)));
 		assertTrue(coordinates.contains(new Coordinate(0, 2)));
 		assertTrue(coordinates.contains(new Coordinate(1, 2)));
+	}
+
+	@Test
+	void iterator_createsIteratorThatIteratesThroughValuesInOrder() {
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> i + "" + j);
+
+		Iterator<String> it = grid.iterator();
+
+		assertEquals("00", it.next());
+		assertEquals("10", it.next());
+		assertEquals("01", it.next());
+		assertEquals("11", it.next());
+		assertEquals("02", it.next());
+		assertEquals("12", it.next());
+		assertFalse(it.hasNext());
 	}
 
 	@Test
@@ -297,99 +273,4 @@ class FixedSizeGridTest {
 				);
 	}
 
-	@Test
-	void containsAll_withValidEntries_returnsTrue() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		grid.set(0, 0, "a");
-		grid.set(0, 1, "b");
-		grid.set(1, 1, "c");
-
-		boolean result = grid.containsAll(List.of("a", "b", "c"));
-
-		assertTrue(result);
-	}
-
-	@Test
-	void containsAll_withInvalidEntries_returnsFalse() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		grid.set(0, 0, "a");
-		grid.set(0, 1, "b");
-		grid.set(1, 1, "c");
-
-		boolean result = grid.containsAll(List.of("X", "b", "c"));
-
-		assertFalse(result);
-	}
-
-	@Test
-	void containsAll_withEmptyCollectionOnFullGrid_returnsTrue() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		grid.set(0, 0, "a");
-		grid.set(0, 1, "b");
-		grid.set(1, 0, "c");
-		grid.set(1, 1, "d");
-
-		boolean result = grid.containsAll(new ArrayList<>());
-
-		assertTrue(result);
-		assertFalse(grid.contains(""));
-	}
-
-	@Test
-	void containsAll_withDefaultOnNotFullGrid_returnsTrue() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		grid.set(0, 0, "a");
-		grid.set(0, 1, "b");
-
-		boolean result = grid.containsAll(List.of(""));
-
-		assertTrue(result);
-	}
-
-	@Test
-	void containsAll_withEmptyStringCollectionOnFullGrid_returnsFalse() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		grid.set(0, 0, "a");
-		grid.set(0, 1, "b");
-		grid.set(1, 0, "c");
-		grid.set(1, 1, "d");
-
-		boolean result = grid.containsAll(List.of(""));
-
-		assertFalse(result);
-	}
-
-
-
-
-	@Test
-	void remove_throwsUnsupportedOperationException() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-
-		assertThrows(UnsupportedOperationException.class, () -> grid.remove(""));
-	}
-
-	@Test
-	void addAll_throwsUnsupportedOperationException() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2);
-		Collection<String> c = List.of("r", "t");
-
-		assertThrows(UnsupportedOperationException.class, () -> grid.addAll(c));
-	}
-
-	@Test
-	void removeAll_throwsUnsupportedOperationException() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		Collection<String> c = List.of("");
-
-		assertThrows(UnsupportedOperationException.class, () -> grid.removeAll(c));
-	}
-
-	@Test
-	void retainAll_throwsUnsupportedOperationException() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, "");
-		Collection<String> c = List.of("");
-
-		assertThrows(UnsupportedOperationException.class, () -> grid.retainAll(c));
-	}
 }

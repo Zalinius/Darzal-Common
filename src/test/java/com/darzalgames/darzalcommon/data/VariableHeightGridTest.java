@@ -3,6 +3,7 @@ package com.darzalgames.darzalcommon.data;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -15,13 +16,21 @@ import com.darzalgames.darzalcommon.functional.Do;
 
 class VariableHeightGridTest {
 
+	@Test
+	void width_returnsGridWidth() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
+
+		assertTrue(grid.isEmpty());
+		assertEquals(3, grid.width());
+	}
+
 	@ParameterizedTest
 	@MethodSource("entryCountAndExpectedHeight")
 	void getHeight_width3VariousValues_returnsExpected(int entryCount, int expectedHeight) {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
 		Do.xTimes(entryCount, () -> grid.add("test"));
 
-		int result = grid.getHeight();
+		int result = grid.height();
 
 		assertEquals(expectedHeight, result);
 	}
@@ -96,31 +105,6 @@ class VariableHeightGridTest {
 		assertEquals(new Coordinate(0, 1), result);
 	}
 
-
-	@Test
-	void toArray_onGrid_returnsExpectedArray() {
-		VariableHeightGrid<Integer> grid = new VariableHeightGrid<>(3);
-		Do.xTimes(6, () -> grid.add(-1));
-
-		Object[] result = grid.toArray();
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer.equals(-1));
-
-		assertEquals(6, grid.size());
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
-	}
-
-	@Test
-	void toArrayWithType_onGrid_returnsExpectedArray() {
-		VariableHeightGrid<Integer> grid = new VariableHeightGrid<>(1, List.of(-1, -1, -1));
-
-		Integer[] result = grid.toArray(new Integer[0]);
-		boolean fullOfNegativeOnes = Stream.of(result).allMatch(integer -> integer == -1);
-
-		assertEquals(grid.size(), result.length);
-		assertTrue(fullOfNegativeOnes);
-	}
-
 	@Test
 	void stream_onGrid_streams() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
@@ -129,6 +113,23 @@ class VariableHeightGridTest {
 		String result = grid.stream().map(String::toUpperCase).reduce("", (a,b) -> a+b);
 
 		assertEquals("AAAAAAAAAAAA", result);
+	}
+
+	@Test
+	void iterator_onGrid_returnsIteratorForAllValues() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+		grid.add("d");
+
+		Iterator<String> it = grid.iterator();
+
+		assertEquals("a", it.next());
+		assertEquals("b", it.next());
+		assertEquals("c", it.next());
+		assertEquals("d", it.next());
+		assertFalse(it.hasNext());
 	}
 
 	@Test
@@ -253,27 +254,14 @@ class VariableHeightGridTest {
 		grid.add("a");
 		grid.add("b");
 
-		int initialHeight = grid.getHeight();
-		boolean changed = grid.addAll(List.of("r", "t"));
-		int finalHeight = grid.getHeight();
+		int initialHeight = grid.height();
+		grid.addAll(List.of("r", "t"));
+		int finalHeight = grid.height();
 
-		assertTrue(changed);
 		assertTrue(grid.containsAll(List.of("a", "b", "r", "t")));
 		assertFalse(grid.contains(""));
 		assertEquals(1, initialHeight);
 		assertEquals(2, finalHeight);
-	}
-
-	@Test
-	void addAll_emptyList_returnsFalse() {
-		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
-		grid.add("a");
-		grid.add("b");
-		grid.add("c");
-
-		boolean changed = grid.addAll(new ArrayList<>());
-
-		assertFalse(changed);
 	}
 
 	@Test
@@ -344,19 +332,17 @@ class VariableHeightGridTest {
 	}
 
 	@Test
-	void retainAll_retainsValidValues() {
+	void clear_removesAllElementsFromGrid() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
 		grid.add("a");
-		grid.add("a");
-		grid.add("b");
 		grid.add("b");
 		grid.add("c");
 
-		boolean changed = grid.retainAll(List.of("a", "x"));
+		grid.clear();
 
-		assertTrue(changed);
-		assertTrue(grid.contains("a"));
-		assertEquals(2, grid.size());
+		assertTrue(grid.isEmpty());
+		assertEquals(0, grid.size());
 	}
+
 }
 

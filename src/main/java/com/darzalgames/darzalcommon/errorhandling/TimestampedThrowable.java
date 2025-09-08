@@ -9,10 +9,8 @@ public class TimestampedThrowable extends Throwable{
 
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * The time at which the exception was thrown, in UTC
-	 */
-	public final Instant timestamp;
+	/** The time in UTC */
+	private final Instant timestamp;
 
 	/**
 	 * Constructs a TimeStampledThrowable
@@ -22,5 +20,13 @@ public class TimestampedThrowable extends Throwable{
 	public TimestampedThrowable(Throwable error, Instant timestamp) {
 		super(error);
 		this.timestamp = timestamp;
+	}
+
+	/**
+	 * Gets the time at which the exception was thrown
+	 * @return the instant at which the exception was thrown, in UTC
+	 */
+	public Instant getTimestamp() {
+		return timestamp;
 	}
 }
