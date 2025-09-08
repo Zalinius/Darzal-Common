@@ -91,11 +91,9 @@ class HexagonTest {
 	@Test
 	void equals_withNonHexagon_isFalse() {
 		Hexagon hexagon1 = new Hexagon(3, 20);
+		String hexagonString = "hexagon";
 
-		@SuppressWarnings("unlikely-arg-type")
-		boolean stringComparisonResult = "hexagon".equals(hexagon1);
-
-		assertFalse(stringComparisonResult);
+		assertNotEquals(hexagon1, hexagonString);
 	}
 
 	@Test

@@ -9,22 +9,48 @@ import org.junit.jupiter.api.Test;
 class BiMapTest {
 
 	@Test
-	void addPair_toEmptyBiMap_addsPair() {
+	void putPair_toEmptyBiMap_addsPairAndReturnsNull() {
 		BiMap<Integer, String> biMap = new BiMap<>();
 
-		biMap.addPair(1, "one");
+		biMap.putPair(1, "one");
 
-		assertEquals("one", biMap.getSecondValue(1));
-		assertEquals(1, biMap.getFirstValue("one"));
 		assertFalse(biMap.isEmpty());
 		assertEquals(1, biMap.size());
+		assertEquals("one", biMap.getSecondValue(1));
+		assertEquals(1, biMap.getFirstValue("one"));
 	}
 
+	@Test
+	void putPair_withExactCollision_addsPairAndOldPairIsGone() {
+		BiMap<Integer, String> biMap = new BiMap<>();
+
+		biMap.putPair(1, "one");
+		biMap.putPair(1, "one");
+
+		assertFalse(biMap.isEmpty());
+		assertEquals(1, biMap.size());
+		assertEquals("one", biMap.getSecondValue(1));
+		assertEquals(1, biMap.getFirstValue("one"));
+	}
+
+	@Test
+	void putPair_withDoubleCollision_addsPairAndRemovesTwoCollidedPair() {
+		BiMap<Integer, String> biMap = new BiMap<>();
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
+
+		biMap.putPair(1, "two");
+
+		assertFalse(biMap.isEmpty());
+		assertEquals(1, biMap.size());
+		assertEquals("two", biMap.getSecondValue(1));
+		assertEquals(1, biMap.getFirstValue("two"));
+	}
 
 	@Test
 	void removePair_inBiMap_removesPair() {
 		BiMap<Integer, String> biMap = new BiMap<>();
-		biMap.addPair(1, "one");
+		biMap.putPair(1, "one");
 
 		Tuple<Integer, String> removedPair = biMap.removePair(1, "one");
 
@@ -38,7 +64,7 @@ class BiMapTest {
 	}
 
 	@Test
-	void remove_NonExistingPair_ReturnsFalse(){
+	void remove_nonExistingPair_returnsNull(){
 		BiMap <String, String> bimap = new BiMap<>();
 		String input1 = "hello", input2 = "world";
 
@@ -52,8 +78,8 @@ class BiMapTest {
 	@Test
 	void removePair_ofPresentButUnlinkedKeys_doesNotRemovePair() {
 		BiMap<Integer, String> biMap = new BiMap<>();
-		biMap.addPair(1, "one");
-		biMap.addPair(2, "two");
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
 
 		Tuple<Integer, String> removedPair = biMap.removePair(1, "two");
 
@@ -65,8 +91,8 @@ class BiMapTest {
 	@Test
 	void getKeySets_returnsApropriateKeySet() {
 		BiMap<Integer, String> biMap = new BiMap<>();
-		biMap.addPair(1, "one");
-		biMap.addPair(2, "two");
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
 
 		Set<Integer> firstKeySet = biMap.getFirstKeySet();
 		Set<String> secondKeySet = biMap.getSecondKeyset();
@@ -78,8 +104,8 @@ class BiMapTest {
 	@Test
 	void containsKey_checksIfValueIsPresent() {
 		BiMap<Integer, String> biMap = new BiMap<>();
-		biMap.addPair(1, "one");
-		biMap.addPair(2, "two");
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
 
 		assertTrue(biMap.containsFirstKey(1));
 		assertFalse(biMap.containsFirstKey(0));
@@ -90,8 +116,8 @@ class BiMapTest {
 	@Test
 	void removeByKey_inBiMapWithKeyPresent_removesPair() {
 		BiMap<Integer, String> biMap = new BiMap<>();
-		biMap.addPair(1, "one");
-		biMap.addPair(2, "two");
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
 
 		Tuple<Integer, String> removedPairByFirstType = biMap.removeByFirstType(1);
 		Tuple<Integer, String> removedPairBySecondType = biMap.removeBySecondType("two");
@@ -105,6 +131,20 @@ class BiMapTest {
 		assertEquals("two", removedPairBySecondType.f());
 
 		assertTrue(biMap.isEmpty());
+	}
+
+	@Test
+	void removeByKey_inBiMapWithoutKeyPresent_removesNothingAndReturnsNull() {
+		BiMap<Integer, String> biMap = new BiMap<>();
+		biMap.putPair(1, "one");
+		biMap.putPair(2, "two");
+
+		Tuple<Integer, String> removedPairByFirstType = biMap.removeByFirstType(3);
+		Tuple<Integer, String> removedPairBySecondType = biMap.removeBySecondType("three");
+
+		assertEquals(2, biMap.size());
+		assertNull(removedPairByFirstType);
+		assertNull(removedPairBySecondType);
 	}
 
 

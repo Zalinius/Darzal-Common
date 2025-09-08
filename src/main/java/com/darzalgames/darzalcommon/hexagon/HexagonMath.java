@@ -2,6 +2,9 @@ package com.darzalgames.darzalcommon.hexagon;
 
 import com.darzalgames.darzalcommon.data.Tuple;
 
+/**
+ * A collection of pure functions related to hexagon math
+ */
 public class HexagonMath {
 
 	/**

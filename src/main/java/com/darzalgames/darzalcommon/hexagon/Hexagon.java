@@ -5,7 +5,6 @@ import java.util.Objects;
 
 /**
  * A simple class representing a flat-top hexagon using axial coordinates
- * @author DarZal
  */
 public class Hexagon {
 
@@ -23,6 +22,7 @@ public class Hexagon {
 	}
 
 	/**
+	 * Get the Q coordinate
 	 * @return The axial Q coordinate of the {@link Hexagon} (logical coordinate)
 	 */
 	public int getQ() {
@@ -30,6 +30,7 @@ public class Hexagon {
 	}
 
 	/**
+	 * Get the R coordinate
 	 * @return The axial R coordinate of the {@link Hexagon} (logical coordinate)
 	 */
 	public int getR() {
@@ -37,6 +38,7 @@ public class Hexagon {
 	}
 
 	/**
+	 * Get the S coordinate
 	 * @return The axial S coordinate of the {@link Hexagon} (logical coordinate), calculated from Q and R
 	 */
 	public int getS() {
@@ -46,6 +48,7 @@ public class Hexagon {
 	}
 
 	/**
+	 * Get the column
 	 * @return The offset column coordinate of the {@link Hexagon}
 	 */
 	public int getColumn() {
@@ -53,6 +56,7 @@ public class Hexagon {
 	}
 
 	/**
+	 * Get the row
 	 * @return The offset row coordinate of the {@link Hexagon}
 	 */
 	public int getRow() {
@@ -85,9 +89,10 @@ public class Hexagon {
 	}
 
 	/**
+	 * Creates a hexagon from a row and column
 	 * @param row offset coordinates row number
 	 * @param column offset coordinates column number
-	 * @return a @Hexagon built from the provided coordinates, compatible with all coordinate systems
+	 * @return a {@link Hexagon} built from the provided coordinates, compatible with all coordinate systems
 	 */
 	public static Hexagon makeHexagonFromOffsetCoordinates(int row, int column) {
 		int q = column;
@@ -96,6 +101,9 @@ public class Hexagon {
 	}
 
 
+	/**
+	 * A comparator that orders hexagons top to bottom, and then left to right
+	 */
 	public static final Comparator<Hexagon> topToBottomLeftToRightComparator = (hexagon1, hexagon2) -> {
 		int firstComparison = Float.compare(hexagon1.getColumn(), hexagon2.getColumn());
 		if (firstComparison != 0) {

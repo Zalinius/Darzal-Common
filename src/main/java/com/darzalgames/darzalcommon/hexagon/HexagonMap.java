@@ -3,34 +3,53 @@ package com.darzalgames.darzalcommon.hexagon;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * A java-style map, with hexagons as keys and various convenience functions
+ * @param <E> The type for the values of the key-value pairs in the map
+ */
 public class HexagonMap<E> {
 
-	protected final Map<Hexagon, E> grid;
+	private final Map<Hexagon, E> innerMap;
 
+	/**
+	 * Constructs an empty HexagonMap
+	 */
 	public HexagonMap() {
-		grid = new HashMap<>();
-	}
-
-	public E getMiddleHexagonValue() {
-		return grid.get(new Hexagon(0, 0));
-	}
-
-	public void put(Hexagon hexagon, E value) {
-		grid.put(hexagon, value);
+		innerMap = new HashMap<>();
 	}
 
 	/**
-	 * @return all {@link Hexagon} objects stored by this grid
+	 * Gets the value in the middle of the map
+	 * @return gets the value at the origin hexagon (0,0)
+	 */
+	public E getMiddleHexagonValue() {
+		return innerMap.get(new Hexagon(0, 0));
+	}
+
+	/**
+	 * Puts a value at the specified hexagon coordinate
+	 * @param hexagon the location for the new value
+	 * @param value the value to insert
+	 * @return the previous value at the hexagon coordinate, or null if there was none
+	 */
+	public E put(Hexagon hexagon, E value) {
+		return innerMap.put(hexagon, value);
+	}
+
+	/**
+	 * Returns the set of all hexagon keys in this map
+	 * @return all {@link Hexagon} objects stored by this map
 	 */
 	public Set<Hexagon> getAllHexagons() {
-		return grid.keySet();
+		return innerMap.keySet();
 	}
 
 	/**
-	 * @return all objects stored by this grid
+	 * Gets all the values stored in this map
+	 * @return all objects stored by this map
 	 */
 	public Collection<E> getAllValues() {
-		return grid.values();
+		return innerMap.values();
 	}
 
 	/**
@@ -41,7 +60,7 @@ public class HexagonMap<E> {
 	public Set<Hexagon> getHexagonNeighborsOf(Hexagon hexagon) {
 		return HexagonDirection.values().stream()
 				.map(direction -> HexagonDirection.getNeighborHexagon(hexagon, direction))
-				.filter(grid::containsKey)
+				.filter(innerMap::containsKey)
 				.collect(Collectors.toSet());
 	}
 	/**
@@ -50,28 +69,30 @@ public class HexagonMap<E> {
 	 * @return A list of the neighboring values
 	 */
 	public Collection<E> getValueNeighborsOf(Hexagon hexagon) {
-		return getHexagonNeighborsOf(hexagon).stream().map(grid::get).toList();
+		return getHexagonNeighborsOf(hexagon).stream().map(innerMap::get).toList();
 	}
 
 	/**
+	 * Gets the immediate neibhbor value in the specified direction
 	 * @param hexagon The starting point for searching for a neighbor
 	 * @param direction the direction to search in
 	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */
-	public E getNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
+	public E getValueNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
 		Hexagon neighbor = HexagonDirection.getNeighborHexagon(hexagon, direction);
-		return getValueAt(neighbor);
+		return get(neighbor);
 	}
 
 	/**
+	 * Get the value at the specified hexagon
 	 * @param hexagon the hexagon address of the desired value
 	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException
 	 */
-	public E getValueAt(Hexagon hexagon) {
-		if (grid.containsKey(hexagon)) {
-			return grid.get(hexagon);
+	public E get(Hexagon hexagon) {
+		if (innerMap.containsKey(hexagon)) {
+			return innerMap.get(hexagon);
 		} else {
-			throw new IllegalArgumentException("Cannot get hexagon outside of the grid at: " + hexagon);
+			throw new IllegalArgumentException("Hexagon not in map: " + hexagon);
 		}
 	}
 }

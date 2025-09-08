@@ -39,14 +39,14 @@ class CoordinateTest {
 	}
 
 	@Test
-	void noArgConstrucror_createsAnOriginCoordinate() {
+	void noArgConstructor_createsAnOriginCoordinate() {
 		Coordinate coordinate = new Coordinate();
 
 		assertEquals(new Coordinate(0, 0), coordinate);
 	}
 
 	@Test
-	void tupleConstrucror_createsCoordinate() {
+	void tupleConstructor_createsCoordinate() {
 		Tuple<Integer, Integer> tuple = new Tuple<>(2, 4);
 		Coordinate coordinate = new Coordinate(tuple);
 
@@ -54,13 +54,40 @@ class CoordinateTest {
 	}
 
 	@Test
-	void tupleConstrucror_tupleWithNullEntries_throwsNullPointerException() {
+	void tupleConstructor_tupleWithNullEntries_throwsNullPointerException() {
 		Tuple<Integer, Integer> tuple = new Tuple<>(null, null);
 
 		assertThrows(NullPointerException.class, () -> new Coordinate(tuple));
 
 	}
 
+	@Test
+	void pairConstructor_createsCoordinate() {
+		Pair<Integer> pair = new Pair<>(2, 4);
+		Coordinate coordinate = new Coordinate(pair);
+
+		assertEquals(new Coordinate(2, 4), coordinate);
+	}
+
+	@Test
+	void toPair_createsIntegerPairFromCoordinate() {
+		Coordinate coordinate = new Coordinate(1,2);
+
+		Pair<Integer> pair = coordinate.toPair();
+
+		assertEquals(1, pair.e1());
+		assertEquals(2, pair.e2());
+	}
+
+	@Test
+	void toTuple_createsIntegerTupleFromCoordinate() {
+		Coordinate coordinate = new Coordinate(1,2);
+
+		Tuple<Integer, Integer> tuple = coordinate.toTuple();
+
+		assertEquals(1, tuple.e());
+		assertEquals(2, tuple.f());
+	}
 
 	@Test
 	void toString_doesNotThrow() {

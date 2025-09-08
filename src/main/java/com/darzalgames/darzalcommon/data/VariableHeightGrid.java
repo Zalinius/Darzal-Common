@@ -36,7 +36,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	 * Gets the fixed width of the grid
 	 * @return the fixed number of objects in a full row (i.e. the number of columns)
 	 */
-	public int getWidth() {
+	public int width() {
 		return width;
 	}
 
@@ -44,7 +44,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	 * Gets the current height of the grid
 	 * @return the number of rows, which can change as the entries change
 	 */
-	public int getHeight() {
+	public int height() {
 		int rowCount = inside.size()/width;
 		int remainder = inside.size()%width;
 		if (remainder > 0) {
@@ -120,7 +120,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (int row = 0; row < getHeight(); row++) {
+		for (int row = 0; row < height(); row++) {
 			for (int column = 0; column < width; column++) {
 				if (hasEntryAt(row, column)) {
 					sb.append(get(row, column));

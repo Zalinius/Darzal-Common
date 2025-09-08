@@ -2,6 +2,7 @@ package com.darzalgames.darzalcommon.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,6 +12,20 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class FixedSizeGridTest {
+
+	@Test
+	void width_returnsGridWidth() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
+
+		assertEquals(5, grid.width());
+	}
+
+	@Test
+	void heigth_returnsGridHeight() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
+
+		assertEquals(7, grid.height());
+	}
 
 	@Test
 	void size_of5x7grid_is35() {
@@ -31,17 +46,28 @@ class FixedSizeGridTest {
 	}
 
 	@Test
-	void get_outsideOfGrid_throwsIllegalArgumentException() {
+	void get_outsideOfGrid_throwsIndexOutOfBoundsException() {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
 
 		assertThrows(IndexOutOfBoundsException.class, () -> grid.get(6, 8));
 	}
 
 	@Test
-	void set_outsideOfGrid_throwsIllegalArgumentException() {
+	void set_outsideOfGrid_throwsIndexOutOfBoundsException() {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
 
 		assertThrows(IndexOutOfBoundsException.class, () -> grid.set(6, 8, 23));
+	}
+
+	@Test
+	void set_whenCoordinateAlreadyHasValue_returnsOldValue() {
+		final int defaultValue = 69;
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7, defaultValue);
+
+		int replacedValue = grid.set(new Coordinate(2, 3), 420);
+
+		assertEquals(69, replacedValue);
+		assertEquals(420, grid.get(2, 3));
 	}
 
 	@Test
@@ -150,7 +176,7 @@ class FixedSizeGridTest {
 
 
 	@Test
-	void constructorWithInitializerAndDefaultValue_whenGivenInitializerLambdaAndDefault_initializedValues() {
+	void constructorWithInitializer_whenGivenInitializer_initializesValues() {
 		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i+","+j));
 
 		assertEquals(6, grid.size());
@@ -185,6 +211,21 @@ class FixedSizeGridTest {
 		assertTrue(coordinates.contains(new Coordinate(1, 1)));
 		assertTrue(coordinates.contains(new Coordinate(0, 2)));
 		assertTrue(coordinates.contains(new Coordinate(1, 2)));
+	}
+
+	@Test
+	void iterator_createsIteratorThatIteratesThroughValuesInOrder() {
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> i + "" + j);
+
+		Iterator<String> it = grid.iterator();
+
+		assertEquals("00", it.next());
+		assertEquals("10", it.next());
+		assertEquals("01", it.next());
+		assertEquals("11", it.next());
+		assertEquals("02", it.next());
+		assertEquals("12", it.next());
+		assertFalse(it.hasNext());
 	}
 
 	@Test

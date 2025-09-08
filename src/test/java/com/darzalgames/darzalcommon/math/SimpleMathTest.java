@@ -101,34 +101,9 @@ class SimpleMathTest {
 		assertTrue(result);
 	}
 
-	@Test
-	void isBetween_onLeftBound_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 0;
-
-		boolean result = SimpleMath.isBetween(left, right, input);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isBetween_onRightBound_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 5;
-
-		boolean result = SimpleMath.isBetween(left, right, input);
-
-		assertTrue(result);
-	}
-
-	@Test
-	void isBetween_withinBounds_returnsTrue(){
-		int left = 0;
-		int right = 5;
-		int input = 2;
-
+	@ParameterizedTest
+	@CsvSource(value = {"0,5,0", "0,5,5", "0,5,2"})
+	void isBetween_whenValueIsBetweenBounds_returnsTrue(int left, int right, int input) {
 		boolean result = SimpleMath.isBetween(left, right, input);
 
 		assertTrue(result);

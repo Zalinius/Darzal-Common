@@ -3,6 +3,7 @@ package com.darzalgames.darzalcommon.data;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -15,13 +16,21 @@ import com.darzalgames.darzalcommon.functional.Do;
 
 class VariableHeightGridTest {
 
+	@Test
+	void width_returnsGridWidth() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
+
+		assertTrue(grid.isEmpty());
+		assertEquals(3, grid.width());
+	}
+
 	@ParameterizedTest
 	@MethodSource("entryCountAndExpectedHeight")
 	void getHeight_width3VariousValues_returnsExpected(int entryCount, int expectedHeight) {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
 		Do.xTimes(entryCount, () -> grid.add("test"));
 
-		int result = grid.getHeight();
+		int result = grid.height();
 
 		assertEquals(expectedHeight, result);
 	}
@@ -104,6 +113,23 @@ class VariableHeightGridTest {
 		String result = grid.stream().map(String::toUpperCase).reduce("", (a,b) -> a+b);
 
 		assertEquals("AAAAAAAAAAAA", result);
+	}
+
+	@Test
+	void iterator_onGrid_returnsIteratorForAllValues() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+		grid.add("d");
+
+		Iterator<String> it = grid.iterator();
+
+		assertEquals("a", it.next());
+		assertEquals("b", it.next());
+		assertEquals("c", it.next());
+		assertEquals("d", it.next());
+		assertFalse(it.hasNext());
 	}
 
 	@Test
@@ -228,9 +254,9 @@ class VariableHeightGridTest {
 		grid.add("a");
 		grid.add("b");
 
-		int initialHeight = grid.getHeight();
+		int initialHeight = grid.height();
 		grid.addAll(List.of("r", "t"));
-		int finalHeight = grid.getHeight();
+		int finalHeight = grid.height();
 
 		assertTrue(grid.containsAll(List.of("a", "b", "r", "t")));
 		assertFalse(grid.contains(""));
@@ -303,6 +329,19 @@ class VariableHeightGridTest {
 		assertTrue(changed);
 		assertFalse(grid.contains("a"));
 		assertEquals(2, grid.size());
+	}
+
+	@Test
+	void clear_removesAllElementsFromGrid() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("a");
+		grid.add("b");
+		grid.add("c");
+
+		grid.clear();
+
+		assertTrue(grid.isEmpty());
+		assertEquals(0, grid.size());
 	}
 
 }

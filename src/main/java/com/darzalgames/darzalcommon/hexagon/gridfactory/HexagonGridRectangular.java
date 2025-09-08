@@ -7,11 +7,11 @@ import com.darzalgames.darzalcommon.hexagon.Hexagon;
 
 /**
  * Factory method for rectangular hexagon tiling
- * @author DarZal
  */
 public class HexagonGridRectangular {
 
 	/**
+	 * Creates a List of hexagons, representing a rectangular layout
 	 * @param gridWidth the number of hexagons along the x-axis
 	 * @param gridHeight the number of hexagons along the y-axis
 	 * @return A list of flat-top {@link Hexagon Hexagons}, with the axial coordinate (0,0) at the center (or near the center if width or height are even)
@@ -20,7 +20,7 @@ public class HexagonGridRectangular {
 		if(gridHeight <= 0 || gridWidth <= 0) {
 			throw new IllegalArgumentException("grid width: " + gridWidth + " and grid height: " + gridHeight + " must be positive");
 		}
-		
+
 		List<Hexagon> grid = new ArrayList<>();
 
 		int left = Math.floorDiv(-gridWidth, 2);
@@ -34,7 +34,7 @@ public class HexagonGridRectangular {
 				grid.add(new Hexagon(q, r));
 			}
 		}
-		
+
 		return grid;
 	}
 

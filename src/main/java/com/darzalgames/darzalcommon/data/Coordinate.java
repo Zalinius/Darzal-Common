@@ -20,11 +20,27 @@ public record Coordinate(
 	}
 
 	/**
+	 * Creates a coordinate from an integer pair
+	 * @param pair a non-null pair of non-null integers
+	 */
+	public Coordinate(Pair<Integer> pair) {
+		this(pair.e1(), pair.e2());
+	}
+
+	/**
 	 * Creates a coordinate from an integer tuple
 	 * @param tuple a non-null tuple of non-null integers
 	 */
 	public Coordinate(Tuple<Integer, Integer> tuple) {
 		this(tuple.e(), tuple.f());
+	}
+
+	/**
+	 * Gets this Coordinate as an Integer Pair
+	 * @return A pair of integers corresponding to this coordinate.
+	 */
+	public Pair<Integer> toPair(){
+		return new Pair<>(i, j);
 	}
 
 	/**

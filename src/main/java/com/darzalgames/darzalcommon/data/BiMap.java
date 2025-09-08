@@ -23,16 +23,16 @@ public class BiMap <F, S> {
 	}
 
 	/**
-	 * Adds a two way pair to the bimap
-	 * @param first A key and value to insert
-	 * @param second A key and value to insert
-	 * @return the previous two values potentially replaced by this insertion, or an empty tuple if nothing was replaced
+	 * Inserts a two way pair to the bimap, removing any pair using either of the keys
+	 * @param first A key and value to insert of the first type
+	 * @param second A key and value to insert of the second type
 	 */
-	public Tuple<F, S> addPair(F first, S second) {
-		S oldSecondValue = mapFirstToSecond.put(first, second);
-		F oldFirstValue = mapSecondToFirst.put(second, first);
+	public void putPair(F first, S second) {
+		removeByFirstType(first);
+		removeBySecondType(second);
 
-		return new Tuple<>(oldFirstValue, oldSecondValue);
+		mapFirstToSecond.put(first, second);
+		mapSecondToFirst.put(second, first);
 	}
 
 	/**
@@ -107,7 +107,7 @@ public class BiMap <F, S> {
 	/**
 	 * Removes the key pair with the specified F key
 	 * @param first the key to be used
-	 * @return True if a pair is removed, false otherwise
+	 * @return The removed pair as a tuple, or null if the pair wasn't in the bimap
 	 */
 	public Tuple<F, S> removeByFirstType(F first)	{
 		if (mapFirstToSecond.containsKey(first)) {
@@ -121,7 +121,7 @@ public class BiMap <F, S> {
 	/**
 	 * Removes the key pair with the specified S key
 	 * @param second the key to be used
-	 * @return True if a pair is removed, false otherwise
+	 * @return The removed pair as a tuple, or null if the pair wasn't in the bimap
 	 */
 	public Tuple<F, S> removeBySecondType(S second) {
 		if (mapSecondToFirst.containsKey(second)) {
