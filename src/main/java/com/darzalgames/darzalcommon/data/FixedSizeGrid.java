@@ -116,7 +116,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 */
 	public E set(int i, int j, E value) {
 		if(!isInGrid(i, j)) {
-			throw new IllegalArgumentException(i + ", " + j + " are not within the domain of the grid!");
+			throw new IndexOutOfBoundsException(i + ", " + j + " are not within the domain of the grid!");
 		}
 
 		return setToList(i, j, value);

@@ -5,8 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A two way map with 1-to-1 mapping. When a pair is inserted
- * Both values will act both as keys and values.
+ * A bidirectional map with a 1-to-1 mapping. When a pair is inserted, the values will act both as keys and values.
  * @param <F> The *left* parameter of the map. The type must be suitable for use as a key (equals, uniqueness) and for hashing
  * @param <S> The *right* parameter of the map. The type must be suitable for use as a key (equals, uniqueness) and for hashing
  */
@@ -27,7 +26,7 @@ public class BiMap <F, S> {
 	 * Adds a two way pair to the bimap
 	 * @param first A key and value to insert
 	 * @param second A key and value to insert
-	 * @return the previous two values potentially replaced by this insertion, or null if nothing was replaced
+	 * @return the previous two values potentially replaced by this insertion, or an empty tuple if nothing was replaced
 	 */
 	public Tuple<F, S> addPair(F first, S second) {
 		S oldSecondValue = mapFirstToSecond.put(first, second);
@@ -75,7 +74,7 @@ public class BiMap <F, S> {
 	 * @param first The key to check
 	 * @return true if the bimap contains the key
 	 */
-	public boolean containsFirstValue(F first) {
+	public boolean containsFirstKey(F first) {
 		return mapFirstToSecond.containsKey(first);
 	}
 
@@ -84,7 +83,7 @@ public class BiMap <F, S> {
 	 * @param second The key to check
 	 * @return true if the bimap contains the key
 	 */
-	public boolean containsSecondValue(S second) {
+	public boolean containsSecondKey(S second) {
 		return mapSecondToFirst.containsKey(second);
 	}
 
@@ -92,16 +91,16 @@ public class BiMap <F, S> {
 	 * Removes a key-key pair if both keys are present and linked to eachother
 	 * @param first The first key
 	 * @param second The second key
-	 * @return True if the pair was removed
+	 * @return The removed pair as a tuple, or null if the pair wasn't in the bimap
 	 */
-	public boolean removePair(F first, S second) {
+	public Tuple<F, S> removePair(F first, S second) {
 		if (mapFirstToSecond.containsKey(first) && mapSecondToFirst.containsKey(second) && getSecondValue(first).equals(second) && getFirstValue(second).equals(first))	{
-			mapFirstToSecond.remove(first);
-			mapSecondToFirst.remove(second);
-			return true;
+			S sValue = mapFirstToSecond.remove(first);
+			F fValue = mapSecondToFirst.remove(second);
+			return new Tuple<>(fValue, sValue);
 		}
 		else {
-			return false;
+			return null;
 		}
 	}
 
@@ -110,12 +109,12 @@ public class BiMap <F, S> {
 	 * @param first the key to be used
 	 * @return True if a pair is removed, false otherwise
 	 */
-	public boolean removeByFirstType(F first)	{
+	public Tuple<F, S> removeByFirstType(F first)	{
 		if (mapFirstToSecond.containsKey(first)) {
 			return removePair(first, mapFirstToSecond.get(first));
 		}
 		else {
-			return false;
+			return null;
 		}
 	}
 
@@ -124,13 +123,29 @@ public class BiMap <F, S> {
 	 * @param second the key to be used
 	 * @return True if a pair is removed, false otherwise
 	 */
-	public boolean removeBySecondType(S second) {
+	public Tuple<F, S> removeBySecondType(S second) {
 		if (mapSecondToFirst.containsKey(second)) {
 			return removePair(mapSecondToFirst.get(second), second);
 		}
 		else {
-			return false;
+			return null;
 		}
+	}
+
+	/**
+	 * Returns the number of key-key mappings in this bi-map.
+	 * @return the number of pairs in this bimap
+	 */
+	public int size() {
+		return mapFirstToSecond.size();
+	}
+
+	/**
+	 * Returns true if this map contains no pairs.
+	 * @return true if this map contains no pairs, false otherwise
+	 */
+	public boolean isEmpty() {
+		return mapFirstToSecond.isEmpty();
 	}
 
 }

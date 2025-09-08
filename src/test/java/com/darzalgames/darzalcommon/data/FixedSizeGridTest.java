@@ -31,10 +31,17 @@ class FixedSizeGridTest {
 	}
 
 	@Test
+	void get_outsideOfGrid_throwsIllegalArgumentException() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
+
+		assertThrows(IndexOutOfBoundsException.class, () -> grid.get(6, 8));
+	}
+
+	@Test
 	void set_outsideOfGrid_throwsIllegalArgumentException() {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(5, 7);
 
-		assertThrows(IllegalArgumentException.class, () -> grid.set(6, 8, 23));
+		assertThrows(IndexOutOfBoundsException.class, () -> grid.set(6, 8, 23));
 	}
 
 	@Test

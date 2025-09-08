@@ -1,3 +1,4 @@
 # Darzal-Common
+A pure java library with no dependencies.
 
-Common code shared between projects, not dependent on ZJE or LibGDX
+Contains various gamedev adjacent utilites.

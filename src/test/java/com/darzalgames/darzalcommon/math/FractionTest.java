@@ -350,6 +350,15 @@ class FractionTest {
 	}
 
 	@Test
+	void integerDivision_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
+		Fraction f1 = new Fraction(-5,  7);
+		Fraction f2 = new Fraction(1, 12);
+
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerDivision(f1, f2));
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerDivision(f2, f1));
+	}
+
+	@Test
 	void integerRemainder_fractionByZero_throwsArithmeticException() {
 		Fraction f1 = new Fraction(5,  7);
 		Fraction f2 = new Fraction(0, 12);
@@ -379,6 +388,15 @@ class FractionTest {
 		Fraction f2 = new Fraction(3, 8);
 
 		assertEquals(new Fraction(17, 56), Fraction.integerRemainder(f1, f2));
+	}
+
+	@Test
+	void integerRemainder_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
+		Fraction f1 = new Fraction(-5,  7);
+		Fraction f2 = new Fraction(1, 12);
+
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerRemainder(f1, f2));
+		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerRemainder(f2, f1));
 	}
 
 	@Test

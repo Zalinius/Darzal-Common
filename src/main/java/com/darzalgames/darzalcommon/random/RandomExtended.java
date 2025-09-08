@@ -9,7 +9,7 @@ import com.darzalgames.darzalcommon.functional.Do;
  * An extension to the Java Random class with some convenience functions for GameDev.
  * Can give you angles and subsets and such
  */
-public class RandomExtended extends Random{
+public class RandomExtended extends Random {
 
 	/**
 	 * All internal state is capture by the parent class

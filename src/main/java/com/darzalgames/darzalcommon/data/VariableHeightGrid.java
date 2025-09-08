@@ -53,6 +53,10 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 		return rowCount;
 	}
 
+	/**
+	 * Get the number of elements in the grid
+	 * @return the number of elements in the grid
+	 */
 	public int size() {
 		return inside.size();
 	}
@@ -151,30 +155,60 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 		return inside.iterator();
 	}
 
-	public boolean add(E e) {
-		return inside.add(e);
+	/**
+	 * Adds an element to the end of this variable height grid
+	 * @param e the element to add
+	 */
+	public void add(E e) {
+		inside.add(e);
 	}
 
-	public boolean remove(Object o) {
-		return inside.remove(o);
+	/**
+	 * Remove the first instance matching the argument from this grid
+	 * @param e the element to remove
+	 * @return true if an element was removed
+	 */
+	public boolean remove(E e) {
+		return inside.remove(e);
 	}
 
+	/**
+	 * Checks if a collection of elements are all present in the grid
+	 * @param c the collection to search for
+	 * @return true if every element in the collection is present in the grid
+	 */
 	public boolean containsAll(Collection<?> c) {
 		return inside.containsAll(c);
 	}
 
-	public boolean addAll(Collection<? extends E> c) {
-		return inside.addAll(c);
+	/**
+	 * Adds all elements from a collection to the end of this grid
+	 * @param c the collection of elements to add
+	 */
+	public void addAll(Collection<? extends E> c) {
+		inside.addAll(c);
 	}
 
+	/**
+	 * Remove the elements matching the elements in the collection from the grid
+	 * @param c the collection of elements to remove
+	 * @return true if any elements were removed
+	 */
 	public boolean removeAll(Collection<?> c) {
 		return inside.removeAll(c);
 	}
 
+	/**
+	 * Stream the elements of this grid in order
+	 * @return an ordered stream of the elements
+	 */
 	public Stream<E> stream() {
 		return inside.stream();
 	}
 
+	/**
+	 * Remove all elements from this grid
+	 */
 	public void clear() {
 		inside.clear();
 	}

@@ -229,26 +229,13 @@ class VariableHeightGridTest {
 		grid.add("b");
 
 		int initialHeight = grid.getHeight();
-		boolean changed = grid.addAll(List.of("r", "t"));
+		grid.addAll(List.of("r", "t"));
 		int finalHeight = grid.getHeight();
 
-		assertTrue(changed);
 		assertTrue(grid.containsAll(List.of("a", "b", "r", "t")));
 		assertFalse(grid.contains(""));
 		assertEquals(1, initialHeight);
 		assertEquals(2, finalHeight);
-	}
-
-	@Test
-	void addAll_emptyList_returnsFalse() {
-		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
-		grid.add("a");
-		grid.add("b");
-		grid.add("c");
-
-		boolean changed = grid.addAll(new ArrayList<>());
-
-		assertFalse(changed);
 	}
 
 	@Test
