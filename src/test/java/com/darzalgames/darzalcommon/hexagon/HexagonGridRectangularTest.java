@@ -24,21 +24,20 @@ class HexagonGridRectangularTest {
 
 	@ParameterizedTest
 	@CsvSource({
-		"3, 3,		9",
-		"5, 2,		10",
-		"3, 5,		15",
-		"2, 4,		8",
-		"2, 2,		4",
-		"7, 4,		28",
-		"4, 3,		12",
-		"1, 1,		1",
+			"3, 3,		9",
+			"5, 2,		10",
+			"3, 5,		15",
+			"2, 4,		8",
+			"2, 2,		4",
+			"7, 4,		28",
+			"4, 3,		12",
+			"1, 1,		1",
 	})
 	void makeGrid_variousSizes_returnsAll(int gridWidth, int gridHeight, int expectedNumberOfHexagons) {
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(gridWidth, gridHeight);
 
 		assertEquals(expectedNumberOfHexagons, hexagons.size());
 	}
-
 
 	@Test
 	void makeGrid_with1x1_containsCorrectHexagons() {
@@ -62,8 +61,10 @@ class HexagonGridRectangularTest {
 
 	@Test
 	void makeGrid_with3x3_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
-				new Hexagon(0, -1), new Hexagon(1, -1), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(-1, 2));
+		Set<Hexagon> expectedHexagons = Set.of(
+				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				new Hexagon(0, -1), new Hexagon(1, -1), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(-1, 2)
+		);
 
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(3, 3);
 
@@ -73,8 +74,10 @@ class HexagonGridRectangularTest {
 
 	@Test
 	void makeGrid_with2x3_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
-				new Hexagon(0, -1), new Hexagon(1, -1));
+		Set<Hexagon> expectedHexagons = Set.of(
+				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				new Hexagon(0, -1), new Hexagon(1, -1)
+		);
 
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(2, 3);
 
@@ -84,8 +87,10 @@ class HexagonGridRectangularTest {
 
 	@Test
 	void makeGrid_with3x2_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
-				new Hexagon(-1, 1), new Hexagon(-1, 2));
+		Set<Hexagon> expectedHexagons = Set.of(
+				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				new Hexagon(-1, 1), new Hexagon(-1, 2)
+		);
 
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(3, 2);
 

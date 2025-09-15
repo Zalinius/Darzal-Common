@@ -11,12 +11,12 @@ public class ListFactory {
 
 	/**
 	 * Creates a modifiable list from a variable number of values
-	 * @param <E> The collection type
+	 * @param <E>    The collection type
 	 * @param values A variable number of values to put into the list
 	 * @return A modifiable list of the values, in order
 	 */
 	@SafeVarargs
-	public static <E> List<E> of(E... values){
+	public static <E> List<E> of(E... values) {
 		List<E> list = new ArrayList<>();
 		Collections.addAll(list, values);
 		return list;
@@ -24,7 +24,7 @@ public class ListFactory {
 
 	/**
 	 * Flattens a list of lists into a single modifiable list
-	 * @param <E> The collection's type
+	 * @param <E>        The collection's type
 	 * @param listOfList a list of nested lists
 	 * @return A flat modifiable list of the values, in order of the list of lists
 	 */

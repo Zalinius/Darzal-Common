@@ -13,7 +13,7 @@ public class Fraction implements Comparable<Fraction> {
 	/**
 	 * Creates a fraction with a value of 0
 	 */
-	public Fraction(){
+	public Fraction() {
 		this(0, 1);
 	}
 
@@ -21,21 +21,21 @@ public class Fraction implements Comparable<Fraction> {
 	 * Creates an integer fraction
 	 * @param wholeNumber The integer value of the fraction
 	 */
-	public Fraction(int wholeNumber){
+	public Fraction(int wholeNumber) {
 		this(wholeNumber, 1);
 	}
 
 	/**
 	 * Creates a fraction
-	 * @param numerator The integer numerator
+	 * @param numerator   The integer numerator
 	 * @param denominator The integer denominator. Must be non zero
 	 */
-	public Fraction(int numerator, int denominator){
-		if(denominator == 0) {
+	public Fraction(int numerator, int denominator) {
+		if (denominator == 0) {
 			throw new ArithmeticException("Fraction can not have a zero denominator");
 		}
 
-		if(denominator < 0) {
+		if (denominator < 0) {
 			numerator = -numerator;
 			denominator = -denominator;
 		}
@@ -67,15 +67,15 @@ public class Fraction implements Comparable<Fraction> {
 	 * @return this fraction as a float
 	 */
 	public float toFloat() {
-		return (float)numerator / (float)denominator;
+		return (float) numerator / (float) denominator;
 	}
 
 	/**
 	 * Computes this fraction's value as a double
 	 * @return this fraction as a double
 	 */
-	public double toDouble()  {
-		return (double)numerator / (double)denominator;
+	public double toDouble() {
+		return (double) numerator / (double) denominator;
 	}
 
 	/**
@@ -115,8 +115,8 @@ public class Fraction implements Comparable<Fraction> {
 	 * @param factor the factor to scale the fraction by
 	 * @return a new scaled fraction
 	 */
-	public Fraction scale(int factor){
-		return new Fraction(numerator*factor, denominator);
+	public Fraction scale(int factor) {
+		return new Fraction(numerator * factor, denominator);
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Fraction implements Comparable<Fraction> {
 	 * @throws ArithmeticException if this fraction's numerator is 0, as the zero fraction cannot be inverted
 	 */
 	public Fraction invert() {
-		if(isZero()) {
+		if (isZero()) {
 			throw new ArithmeticException("Cannot invert fraction as numerator is zero: " + toString());
 		}
 
@@ -176,15 +176,14 @@ public class Fraction implements Comparable<Fraction> {
 		return compareTo(other) <= 0;
 	}
 
-
 	/**
 	 * Adds two fractions together
 	 * @param f1 the first fraction
 	 * @param f2 the second fraction
 	 * @return the sum of the fractions, with a common denominator
 	 */
-	public static Fraction add(Fraction f1, Fraction f2){
-		return new Fraction(f1.numerator*f2.denominator+f2.numerator*f1.denominator, f1.denominator*f2.denominator);
+	public static Fraction add(Fraction f1, Fraction f2) {
+		return new Fraction(f1.numerator * f2.denominator + f2.numerator * f1.denominator, f1.denominator * f2.denominator);
 	}
 
 	/**
@@ -193,8 +192,8 @@ public class Fraction implements Comparable<Fraction> {
 	 * @param f2 the second fraction
 	 * @return the difference of the fractions, with a common denominator
 	 */
-	public static Fraction subtract(Fraction f1, Fraction f2){
-		return new Fraction(f1.numerator*f2.denominator-f2.numerator*f1.denominator, f1.denominator*f2.denominator);
+	public static Fraction subtract(Fraction f1, Fraction f2) {
+		return new Fraction(f1.numerator * f2.denominator - f2.numerator * f1.denominator, f1.denominator * f2.denominator);
 	}
 
 	/**
@@ -203,8 +202,8 @@ public class Fraction implements Comparable<Fraction> {
 	 * @param f2 the second fraction
 	 * @return the product of the fractions, with a common denominator
 	 */
-	public static Fraction multiply(Fraction f1, Fraction f2){
-		return new Fraction(f1.numerator*f2.numerator, f1.denominator*f2.denominator);
+	public static Fraction multiply(Fraction f1, Fraction f2) {
+		return new Fraction(f1.numerator * f2.numerator, f1.denominator * f2.denominator);
 	}
 
 	/**
@@ -214,24 +213,24 @@ public class Fraction implements Comparable<Fraction> {
 	 * @return the quotient of the fractions, with a common denominator
 	 * @throws ArithmeticException if the second fraction (divisor) is equal to 0
 	 */
-	public static Fraction divide(Fraction f1, Fraction f2){
-		if(f2.isZero()) {
+	public static Fraction divide(Fraction f1, Fraction f2) {
+		if (f2.isZero()) {
 			throw new ArithmeticException("Cannot divide by a zero fraction: " + f2);
 		}
-		return new Fraction(f1.numerator*f2.denominator, f1.denominator*f2.numerator );
+		return new Fraction(f1.numerator * f2.denominator, f1.denominator * f2.numerator);
 	}
 
 	/**
 	 * Computes how many times a fraction can wholly divide another fraction
 	 * @param dividend the fraction to divide
-	 * @param divisor the fraction to divide by
+	 * @param divisor  the fraction to divide by
 	 * @return The integer/whole number of times the divisor fits into the dividend
 	 */
 	public static int integerDivision(Fraction dividend, Fraction divisor) {
-		if(divisor.isZero()) {
+		if (divisor.isZero()) {
 			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
 		}
-		if(dividend.isNegative() || divisor.isNegative()) {
+		if (dividend.isNegative() || divisor.isNegative()) {
 			throw new UnsupportedOperationException("negative integer division not implemented lol");
 		}
 
@@ -244,16 +243,16 @@ public class Fraction implements Comparable<Fraction> {
 	}
 
 	/**
-	 * Computes the remainder from  wholly dividing a fraction with another fraction
+	 * Computes the remainder from wholly dividing a fraction with another fraction
 	 * @param dividend the fraction to divide
-	 * @param divisor the fraction to divide by
+	 * @param divisor  the fraction to divide by
 	 * @return The remainder from the integer division. remainder is within [0, divisor[
 	 */
 	public static Fraction integerRemainder(Fraction dividend, Fraction divisor) {
-		if(divisor.isZero()) {
+		if (divisor.isZero()) {
 			throw new ArithmeticException("Can't divide by zero fraction: " + divisor);
 		}
-		if(dividend.isNegative() || divisor.isNegative()) {
+		if (dividend.isNegative() || divisor.isNegative()) {
 			throw new UnsupportedOperationException("negative integer remainder not implemented lol");
 		}
 
@@ -278,8 +277,8 @@ public class Fraction implements Comparable<Fraction> {
 	}
 
 	@Override
-	public String toString(){
-		return numerator+"/"+denominator;
+	public String toString() {
+		return numerator + "/" + denominator;
 	}
 
 	@Override

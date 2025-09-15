@@ -34,15 +34,15 @@ class VariableHeightGridTest {
 
 		assertEquals(expectedHeight, result);
 	}
+
 	private static Stream<Arguments> entryCountAndExpectedHeight() {
 		return Stream.of(
 				Arguments.of(2, 1),
 				Arguments.of(4, 2),
 				Arguments.of(6, 2),
 				Arguments.of(7, 3)
-				);
+		);
 	}
-
 
 	@Test
 	void contains_onObjectNotInGrid_returnsFalse() {
@@ -64,7 +64,6 @@ class VariableHeightGridTest {
 
 		assertTrue(result);
 	}
-
 
 	@Test
 	void contains_objectInGridMultipleTimes_returnsTrue() {
@@ -110,7 +109,7 @@ class VariableHeightGridTest {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(3);
 		Do.xTimes(12, () -> grid.add("a"));
 
-		String result = grid.stream().map(String::toUpperCase).reduce("", (a,b) -> a+b);
+		String result = grid.stream().map(String::toUpperCase).reduce("", (a, b) -> a + b);
 
 		assertEquals("AAAAAAAAAAAA", result);
 	}
@@ -150,6 +149,7 @@ class VariableHeightGridTest {
 
 		assertTrue(result);
 	}
+
 	private static Stream<Arguments> validCoordinates() {
 		return Stream.of(
 				Arguments.of(1, 1),
@@ -157,7 +157,7 @@ class VariableHeightGridTest {
 				Arguments.of(0, 0),
 				Arguments.of(2, 3),
 				Arguments.of(0, 3)
-				);
+		);
 	}
 
 	@ParameterizedTest
@@ -170,13 +170,14 @@ class VariableHeightGridTest {
 
 		assertFalse(result);
 	}
+
 	private static Stream<Arguments> invalidCoordinates() {
 		return Stream.of(
 				Arguments.of(3, 4),
 				Arguments.of(0, 4),
 				Arguments.of(-1, 2),
 				Arguments.of(2, -1)
-				);
+		);
 	}
 
 	@Test
@@ -209,7 +210,6 @@ class VariableHeightGridTest {
 
 		assertFalse(grid.hasEntryAt(1, 1));
 	}
-
 
 	@Test
 	void containsAll_withValidEntries_returnsTrue() {
@@ -345,4 +345,3 @@ class VariableHeightGridTest {
 	}
 
 }
-

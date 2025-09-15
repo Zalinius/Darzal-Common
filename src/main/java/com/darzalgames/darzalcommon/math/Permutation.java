@@ -14,7 +14,7 @@ public class Permutation {
 	/**
 	 * Generate all the possible permutations of a list recursively <br>
 	 * This function will empty the original list
-	 * @param <E> The generic type of the list
+	 * @param <E>      The generic type of the list
 	 * @param original the original list
 	 * @return A list of lists, containing all possible permutations
 	 */

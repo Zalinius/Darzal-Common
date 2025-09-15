@@ -44,7 +44,7 @@ public class FileFriendlyTimeFormatter {
 
 	/**
 	 * Formats an instant for a filename in the given time zone
-	 * @param instant the instant to format
+	 * @param instant  the instant to format
 	 * @param timeZone the time zone ID
 	 * @return a string representing the instant in the given time zone, suitable for use in filenames
 	 */

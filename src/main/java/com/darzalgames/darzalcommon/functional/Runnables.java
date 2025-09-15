@@ -4,7 +4,7 @@ package com.darzalgames.darzalcommon.functional;
  * A class for convenience runnables
  */
 public class Runnables {
-	private Runnables(){}
+	private Runnables() {}
 
 	/**
 	 * Creates a null-effect runnable

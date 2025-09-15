@@ -28,6 +28,7 @@ class PermutationTest {
 		assertTrue(permutations.contains(List.of(3, 2, 1)));
 		assertTrue(permutations.contains(List.of(3, 1, 2)));
 	}
+
 	@Test
 	void listOfThreeWithDuplicate_permuted_hasCorrectValues() {
 		List<Integer> test = new ArrayList<>();

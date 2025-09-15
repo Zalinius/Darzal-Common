@@ -11,7 +11,7 @@ class ListFactoryTest {
 
 	@Test
 	void of_onIntegers_createsList() {
-		List<Integer> list = ListFactory.of(0,1,2);
+		List<Integer> list = ListFactory.of(0, 1, 2);
 
 		assertEquals(3, list.size());
 		assertEquals(0, list.get(0));
@@ -21,7 +21,7 @@ class ListFactoryTest {
 
 	@Test
 	void of_returnValue_supportsModification() {
-		List<Integer> list = ListFactory.of(0,1,2);
+		List<Integer> list = ListFactory.of(0, 1, 2);
 
 		assertDoesNotThrow(() -> list.add(3));
 		assertEquals(4, list.size());
@@ -33,7 +33,7 @@ class ListFactoryTest {
 
 	@Test
 	void flattenListOfList_onNestedLists_flattensLists() {
-		List<List<Integer>> ints = List.of(List.of(0,1,2), List.of(3,4,5));
+		List<List<Integer>> ints = List.of(List.of(0, 1, 2), List.of(3, 4, 5));
 
 		List<Integer> flattened = ListFactory.flattenListOfLists(ints);
 
@@ -48,7 +48,7 @@ class ListFactoryTest {
 
 	@Test
 	void flattenListOfList_onNestedLists_returnsModifiableList() {
-		List<List<Integer>> ints = List.of(List.of(0,1,2), List.of(3,4,5));
+		List<List<Integer>> ints = List.of(List.of(0, 1, 2), List.of(3, 4, 5));
 
 		List<Integer> flattened = ListFactory.flattenListOfLists(ints);
 

@@ -8,7 +8,7 @@ import java.util.*;
  * All keys are valid (including null), and counts without a key can be gotten and modified safely
  * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
  */
-public class CountMap<K> implements Iterable<K>{
+public class CountMap<K> implements Iterable<K> {
 
 	private final Map<K, Integer> data;
 
@@ -46,7 +46,7 @@ public class CountMap<K> implements Iterable<K>{
 	 * @param key The key to increment
 	 */
 	public void increment(K key) {
-		data.put(key, get(key)+1);
+		data.put(key, get(key) + 1);
 	}
 
 	/**
@@ -54,7 +54,7 @@ public class CountMap<K> implements Iterable<K>{
 	 * @param key The key to decrement
 	 */
 	public void decrement(K key) {
-		data.put(key, get(key)-1);
+		data.put(key, get(key) - 1);
 	}
 
 	/**
@@ -75,20 +75,20 @@ public class CountMap<K> implements Iterable<K>{
 
 	/**
 	 * Increases the count associated with a key by an amount
-	 * @param key The key to increase
+	 * @param key    The key to increase
 	 * @param amount The amount to increase by
 	 */
 	public void increaseBy(K key, int amount) {
-		data.put(key, get(key)+amount);
+		data.put(key, get(key) + amount);
 	}
 
 	/**
 	 * Decreases the count associated with a key
-	 * @param key The key to decrease
+	 * @param key    The key to decrease
 	 * @param amount The amount to decrease by
 	 */
 	public void decreaseBy(K key, int amount) {
-		data.put(key, get(key)-amount);
+		data.put(key, get(key) - amount);
 	}
 
 	/**
@@ -144,10 +144,9 @@ public class CountMap<K> implements Iterable<K>{
 	 * Returns the count map's keyset
 	 * @return A set of all the keys in with counts tracked in the count map
 	 */
-	public Set<K> keySet(){
+	public Set<K> keySet() {
 		return data.keySet();
 	}
-
 
 	/**
 	 * Returns an iterator for all the keys in use in the map

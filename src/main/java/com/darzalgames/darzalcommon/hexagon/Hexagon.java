@@ -60,7 +60,7 @@ public class Hexagon {
 	 * @return The offset row coordinate of the {@link Hexagon}
 	 */
 	public int getRow() {
-		return r + (q - (q&1)) / 2;
+		return r + (q - (q & 1)) / 2;
 	}
 
 	@Override
@@ -90,16 +90,15 @@ public class Hexagon {
 
 	/**
 	 * Creates a hexagon from a row and column
-	 * @param row offset coordinates row number
+	 * @param row    offset coordinates row number
 	 * @param column offset coordinates column number
 	 * @return a {@link Hexagon} built from the provided coordinates, compatible with all coordinate systems
 	 */
 	public static Hexagon makeHexagonFromOffsetCoordinates(int row, int column) {
 		int q = column;
-		int r = row - (column - (column&1)) / 2;
+		int r = row - (column - (column & 1)) / 2;
 		return new Hexagon(q, r);
 	}
-
 
 	/**
 	 * A comparator that orders hexagons top to bottom, and then left to right

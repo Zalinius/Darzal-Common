@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class SimpleMathTest {
 
 	@Test
-	void isEven_onEvenInt_returnsTrue(){
+	void isEven_onEvenInt_returnsTrue() {
 		int input = 6;
 
 		boolean result = SimpleMath.isEven(input);
@@ -19,7 +19,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isEven_onOddInt_returnsFalse(){
+	void isEven_onOddInt_returnsFalse() {
 		int input = 5;
 
 		boolean result = SimpleMath.isEven(input);
@@ -28,7 +28,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isEven_onZero_returnsTrue(){
+	void isEven_onZero_returnsTrue() {
 		int input = 0;
 
 		boolean result = SimpleMath.isEven(input);
@@ -37,7 +37,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isEven_onNegativeEvenInt_returnsTrue(){
+	void isEven_onNegativeEvenInt_returnsTrue() {
 		int input = -4;
 
 		boolean result = SimpleMath.isEven(input);
@@ -46,7 +46,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isEven_onNegativeOddInt_returnsFalse(){
+	void isEven_onNegativeOddInt_returnsFalse() {
 		int input = -3;
 
 		boolean result = SimpleMath.isEven(input);
@@ -54,10 +54,9 @@ class SimpleMathTest {
 		assertFalse(result);
 	}
 
-
-	//isOdd int
+	// isOdd int
 	@Test
-	void isOdd_onEvenInt_returnsFalse(){
+	void isOdd_onEvenInt_returnsFalse() {
 		int input = 6;
 
 		boolean result = SimpleMath.isOdd(input);
@@ -66,7 +65,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isOdd_onOddInt_returnsTrue(){
+	void isOdd_onOddInt_returnsTrue() {
 		int input = 5;
 
 		boolean result = SimpleMath.isOdd(input);
@@ -75,7 +74,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isOdd_onZero_returnsFalse(){
+	void isOdd_onZero_returnsFalse() {
 		int input = 0;
 
 		boolean result = SimpleMath.isOdd(input);
@@ -84,7 +83,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isOdd_onNegativeEvenInt_returnsFalse(){
+	void isOdd_onNegativeEvenInt_returnsFalse() {
 		int input = -4;
 
 		boolean result = SimpleMath.isOdd(input);
@@ -93,7 +92,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isOdd_onNegativeOddInt_returnsTrue(){
+	void isOdd_onNegativeOddInt_returnsTrue() {
 		int input = -3;
 
 		boolean result = SimpleMath.isOdd(input);
@@ -102,7 +101,7 @@ class SimpleMathTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource(value = {"0,5,0", "0,5,5", "0,5,2"})
+	@CsvSource(value = { "0,5,0", "0,5,5", "0,5,2" })
 	void isBetween_whenValueIsBetweenBounds_returnsTrue(int left, int right, int input) {
 		boolean result = SimpleMath.isBetween(left, right, input);
 
@@ -110,7 +109,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isBetween_outsideLeftOfBounds_returnsFalse(){
+	void isBetween_outsideLeftOfBounds_returnsFalse() {
 		int left = 0;
 		int right = 5;
 		int input = -3;
@@ -121,7 +120,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isBetween_outsideRightOfBounds_returnsFalse(){
+	void isBetween_outsideRightOfBounds_returnsFalse() {
 		int left = 0;
 		int right = 5;
 		int input = 8;
@@ -132,7 +131,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isBetween_withinReversedBounds_returnsTrue(){
+	void isBetween_withinReversedBounds_returnsTrue() {
 		int left = 5;
 		int right = 0;
 		int input = 2;
@@ -143,7 +142,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isBetween_outsideReversedBounds_returnsFalse(){
+	void isBetween_outsideReversedBounds_returnsFalse() {
 		int left = 5;
 		int right = 0;
 		int input = -3;
@@ -154,7 +153,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isMultiple_onMultipleOddInts_returnsTrue(){
+	void isMultiple_onMultipleOddInts_returnsTrue() {
 		int value = 9;
 		int base = 3;
 
@@ -164,7 +163,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isMultiple_onMultipleEvenInts_returnsTrue(){
+	void isMultiple_onMultipleEvenInts_returnsTrue() {
 		int value = 8;
 		int base = 4;
 
@@ -174,7 +173,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isMultiple_onNonMultipleOddInts_returnsFalse(){
+	void isMultiple_onNonMultipleOddInts_returnsFalse() {
 		int value = 11;
 		int base = 3;
 
@@ -184,7 +183,7 @@ class SimpleMathTest {
 	}
 
 	@Test
-	void isMultiple_onNonMultipleEvenInts_returnsFalse(){
+	void isMultiple_onNonMultipleEvenInts_returnsFalse() {
 		int value = 6;
 		int base = 4;
 
@@ -193,7 +192,7 @@ class SimpleMathTest {
 		assertFalse(result);
 	}
 
-	//Note: this is part of the mathematical definition of GCD
+	// Note: this is part of the mathematical definition of GCD
 	@Test
 	void gcd_0and0_is0() {
 		int result = SimpleMath.greatestCommonDivisor(0, 0);
@@ -245,7 +244,6 @@ class SimpleMathTest {
 		assertEquals(7, result);
 	}
 
-
 	@Test
 	void gcd_twoPrimeNumbers_is1() {
 		int result = SimpleMath.greatestCommonDivisor(7, 11);
@@ -261,7 +259,7 @@ class SimpleMathTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({"2,4,2", "12,15,3", "63,28,7"})
+	@CsvSource({ "2,4,2", "12,15,3", "63,28,7" })
 	void gcd_twoIntegers_returnsTheirGCD(int a, int b, int expectedResult) {
 		int result = SimpleMath.greatestCommonDivisor(a, b);
 

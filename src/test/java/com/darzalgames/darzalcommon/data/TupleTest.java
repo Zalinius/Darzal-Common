@@ -47,7 +47,6 @@ class TupleTest {
 		assertNotEquals(new Tuple<>(4L, 2.7), tuple);
 	}
 
-
 	@Test
 	void toString_doesNotThrow() {
 		Tuple<Integer, Double> tuple1 = new Tuple<>(4, 2.7);
@@ -58,4 +57,3 @@ class TupleTest {
 	}
 
 }
-

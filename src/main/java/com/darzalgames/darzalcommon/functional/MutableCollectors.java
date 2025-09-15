@@ -18,7 +18,7 @@ public class MutableCollectors {
 	 * @param <T> The type of the input elements
 	 * @return a {@code Collector} which collects all the input elements into a mutable {@code List}, in encounter order
 	 */
-	public static <T> Collector<T, ?, List<T>> toList(){
+	public static <T> Collector<T, ?, List<T>> toList() {
 		return Collectors.toCollection(ArrayList::new);
 	}
 

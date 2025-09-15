@@ -71,7 +71,7 @@ class CoordinateTest {
 
 	@Test
 	void toPair_createsIntegerPairFromCoordinate() {
-		Coordinate coordinate = new Coordinate(1,2);
+		Coordinate coordinate = new Coordinate(1, 2);
 
 		Pair<Integer> pair = coordinate.toPair();
 
@@ -81,7 +81,7 @@ class CoordinateTest {
 
 	@Test
 	void toTuple_createsIntegerTupleFromCoordinate() {
-		Coordinate coordinate = new Coordinate(1,2);
+		Coordinate coordinate = new Coordinate(1, 2);
 
 		Tuple<Integer, Integer> tuple = coordinate.toTuple();
 
@@ -104,6 +104,7 @@ class CoordinateTest {
 
 		assertEquals(0, distance);
 	}
+
 	@Test
 	void taxiDistance_betweenCoordinateAndOrigin_isSumOfCoordinates() {
 		Coordinate coordinate = new Coordinate(2, 4);
@@ -115,6 +116,7 @@ class CoordinateTest {
 		assertEquals(6, distance);
 		assertEquals(6, distanceReversed);
 	}
+
 	@Test
 	void taxiDistance_betweenTwoCoordinates_isTheirTaxiDistance() {
 		Coordinate coordinate1 = new Coordinate(3, 4);
@@ -135,6 +137,7 @@ class CoordinateTest {
 
 		assertEquals(0, distance);
 	}
+
 	@Test
 	void kingDistance_betweenCoordinateAndOrigin_isLargestOfCoordinates() {
 		Coordinate coordinate = new Coordinate(2, 4);
@@ -146,6 +149,7 @@ class CoordinateTest {
 		assertEquals(4, distance);
 		assertEquals(4, distanceReversed);
 	}
+
 	@Test
 	void KingDistance_betweenTwoCoordinates_isTheirKingDistance() {
 		Coordinate coordinate1 = new Coordinate(3, 4);

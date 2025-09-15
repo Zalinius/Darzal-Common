@@ -19,7 +19,7 @@ public class LoopingIterator<E> implements Iterator<E> {
 	public LoopingIterator(Iterable<E> baseIterable) {
 		this.baseIterable = baseIterable;
 		currentIterator = baseIterable.iterator();
-		if(!currentIterator.hasNext()) {
+		if (!currentIterator.hasNext()) {
 			throw new IllegalArgumentException("base iterable must contain at least one element: " + baseIterable.toString());
 		}
 	}
@@ -31,7 +31,7 @@ public class LoopingIterator<E> implements Iterator<E> {
 
 	@Override
 	public E next() {
-		if(!currentIterator.hasNext()) {
+		if (!currentIterator.hasNext()) {
 			currentIterator = baseIterable.iterator();
 		}
 		return currentIterator.next();
