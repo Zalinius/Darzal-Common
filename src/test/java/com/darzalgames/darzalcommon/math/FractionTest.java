@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 class FractionTest {
 
-
 	@Test
 	void defaultConstructor_constructsZeroFraction() {
 		Fraction defaultFraction = new Fraction();
@@ -110,7 +109,6 @@ class FractionTest {
 		assertEquals(3, result.denominator());
 	}
 
-
 	@Test
 	void negate_positiveFraction_becomesNegative() {
 		Fraction fraction = new Fraction(2, 3);
@@ -140,13 +138,13 @@ class FractionTest {
 		assertTrue(result.isZero());
 	}
 
-
 	@Test
 	void isPositive_onAZeroFraction_isFalse() {
 		Fraction defaultFraction = new Fraction();
 
 		assertFalse(defaultFraction.isPositive());
 	}
+
 	@Test
 	void isNegative_onAZeroFraction_isFalse() {
 		Fraction defaultFraction = new Fraction();
@@ -281,7 +279,7 @@ class FractionTest {
 
 	@Test
 	void multiply_twoFractions_isCorrect() {
-		Fraction f1 = new Fraction(5,  7);
+		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(7, 12);
 
 		Fraction multiplication = Fraction.multiply(f1, f2);
@@ -292,7 +290,7 @@ class FractionTest {
 
 	@Test
 	void divide_twoFractions_isCorrect() {
-		Fraction f1 = new Fraction(5,  7);
+		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(7, 12);
 
 		Fraction division = Fraction.divide(f1, f2);
@@ -303,7 +301,7 @@ class FractionTest {
 
 	@Test
 	void divide_fractionByZero_throwsArithmeticException() {
-		Fraction f1 = new Fraction(5,  7);
+		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(0, 12);
 
 		assertThrows(ArithmeticException.class, () -> Fraction.divide(f1, f2));
@@ -311,7 +309,7 @@ class FractionTest {
 
 	@Test
 	void integerDivision_fractionByZero_throwsArithmeticException() {
-		Fraction f1 = new Fraction(5,  7);
+		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(0, 12);
 
 		assertThrows(ArithmeticException.class, () -> Fraction.integerDivision(f1, f2));
@@ -351,7 +349,7 @@ class FractionTest {
 
 	@Test
 	void integerDivision_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
-		Fraction f1 = new Fraction(-5,  7);
+		Fraction f1 = new Fraction(-5, 7);
 		Fraction f2 = new Fraction(1, 12);
 
 		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerDivision(f1, f2));
@@ -360,7 +358,7 @@ class FractionTest {
 
 	@Test
 	void integerRemainder_fractionByZero_throwsArithmeticException() {
-		Fraction f1 = new Fraction(5,  7);
+		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(0, 12);
 
 		assertThrows(ArithmeticException.class, () -> Fraction.integerRemainder(f1, f2));
@@ -368,7 +366,7 @@ class FractionTest {
 
 	@Test
 	void integerRemainder_withDividendMultipleOfDivisor_returnsZeroFraction() {
-		Fraction f1 = new Fraction(10,  7);
+		Fraction f1 = new Fraction(10, 7);
 		Fraction f2 = new Fraction(5, 7);
 
 		assertTrue(Fraction.integerRemainder(f1, f2).isZero());
@@ -376,7 +374,7 @@ class FractionTest {
 
 	@Test
 	void integerRemainder_withTwoFractionsWithCommonBase_returnsRemainder() {
-		Fraction f1 = new Fraction(10,  7);
+		Fraction f1 = new Fraction(10, 7);
 		Fraction f2 = new Fraction(3, 7);
 
 		assertEquals(new Fraction(1, 7), Fraction.integerRemainder(f1, f2));
@@ -384,7 +382,7 @@ class FractionTest {
 
 	@Test
 	void integerRemainder_withTwoFractionsWithDifferentBases_returnsRemainder() {
-		Fraction f1 = new Fraction(10,  7);
+		Fraction f1 = new Fraction(10, 7);
 		Fraction f2 = new Fraction(3, 8);
 
 		assertEquals(new Fraction(17, 56), Fraction.integerRemainder(f1, f2));
@@ -392,7 +390,7 @@ class FractionTest {
 
 	@Test
 	void integerRemainder_withNegativeDivisorOrDividend_throwsUnsupportedOperationException() {
-		Fraction f1 = new Fraction(-5,  7);
+		Fraction f1 = new Fraction(-5, 7);
 		Fraction f2 = new Fraction(1, 12);
 
 		assertThrows(UnsupportedOperationException.class, () -> Fraction.integerRemainder(f1, f2));

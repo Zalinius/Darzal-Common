@@ -11,10 +11,10 @@ class HexagonMathTest {
 
 	@ParameterizedTest
 	@CsvSource({
-		"0, 0,		0, 0",
-		"0, 1,		0, 7",
-		"1, 0,		6, 3.5",
-		"1, 1,		6, 10.5",
+			"0, 0,		0, 0",
+			"0, 1,		0, 7",
+			"1, 0,		6, 3.5",
+			"1, 1,		6, 10.5",
 	})
 	void getScreenPosition_variousCoordinatesAndPixelRatio_returnsExpectedPosition(int hexagonQ, int hexagonR, float expectedX, float expectedY) {
 
@@ -26,14 +26,14 @@ class HexagonMathTest {
 
 	@ParameterizedTest
 	@CsvSource({
-		"0, 0,		0, 0",
-		"0, 1,		0, 0.8660254",
-		"1, 0,		1.125, 0.4330127",
-		"1, 1,		1.125, 1.2990381",
+			"0, 0,		0, 0",
+			"0, 1,		0, 0.8660254",
+			"1, 0,		1.125, 0.4330127",
+			"1, 1,		1.125, 1.2990381",
 	})
 	void getScreenPosition_variousCoordinatesAndPerfectRatio_returnsExpectedPosition(int hexagonQ, int hexagonR, float expectedX, float expectedY) {
-		float width = 3f/2;
-		float height = (float) (Math.sqrt(3)/2f);
+		float width = 3f / 2;
+		float height = (float) (Math.sqrt(3) / 2f);
 
 		Tuple<Float, Float> position = HexagonMath.getScreenPosition(hexagonQ, hexagonR, width, height);
 
@@ -41,13 +41,12 @@ class HexagonMathTest {
 		assertEquals(expectedY, position.f());
 	}
 
-
 	@ParameterizedTest
 	@CsvSource({
-		"0, 0,		0, 193,		200",
-		"0, 1,		0, 386,		400",
-		"1, 0,		6, 489.5, 	500",
-		"1, 1,		6, 732.5, 	750",
+			"0, 0,		0, 193,		200",
+			"0, 1,		0, 386,		400",
+			"1, 0,		6, 489.5, 	500",
+			"1, 1,		6, 732.5, 	750",
 	})
 	void getScreenPositionOnStage_variousCoordinatesAndPixelRatio_returnsExpectedPosition(int hexagonQ, int hexagonR, float expectedX, float expectedY, int stageHeight) {
 

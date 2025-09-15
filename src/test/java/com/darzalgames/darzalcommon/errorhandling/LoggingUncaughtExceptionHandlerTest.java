@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 class LoggingUncaughtExceptionHandlerTest {
 
-
 	@Test
 	void uncaughtException_printsToGivenStream() {
 		LoggingUncaughtExceptionHandlerSpy exceptionHandlerSpy = new LoggingUncaughtExceptionHandlerSpy();
@@ -20,8 +19,6 @@ class LoggingUncaughtExceptionHandlerTest {
 
 		assertTrue(exceptionHandlerSpy.getPrintStreamAsString().contains("Exception for testing LoggingUncaughtExceptionHandler"));
 	}
-
-
 
 	private static class LoggingUncaughtExceptionHandlerSpy extends LoggingUncaughtExceptionHandler {
 

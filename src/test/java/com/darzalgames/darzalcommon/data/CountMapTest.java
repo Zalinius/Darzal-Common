@@ -51,6 +51,7 @@ class CountMapTest {
 
 		assertEquals(0, result);
 	}
+
 	@Test
 	void increment_withCountMapKey_incrementsCountForKey() {
 		CountMap<String> countMap = new CountMap<>();
@@ -261,6 +262,5 @@ class CountMapTest {
 		assertTrue(toString.contains("banana=0"));
 		assertTrue(toString.contains("null=-1"));
 	}
-
 
 }

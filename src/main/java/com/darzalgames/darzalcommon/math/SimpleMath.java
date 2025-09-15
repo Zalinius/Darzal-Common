@@ -15,6 +15,7 @@ public class SimpleMath {
 	public static boolean isEven(int value) {
 		return value % 2 == 0;
 	}
+
 	/**
 	 * Checks if an integer is odd
 	 * @param value the integer to test
@@ -27,7 +28,7 @@ public class SimpleMath {
 	/**
 	 * Checks if a value is an integer multiple of an integer divisor
 	 * @param value The value checked
-	 * @param base the divisor
+	 * @param base  the divisor
 	 * @return true if the value is a multiple. false otherwise
 	 */
 	public static boolean isMultiple(int value, int base) {
@@ -39,20 +40,18 @@ public class SimpleMath {
 	 * The bounds may be given in either order
 	 * @param bound1 the first bound
 	 * @param bound2 the second bound
-	 * @param value the value to test
+	 * @param value  the value to test
 	 * @return True if and only if the value is between the two bounds
 	 */
 	public static boolean isBetween(float bound1, float bound2, float value) {
-		if(bound1 > bound2) {
+		if (bound1 > bound2) {
 			float newBound1 = bound2;
 			float newBound2 = bound1;
 			return isBetween(newBound1, newBound2, value);
-		}
-		else {
+		} else {
 			return value >= bound1 && value <= bound2;
 		}
 	}
-
 
 	/**
 	 * Checks if a string represents an integer
@@ -74,7 +73,7 @@ public class SimpleMath {
 	 * @return true if the string can safely be parsed to a float
 	 */
 	public static boolean canParseToFloat(String string) {
-		if(string == null) {
+		if (string == null) {
 			return false;
 		}
 		try {
@@ -91,23 +90,23 @@ public class SimpleMath {
 	 * @param y the second integer
 	 * @return their greatest common divisor
 	 */
-	public static int greatestCommonDivisor(int x, int y){
+	public static int greatestCommonDivisor(int x, int y) {
 		x = Math.abs(x);
 		y = Math.abs(y);
-		if(x<y) {
+		if (x < y) {
 			int temp = y;
 			y = x;
 			x = temp;
 		}
 
-		return gcdRecursiveCall(x,y);
+		return gcdRecursiveCall(x, y);
 	}
 
-	private static int gcdRecursiveCall(int x, int y){
-		if(y==0) {
+	private static int gcdRecursiveCall(int x, int y) {
+		if (y == 0) {
 			return x;
 		}
-		return (gcdRecursiveCall(y, x%y));
+		return (gcdRecursiveCall(y, x % y));
 	}
 
 }

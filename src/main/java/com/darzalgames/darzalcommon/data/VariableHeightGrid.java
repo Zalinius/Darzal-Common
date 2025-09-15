@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  * Can be added to and removed from like a list, and won't keep empty entries between others.
  * @param <E> The Generic type the grid contains
  */
-public class VariableHeightGrid<E> implements Iterable<E>{
+public class VariableHeightGrid<E> implements Iterable<E> {
 
 	private final List<E> inside;
 	private final int width;
@@ -23,7 +23,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 
 	/**
 	 * Creates a grid of a fixed width and variable (calculated) height, initialized with a collection of values
-	 * @param width The width of the grid
+	 * @param width         The width of the grid
 	 * @param initialValues The values to place in the grid initially
 	 */
 	public VariableHeightGrid(int width, Collection<E> initialValues) {
@@ -45,8 +45,8 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	 * @return the number of rows, which can change as the entries change
 	 */
 	public int height() {
-		int rowCount = inside.size()/width;
-		int remainder = inside.size()%width;
+		int rowCount = inside.size() / width;
+		int remainder = inside.size() % width;
 		if (remainder > 0) {
 			rowCount++;
 		}
@@ -64,7 +64,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	/**
 	 * Checks if a non-null entry is present at the given row and column
 	 * This method will not throw if the row and column are invalid
-	 * @param row the row to check
+	 * @param row    the row to check
 	 * @param column the column to check
 	 * @return true if there is a non-null entry at the specified position, false otherwise
 	 */
@@ -79,7 +79,7 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	/**
 	 * Gets the value at the specified position <br>
 	 * Call {@link VariableHeightGrid#hasEntryAt(int, int)} to validate that such an entry exist first
-	 * @param row (vertical)
+	 * @param row    (vertical)
 	 * @param column (horizontal)
 	 * @return The E at the specified row and column
 	 * @throws IndexOutOfBoundsException if the the row and column are outside the bounds of the grid
@@ -98,16 +98,15 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 	 */
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
-		if(linearPosition == -1) {
+		if (linearPosition == -1) {
 			throw new IllegalArgumentException(e + " is not in the grid!");
-		}
-		else {
+		} else {
 			return computeCoordinatePosition(linearPosition);
 		}
 	}
 
 	private int computeLinearPosition(int row, int column) {
-		return row*width + column;
+		return row * width + column;
 	}
 
 	private Coordinate computeCoordinatePosition(int linearPosition) {
@@ -115,7 +114,6 @@ public class VariableHeightGrid<E> implements Iterable<E>{
 		int column = linearPosition % width;
 		return new Coordinate(row, column);
 	}
-
 
 	@Override
 	public String toString() {

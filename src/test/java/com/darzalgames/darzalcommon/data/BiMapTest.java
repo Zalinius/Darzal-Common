@@ -64,8 +64,8 @@ class BiMapTest {
 	}
 
 	@Test
-	void remove_nonExistingPair_returnsNull(){
-		BiMap <String, String> bimap = new BiMap<>();
+	void remove_nonExistingPair_returnsNull() {
+		BiMap<String, String> bimap = new BiMap<>();
 		String input1 = "hello", input2 = "world";
 
 		Tuple<String, String> removedPair = bimap.removePair(input1, input2);
@@ -146,6 +146,5 @@ class BiMapTest {
 		assertNull(removedPairByFirstType);
 		assertNull(removedPairBySecondType);
 	}
-
 
 }

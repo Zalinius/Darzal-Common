@@ -29,7 +29,7 @@ public class HexagonMap<E> {
 	/**
 	 * Puts a value at the specified hexagon coordinate
 	 * @param hexagon the location for the new value
-	 * @param value the value to insert
+	 * @param value   the value to insert
 	 * @return the previous value at the hexagon coordinate, or null if there was none
 	 */
 	public E put(Hexagon hexagon, E value) {
@@ -63,6 +63,7 @@ public class HexagonMap<E> {
 				.filter(innerMap::containsKey)
 				.collect(Collectors.toSet());
 	}
+
 	/**
 	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
@@ -74,7 +75,7 @@ public class HexagonMap<E> {
 
 	/**
 	 * Gets the immediate neibhbor value in the specified direction
-	 * @param hexagon The starting point for searching for a neighbor
+	 * @param hexagon   The starting point for searching for a neighbor
 	 * @param direction the direction to search in
 	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */

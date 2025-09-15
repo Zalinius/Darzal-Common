@@ -31,8 +31,8 @@ public class HexagonDirection extends Hexagon {
 
 	/**
 	 * Calculates the neighboring {@link Hexagon} in a particular hexagonal direction
-	 * @param q Q-axis Hexagon whose neighbor you want to find (axial system)
-	 * @param r R-axis Hexagon whose neighbor you want to find (axial system)
+	 * @param q         Q-axis Hexagon whose neighbor you want to find (axial system)
+	 * @param r         R-axis Hexagon whose neighbor you want to find (axial system)
 	 * @param direction The direction for the Hexagon that you want to find
 	 * @return The neighboring {@link Hexagon} in a particular direction
 	 */
@@ -44,7 +44,7 @@ public class HexagonDirection extends Hexagon {
 
 	/**
 	 * Calculates the neighboring {@link Hexagon} in a particular hexagonal direction
-	 * @param hexagon The hexagon whose neighbor you want to find (axial system)
+	 * @param hexagon   The hexagon whose neighbor you want to find (axial system)
 	 * @param direction The direction for the Hexagon that you want to find
 	 * @return The neighboring {@link Hexagon} in a particular direction
 	 */

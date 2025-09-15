@@ -11,7 +11,7 @@ import com.darzalgames.darzalcommon.functional.Do;
 
 /**
  * We're deliberately not using the same seed here, as we're not testing the source of randomness,
- *  instead we're testing the method interfaces, using a barrage approach
+ * instead we're testing the method interfaces, using a barrage approach
  */
 class RandomExtendedTest {
 
@@ -38,7 +38,7 @@ class RandomExtendedTest {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextRadian();
 			assertTrue(0.0 <= result);
-			assertTrue(result < 2.0*Math.PI);
+			assertTrue(result < 2.0 * Math.PI);
 		});
 	}
 
@@ -56,7 +56,7 @@ class RandomExtendedTest {
 		Do.xTimes(RUNS, () -> {
 			float result = randomExtended.nextRadianF();
 			assertTrue(0.0f <= result);
-			assertTrue(result < 2.0f*(float)Math.PI);
+			assertTrue(result < 2.0f * (float) Math.PI);
 		});
 	}
 

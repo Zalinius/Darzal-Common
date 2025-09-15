@@ -174,10 +174,9 @@ class FixedSizeGridTest {
 		assertFalse(results.contains(19));
 	}
 
-
 	@Test
 	void constructorWithInitializer_whenGivenInitializer_initializesValues() {
-		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i+","+j));
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i + "," + j));
 
 		assertEquals(6, grid.size());
 
@@ -193,7 +192,10 @@ class FixedSizeGridTest {
 	void stream_onGrid_streams() {
 		FixedSizeGrid<String> grid = new FixedSizeGrid<>(3, 4, (i, j) -> "a");
 
-		String result = grid.streamElements().map(String::toUpperCase).reduce("", (a,b) -> a+b);
+		String result = grid
+				.streamElements()
+				.map(String::toUpperCase)
+				.reduce("", (a, b) -> a + b);
 
 		assertEquals("AAAAAAAAAAAA", result);
 	}
@@ -245,6 +247,7 @@ class FixedSizeGridTest {
 
 		assertTrue(result);
 	}
+
 	private static Stream<Arguments> validCoordinates() {
 		return Stream.of(
 				Arguments.of(1, 1),
@@ -252,7 +255,7 @@ class FixedSizeGridTest {
 				Arguments.of(0, 0),
 				Arguments.of(2, 3),
 				Arguments.of(0, 3)
-				);
+		);
 	}
 
 	@ParameterizedTest
@@ -264,13 +267,14 @@ class FixedSizeGridTest {
 
 		assertFalse(result);
 	}
+
 	private static Stream<Arguments> invalidCoordinates() {
 		return Stream.of(
 				Arguments.of(3, 4),
 				Arguments.of(0, 4),
 				Arguments.of(-1, 2),
 				Arguments.of(2, -1)
-				);
+		);
 	}
 
 }

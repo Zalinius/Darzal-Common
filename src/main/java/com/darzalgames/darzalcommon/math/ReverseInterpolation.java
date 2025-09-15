@@ -12,12 +12,12 @@ public class ReverseInterpolation {
 	/**
 	 * Reversed Linear Interpolation
 	 * @param start The start value of the interpolation range
-	 * @param end The end value of the interpolation range
+	 * @param end   The end value of the interpolation range
 	 * @param value The value within the interpolation range
 	 * @return The interpolant corresponding to the value's interpolation within the range
 	 */
 	public static float linear(float start, float end, float value) {
-		return (value-start)/(end-start);
+		return (value - start) / (end - start);
 	}
 
 }

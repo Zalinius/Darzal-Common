@@ -42,9 +42,11 @@ class HexagonGridCircularTest {
 
 	@Test
 	void makeGrid_withRadius3_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0),
+		Set<Hexagon> expectedHexagons = Set.of(
+				new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0),
 				new Hexagon(0, -2), new Hexagon(1, -2), new Hexagon(2, -2), new Hexagon(-1, -1), new Hexagon(2, -1), new Hexagon(-2, 0), new Hexagon(2, 0), new Hexagon(-2, 1),
-				new Hexagon(1, 1), new Hexagon(-2, 2), new Hexagon(-1, 2), new Hexagon(0, 2));
+				new Hexagon(1, 1), new Hexagon(-2, 2), new Hexagon(-1, 2), new Hexagon(0, 2)
+		);
 
 		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(3);
 
@@ -54,10 +56,10 @@ class HexagonGridCircularTest {
 
 	@ParameterizedTest
 	@CsvSource({
-		"1, 1",
-		"2, 7",
-		"3, 19",
-		"4, 37",
+			"1, 1",
+			"2, 7",
+			"3, 19",
+			"4, 37",
 	})
 	void getAllHexagons_variousSizes_returnsAll(int radius, int expectedNumberOfHexagons) {
 		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(radius);

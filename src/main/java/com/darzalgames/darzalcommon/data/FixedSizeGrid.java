@@ -17,7 +17,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 
 	/**
 	 * Creates a grid of a fixed width and height, with values initialized to null
-	 * @param width The width of the grid
+	 * @param width  The width of the grid
 	 * @param height The height of the grid
 	 */
 	public FixedSizeGrid(int width, int height) {
@@ -26,8 +26,8 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 
 	/**
 	 * Creates a grid of a fixed width and height, with values initialized to a default value
-	 * @param width The width of the grid
-	 * @param height The height of the grid
+	 * @param width        The width of the grid
+	 * @param height       The height of the grid
 	 * @param defaultValue The value to initialize each grid entry to
 	 */
 	public FixedSizeGrid(int width, int height, E defaultValue) {
@@ -36,13 +36,13 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 
 	/**
 	 * Creates a grid of a fixed width and height, with values initialized using a function
-	 * @param width The width of the grid
-	 * @param height The height of the grid
+	 * @param width       The width of the grid
+	 * @param height      The height of the grid
 	 * @param initializer The initialization function, which uses the i and j coordinates as input
 	 */
 	public FixedSizeGrid(int width, int height, BiFunction<Integer, Integer, E> initializer) {
-		inside = new ArrayList<>(width*height);
-		for (int i = 0; i < width*height; i++) {
+		inside = new ArrayList<>(width * height);
+		for (int i = 0; i < width * height; i++) {
 			inside.add(null);
 		}
 		this.width = width;
@@ -96,7 +96,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @return The total size and capacity of the grid
 	 */
 	public int size() {
-		return width*height;
+		return width * height;
 	}
 
 	/**
@@ -109,13 +109,13 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 
 	/**
 	 * Sets the value at a given coordinate
-	 * @param i The i coordinate, which runs along the width
-	 * @param j The j coordinate, which runs along the height
+	 * @param i     The i coordinate, which runs along the width
+	 * @param j     The j coordinate, which runs along the height
 	 * @param value The value to insert
 	 * @return the value previously at that coordinate, or null otherwise
 	 */
 	public E set(int i, int j, E value) {
-		if(!isInGrid(i, j)) {
+		if (!isInGrid(i, j)) {
 			throw new IndexOutOfBoundsException(i + ", " + j + " are not within the domain of the grid!");
 		}
 
@@ -125,7 +125,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	/**
 	 * Sets the value at a given coordinate
 	 * @param coordinate The coordinate in the grid
-	 * @param value The new value to set at the given coordinate
+	 * @param value      The new value to set at the given coordinate
 	 * @return the value previously at that coordinate, or null otherwise
 	 */
 	public E set(Coordinate coordinate, E value) {
@@ -139,10 +139,9 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @return the value at the coordinate
 	 */
 	public E get(int i, int j) {
-		if(!isInGrid(i, j)) {
-			throw new IndexOutOfBoundsException(i +", " + j);
-		}
-		else {
+		if (!isInGrid(i, j)) {
+			throw new IndexOutOfBoundsException(i + ", " + j);
+		} else {
 			return getFromList(i, j);
 		}
 	}
@@ -163,10 +162,9 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 */
 	public Coordinate coordinatesOf(E e) {
 		int linearPosition = inside.indexOf(e);
-		if(linearPosition == -1) {
+		if (linearPosition == -1) {
 			return null;
-		}
-		else {
+		} else {
 			return computeCoordinatePosition(linearPosition);
 		}
 	}
@@ -178,7 +176,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @param j The j coordinate, which runs along the height
 	 * @return a list of directly adjacent coordinates
 	 */
-	public List<Coordinate> getDirectlyAdjacentCoordinates(int i, int j){
+	public List<Coordinate> getDirectlyAdjacentCoordinates(int i, int j) {
 		return streamCoordinates()
 				.filter(coordinate -> coordinate.taxiDistance(new Coordinate(i, j)) == 1)
 				.filter(this::isInGrid)
@@ -192,7 +190,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @param j The j coordinate, which runs along the height
 	 * @return a list of adjacent coordinates
 	 */
-	public List<Coordinate> getAdjacentCoordinates(int i, int j){
+	public List<Coordinate> getAdjacentCoordinates(int i, int j) {
 		return streamCoordinates()
 				.filter(coordinate -> coordinate.kingDistance(new Coordinate(i, j)) == 1)
 				.filter(this::isInGrid)
@@ -206,7 +204,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @param j The j coordinate, which runs along the height
 	 * @return a list of directly adjacent elements
 	 */
-	public List<E> getDirectlyAdjacentElements(int i, int j){
+	public List<E> getDirectlyAdjacentElements(int i, int j) {
 		List<Coordinate> coordinatesToGet = getDirectlyAdjacentCoordinates(i, j);
 		return coordinatesToGet.stream().map(this::get).toList();
 
@@ -219,7 +217,7 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	 * @param j The j coordinate, which runs along the height
 	 * @return a list of adjacent elements
 	 */
-	public List<E> getAdjacentElements(int i, int j){
+	public List<E> getAdjacentElements(int i, int j) {
 		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);
 		return coordinatesToGet.stream().map(this::get).toList();
 
@@ -229,13 +227,16 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 		int position = computeLinearPosition(i, j);
 		return inside.get(position);
 	}
+
 	private E setToList(int i, int j, E value) {
 		int position = computeLinearPosition(i, j);
 		return inside.set(position, value);
 	}
+
 	private int computeLinearPosition(int i, int j) {
-		return i + j*width;
+		return i + j * width;
 	}
+
 	private Coordinate computeCoordinatePosition(int linearPosition) {
 		int i = linearPosition % width;
 		int j = linearPosition / width;

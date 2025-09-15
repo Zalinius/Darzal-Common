@@ -9,7 +9,7 @@ import java.util.Set;
  * @param <F> The *left* parameter of the map. The type must be suitable for use as a key (equals, uniqueness) and for hashing
  * @param <S> The *right* parameter of the map. The type must be suitable for use as a key (equals, uniqueness) and for hashing
  */
-public class BiMap <F, S> {
+public class BiMap<F, S> {
 
 	private final Map<F, S> mapFirstToSecond;
 	private final Map<S, F> mapSecondToFirst;
@@ -24,7 +24,7 @@ public class BiMap <F, S> {
 
 	/**
 	 * Inserts a two way pair to the bimap, removing any pair using either of the keys
-	 * @param first A key and value to insert of the first type
+	 * @param first  A key and value to insert of the first type
 	 * @param second A key and value to insert of the second type
 	 */
 	public void putPair(F first, S second) {
@@ -89,17 +89,16 @@ public class BiMap <F, S> {
 
 	/**
 	 * Removes a key-key pair if both keys are present and linked to eachother
-	 * @param first The first key
+	 * @param first  The first key
 	 * @param second The second key
 	 * @return The removed pair as a tuple, or null if the pair wasn't in the bimap
 	 */
 	public Tuple<F, S> removePair(F first, S second) {
-		if (mapFirstToSecond.containsKey(first) && mapSecondToFirst.containsKey(second) && getSecondValue(first).equals(second) && getFirstValue(second).equals(first))	{
+		if (mapFirstToSecond.containsKey(first) && mapSecondToFirst.containsKey(second) && getSecondValue(first).equals(second) && getFirstValue(second).equals(first)) {
 			S sValue = mapFirstToSecond.remove(first);
 			F fValue = mapSecondToFirst.remove(second);
 			return new Tuple<>(fValue, sValue);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -109,11 +108,10 @@ public class BiMap <F, S> {
 	 * @param first the key to be used
 	 * @return The removed pair as a tuple, or null if the pair wasn't in the bimap
 	 */
-	public Tuple<F, S> removeByFirstType(F first)	{
+	public Tuple<F, S> removeByFirstType(F first) {
 		if (mapFirstToSecond.containsKey(first)) {
 			return removePair(first, mapFirstToSecond.get(first));
-		}
-		else {
+		} else {
 			return null;
 		}
 	}
@@ -126,8 +124,7 @@ public class BiMap <F, S> {
 	public Tuple<F, S> removeBySecondType(S second) {
 		if (mapSecondToFirst.containsKey(second)) {
 			return removePair(mapSecondToFirst.get(second), second);
-		}
-		else {
+		} else {
 			return null;
 		}
 	}

@@ -16,7 +16,7 @@ public record Coordinate(
 	 * Creates a coordinate centered at the origin
 	 */
 	public Coordinate() {
-		this(0,0);
+		this(0, 0);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public record Coordinate(
 	 * Gets this Coordinate as an Integer Pair
 	 * @return A pair of integers corresponding to this coordinate.
 	 */
-	public Pair<Integer> toPair(){
+	public Pair<Integer> toPair() {
 		return new Pair<>(i, j);
 	}
 
@@ -47,7 +47,7 @@ public record Coordinate(
 	 * Gets this Coordinate as an Integer Tuple
 	 * @return A tuple of integers corresponding to this coordinate.
 	 */
-	public Tuple<Integer, Integer> toTuple(){
+	public Tuple<Integer, Integer> toTuple() {
 		return new Tuple<>(i, j);
 	}
 

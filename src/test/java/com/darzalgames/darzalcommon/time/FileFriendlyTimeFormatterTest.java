@@ -43,7 +43,7 @@ class FileFriendlyTimeFormatterTest {
 
 		assertFalse(formattedTime.contains(":"));
 		assertFalse(formattedTime.contains("/"));
-		assertEquals("1969-12-31T19.00.00-0500", formattedTime); //5 hours before the epoch
+		assertEquals("1969-12-31T19.00.00-0500", formattedTime); // 5 hours before the epoch
 	}
 
 }
