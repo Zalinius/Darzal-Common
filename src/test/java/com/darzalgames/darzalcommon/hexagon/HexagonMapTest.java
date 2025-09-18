@@ -1,8 +1,6 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collection;
 import java.util.Set;
@@ -150,6 +148,17 @@ class HexagonMapTest {
 		String neighbor = hexagonMap.getValueNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 
 		assertEquals(expectedNeighborHexagonQ + " " + expectedNeighborHexagonR, neighbor);
+	}
+
+	@Test
+	void remove_onHexagonWithValue_removesPairingFromMap() {
+		HexagonMap<Integer> hexagonMap = new HexagonMap<>();
+		hexagonMap.put(new Hexagon(0, 0), 5);
+
+		int removedValue = hexagonMap.remove(new Hexagon(0, 0));
+
+		assertEquals(5, removedValue);
+		assertFalse(hexagonMap.containsHexagon(new Hexagon(0, 0)));
 	}
 
 }

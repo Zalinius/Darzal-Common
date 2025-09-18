@@ -45,6 +45,25 @@ public class HexagonMap<E> {
 	}
 
 	/**
+	 * Returns true if this map contains a mapping for the specified hexagon
+	 * @param hexagon whose presence in this map is to be tested
+	 * @return {@code true} if this map contains a mapping for the specified key
+	 */
+	public boolean containsHexagon(Hexagon hexagon) {
+		return innerMap.containsKey(hexagon);
+	}
+
+	/**
+	 * Removes the mapping for a hexagon from this map if it is present<br>
+	 * Returns the value to which this map previously associated the hexagon, or null if the map contained no mapping for the key.
+	 * @param hexagon whose mapping is to be removed from the map
+	 * @return the previous value associated with the hexagon, or null if there was no mapping for the hexagon.
+	 */
+	public E remove(Hexagon hexagon) {
+		return innerMap.remove(hexagon);
+	}
+
+	/**
 	 * Gets all the values stored in this map
 	 * @return all objects stored by this map
 	 */

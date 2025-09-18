@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class MutableCollectors {
 
-	MutableCollectors() {}
+	private MutableCollectors() {}
 
 	/**
 	 * Returns a Collector that accumulates the input elements into a new {@code List}. <br>
