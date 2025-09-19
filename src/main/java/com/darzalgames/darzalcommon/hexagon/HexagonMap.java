@@ -1,21 +1,23 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * A java-style map, with hexagons as keys and various convenience functions
  * @param <E> The type for the values of the key-value pairs in the map
  */
-public class HexagonMap<E> {
+public class HexagonMap<E> extends HashMap<Hexagon, E> {
 
-	private final Map<Hexagon, E> innerMap;
+	private static final long serialVersionUID = 5801182744649958152L;
 
 	/**
 	 * Constructs an empty HexagonMap
 	 */
 	public HexagonMap() {
-		innerMap = new HashMap<>();
+		super();
 	}
 
 	/**
@@ -23,52 +25,7 @@ public class HexagonMap<E> {
 	 * @return gets the value at the origin hexagon (0,0)
 	 */
 	public E getMiddleHexagonValue() {
-		return innerMap.get(new Hexagon(0, 0));
-	}
-
-	/**
-	 * Puts a value at the specified hexagon coordinate
-	 * @param hexagon the location for the new value
-	 * @param value   the value to insert
-	 * @return the previous value at the hexagon coordinate, or null if there was none
-	 */
-	public E put(Hexagon hexagon, E value) {
-		return innerMap.put(hexagon, value);
-	}
-
-	/**
-	 * Returns the set of all hexagon keys in this map
-	 * @return all {@link Hexagon} objects stored by this map
-	 */
-	public Set<Hexagon> getAllHexagons() {
-		return innerMap.keySet();
-	}
-
-	/**
-	 * Returns true if this map contains a mapping for the specified hexagon
-	 * @param hexagon whose presence in this map is to be tested
-	 * @return {@code true} if this map contains a mapping for the specified key
-	 */
-	public boolean containsHexagon(Hexagon hexagon) {
-		return innerMap.containsKey(hexagon);
-	}
-
-	/**
-	 * Removes the mapping for a hexagon from this map if it is present<br>
-	 * Returns the value to which this map previously associated the hexagon, or null if the map contained no mapping for the key.
-	 * @param hexagon whose mapping is to be removed from the map
-	 * @return the previous value associated with the hexagon, or null if there was no mapping for the hexagon.
-	 */
-	public E remove(Hexagon hexagon) {
-		return innerMap.remove(hexagon);
-	}
-
-	/**
-	 * Gets all the values stored in this map
-	 * @return all objects stored by this map
-	 */
-	public Collection<E> getAllValues() {
-		return innerMap.values();
+		return get(Hexagon.ORIGIN);
 	}
 
 	/**
@@ -78,8 +35,8 @@ public class HexagonMap<E> {
 	 */
 	public Set<Hexagon> getHexagonNeighborsOf(Hexagon hexagon) {
 		return HexagonDirection.values().stream()
-				.map(direction -> HexagonDirection.getNeighborHexagon(hexagon, direction))
-				.filter(innerMap::containsKey)
+				.map(direction -> direction.getNeighborHexagon(hexagon))
+				.filter(this::containsKey)
 				.collect(Collectors.toSet());
 	}
 
@@ -89,7 +46,7 @@ public class HexagonMap<E> {
 	 * @return A list of the neighboring values
 	 */
 	public Collection<E> getValueNeighborsOf(Hexagon hexagon) {
-		return getHexagonNeighborsOf(hexagon).stream().map(innerMap::get).toList();
+		return getHexagonNeighborsOf(hexagon).stream().map(this::get).toList();
 	}
 
 	/**
@@ -99,20 +56,16 @@ public class HexagonMap<E> {
 	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */
 	public E getValueNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
-		Hexagon neighbor = HexagonDirection.getNeighborHexagon(hexagon, direction);
+		Hexagon neighbor = direction.getNeighborHexagon(hexagon);
 		return get(neighbor);
 	}
 
-	/**
-	 * Get the value at the specified hexagon
-	 * @param hexagon the hexagon address of the desired value
-	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException
-	 */
-	public E get(Hexagon hexagon) {
-		if (innerMap.containsKey(hexagon)) {
-			return innerMap.get(hexagon);
-		} else {
-			throw new IllegalArgumentException("Hexagon not in map: " + hexagon);
+	@Override
+	public E get(Object key) {
+		if (!containsKey(key)) {
+			throw new IllegalArgumentException("Hexagon not in map: " + key);
 		}
+		return super.get(key);
 	}
+
 }

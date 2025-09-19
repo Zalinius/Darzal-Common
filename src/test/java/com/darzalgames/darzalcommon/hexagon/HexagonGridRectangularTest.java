@@ -41,7 +41,7 @@ class HexagonGridRectangularTest {
 
 	@Test
 	void makeGrid_with1x1_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0));
+		Set<Hexagon> expectedHexagons = Set.of(Hexagon.ORIGIN);
 
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(1, 1);
 
@@ -51,7 +51,7 @@ class HexagonGridRectangularTest {
 
 	@Test
 	void makeGrid_with2x2_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1));
+		Set<Hexagon> expectedHexagons = Set.of(Hexagon.ORIGIN, new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1));
 
 		List<Hexagon> hexagons = HexagonGridRectangular.makeGrid(2, 2);
 
@@ -62,7 +62,7 @@ class HexagonGridRectangularTest {
 	@Test
 	void makeGrid_with3x3_containsCorrectHexagons() {
 		Set<Hexagon> expectedHexagons = Set.of(
-				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				Hexagon.ORIGIN, new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
 				new Hexagon(0, -1), new Hexagon(1, -1), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(-1, 2)
 		);
 
@@ -75,7 +75,7 @@ class HexagonGridRectangularTest {
 	@Test
 	void makeGrid_with2x3_containsCorrectHexagons() {
 		Set<Hexagon> expectedHexagons = Set.of(
-				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				Hexagon.ORIGIN, new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
 				new Hexagon(0, -1), new Hexagon(1, -1)
 		);
 
@@ -88,7 +88,7 @@ class HexagonGridRectangularTest {
 	@Test
 	void makeGrid_with3x2_containsCorrectHexagons() {
 		Set<Hexagon> expectedHexagons = Set.of(
-				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				Hexagon.ORIGIN, new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
 				new Hexagon(-1, 1), new Hexagon(-1, 2)
 		);
 

@@ -11,10 +11,10 @@ class HexagonDirectionTest {
 		int startQ = 5;
 		int startR = -3;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP_LEFT);
+		Hexagon hexagon = HexagonDirection.TOP_LEFT.getNeighborHexagon(startQ, startR);
 
-		assertEquals(4, hexagon.getQ());
-		assertEquals(startR, hexagon.getR());
+		assertEquals(4, hexagon.q());
+		assertEquals(startR, hexagon.r());
 	}
 
 	@Test
@@ -22,10 +22,10 @@ class HexagonDirectionTest {
 		int startQ = 12;
 		int startR = 4;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP);
+		Hexagon hexagon = HexagonDirection.TOP.getNeighborHexagon(startQ, startR);
 
-		assertEquals(startQ, hexagon.getQ());
-		assertEquals(3, hexagon.getR());
+		assertEquals(startQ, hexagon.q());
+		assertEquals(3, hexagon.r());
 	}
 
 	@Test
@@ -33,10 +33,10 @@ class HexagonDirectionTest {
 		int startQ = 0;
 		int startR = -8;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.TOP_RIGHT);
+		Hexagon hexagon = HexagonDirection.TOP_RIGHT.getNeighborHexagon(startQ, startR);
 
-		assertEquals(1, hexagon.getQ());
-		assertEquals(-9, hexagon.getR());
+		assertEquals(1, hexagon.q());
+		assertEquals(-9, hexagon.r());
 	}
 
 	@Test
@@ -44,10 +44,10 @@ class HexagonDirectionTest {
 		int startQ = -18;
 		int startR = 6;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM_RIGHT);
+		Hexagon hexagon = HexagonDirection.BOTTOM_RIGHT.getNeighborHexagon(startQ, startR);
 
-		assertEquals(-17, hexagon.getQ());
-		assertEquals(startR, hexagon.getR());
+		assertEquals(-17, hexagon.q());
+		assertEquals(startR, hexagon.r());
 	}
 
 	@Test
@@ -55,10 +55,10 @@ class HexagonDirectionTest {
 		int startQ = -6;
 		int startR = 0;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM);
+		Hexagon hexagon = HexagonDirection.BOTTOM.getNeighborHexagon(startQ, startR);
 
-		assertEquals(startQ, hexagon.getQ());
-		assertEquals(1, hexagon.getR());
+		assertEquals(startQ, hexagon.q());
+		assertEquals(1, hexagon.r());
 	}
 
 	@Test
@@ -66,9 +66,9 @@ class HexagonDirectionTest {
 		int startQ = 0;
 		int startR = -8;
 
-		Hexagon hexagon = HexagonDirection.getNeighborHexagon(startQ, startR, HexagonDirection.BOTTOM_LEFT);
+		Hexagon hexagon = HexagonDirection.BOTTOM_LEFT.getNeighborHexagon(startQ, startR);
 
-		assertEquals(-1, hexagon.getQ());
-		assertEquals(-7, hexagon.getR());
+		assertEquals(-1, hexagon.q());
+		assertEquals(-7, hexagon.r());
 	}
 }
