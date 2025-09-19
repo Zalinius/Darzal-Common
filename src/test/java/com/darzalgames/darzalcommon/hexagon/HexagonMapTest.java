@@ -22,7 +22,7 @@ class HexagonMapTest {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
 
-		hexagonMap.put(new Hexagon(0, 0), "middle!");
+		hexagonMap.put(Hexagon.ORIGIN, "middle!");
 
 		assertEquals("middle!", hexagonMap.getMiddleHexagonValue());
 	}
@@ -32,11 +32,11 @@ class HexagonMapTest {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, ""));
 		Set<Hexagon> expectedHexagons = Set.of(
-				new Hexagon(0, 0), new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
+				Hexagon.ORIGIN, new Hexagon(0, 1), new Hexagon(1, 0), new Hexagon(1, 1),
 				new Hexagon(0, -1), new Hexagon(1, -1), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(-1, 2)
 		);
 
-		Collection<Hexagon> all = hexagonMap.getAllHexagons();
+		Collection<Hexagon> all = hexagonMap.keySet();
 
 		assertEquals(expectedHexagons.size(), all.size());
 		assertTrue(all.containsAll(expectedHexagons));
@@ -47,12 +47,12 @@ class HexagonMapTest {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, hex.toString()));
 		Set<String> expectedHexagons = Set.of(
-				new Hexagon(0, 0).toString(), new Hexagon(0, 1).toString(),
+				Hexagon.ORIGIN.toString(), new Hexagon(0, 1).toString(),
 				new Hexagon(1, 0).toString(), new Hexagon(1, 1).toString(), new Hexagon(0, -1).toString(),
 				new Hexagon(1, -1).toString(), new Hexagon(-1, 0).toString(), new Hexagon(-1, 1).toString(), new Hexagon(-1, 2).toString()
 		);
 
-		Collection<String> all = hexagonMap.getAllValues();
+		Collection<String> all = hexagonMap.values();
 
 		assertEquals(expectedHexagons.size(), all.size());
 		assertTrue(all.containsAll(expectedHexagons));
@@ -67,7 +67,7 @@ class HexagonMapTest {
 				new Hexagon(1, -1).toString(), new Hexagon(-1, 0).toString(), new Hexagon(-1, 1).toString()
 		);
 
-		Collection<String> neighbors = hexagonMap.getValueNeighborsOf(new Hexagon(0, 0));
+		Collection<String> neighbors = hexagonMap.getValueNeighborsOf(Hexagon.ORIGIN);
 
 		assertEquals(6, neighbors.size());
 		assertTrue(neighbors.containsAll(expectedHexagons));
@@ -143,7 +143,7 @@ class HexagonMapTest {
 	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
 	void getValueNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
-		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, hex.getQ() + " " + hex.getR()));
+		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, hex.q() + " " + hex.r()));
 
 		String neighbor = hexagonMap.getValueNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 
@@ -153,12 +153,12 @@ class HexagonMapTest {
 	@Test
 	void remove_onHexagonWithValue_removesPairingFromMap() {
 		HexagonMap<Integer> hexagonMap = new HexagonMap<>();
-		hexagonMap.put(new Hexagon(0, 0), 5);
+		hexagonMap.put(Hexagon.ORIGIN, 5);
 
-		int removedValue = hexagonMap.remove(new Hexagon(0, 0));
+		int removedValue = hexagonMap.remove(Hexagon.ORIGIN);
 
 		assertEquals(5, removedValue);
-		assertFalse(hexagonMap.containsHexagon(new Hexagon(0, 0)));
+		assertFalse(hexagonMap.containsKey(Hexagon.ORIGIN));
 	}
 
 }

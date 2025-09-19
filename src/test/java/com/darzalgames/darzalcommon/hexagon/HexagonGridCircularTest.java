@@ -22,7 +22,7 @@ class HexagonGridCircularTest {
 
 	@Test
 	void makeGrid_withRadius1_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0));
+		Set<Hexagon> expectedHexagons = Set.of(Hexagon.ORIGIN);
 
 		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(1);
 
@@ -32,7 +32,7 @@ class HexagonGridCircularTest {
 
 	@Test
 	void makeGrid_withRadius2_containsCorrectHexagons() {
-		Set<Hexagon> expectedHexagons = Set.of(new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0));
+		Set<Hexagon> expectedHexagons = Set.of(Hexagon.ORIGIN, new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0));
 
 		List<Hexagon> hexagons = HexagonGridCircular.makeGrid(2);
 
@@ -43,7 +43,7 @@ class HexagonGridCircularTest {
 	@Test
 	void makeGrid_withRadius3_containsCorrectHexagons() {
 		Set<Hexagon> expectedHexagons = Set.of(
-				new Hexagon(0, 0), new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0),
+				Hexagon.ORIGIN, new Hexagon(-1, 0), new Hexagon(-1, 1), new Hexagon(0, -1), new Hexagon(0, 1), new Hexagon(1, -1), new Hexagon(1, 0),
 				new Hexagon(0, -2), new Hexagon(1, -2), new Hexagon(2, -2), new Hexagon(-1, -1), new Hexagon(2, -1), new Hexagon(-2, 0), new Hexagon(2, 0), new Hexagon(-2, 1),
 				new Hexagon(1, 1), new Hexagon(-2, 2), new Hexagon(-1, 2), new Hexagon(0, 2)
 		);

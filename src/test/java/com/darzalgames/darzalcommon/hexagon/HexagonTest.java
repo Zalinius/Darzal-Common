@@ -36,8 +36,8 @@ class HexagonTest {
 
 		Hexagon result = Hexagon.makeHexagonFromOffsetCoordinates(row, column);
 
-		assertEquals(expectedQ, result.getQ());
-		assertEquals(expectedR, result.getR());
+		assertEquals(expectedQ, result.q());
+		assertEquals(expectedR, result.r());
 	}
 
 	@ParameterizedTest
@@ -53,7 +53,7 @@ class HexagonTest {
 	void getS_isCalculatedCorrectly(int q, int r, int expectedS) {
 		Hexagon hexagon = new Hexagon(q, r);
 
-		assertEquals(expectedS, hexagon.getS());
+		assertEquals(expectedS, hexagon.s());
 	}
 
 	@Test
