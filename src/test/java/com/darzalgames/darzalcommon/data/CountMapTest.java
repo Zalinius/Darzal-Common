@@ -30,7 +30,8 @@ class CountMapTest {
 
 	@Test
 	void constructor_withExistingNullCollection_throwsNullPointerException() {
-		assertThrows(NullPointerException.class, () -> new CountMap<>(null));
+		Collection<Void> nullCollection = null;
+		assertThrows(NullPointerException.class, () -> new CountMap<>(nullCollection));
 	}
 
 	@Test

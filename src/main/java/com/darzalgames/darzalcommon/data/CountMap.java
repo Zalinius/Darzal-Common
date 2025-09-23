@@ -18,18 +18,36 @@ public class CountMap<K> implements Iterable<K> {
 	 * Creates a blank CountMap
 	 */
 	public CountMap() {
-		data = new HashMap<>();
+		this(new HashMap<>());
+	}
+
+	/**
+	 * Creates a blank CountMap using the provided map as backing
+	 * @param innerMap a map that will be used as the backing of this count map
+	 */
+	public CountMap(Map<K, Integer> innerMap) {
+		this(innerMap, List.of());
 	}
 
 	/**
 	 * Creates a CountMap, initialized with all the values of the provided collection
-	 * @param collection An existing non null collection
-	 * @throws NullPointerException if collection is null
+	 * @param initialIncrements An existing non null collection to increment the count map with
+	 * @throws NullPointerException if the initialIncrements is null
 	 */
-	public CountMap(Collection<K> collection) {
-		this();
-		Objects.requireNonNull(collection, "collection must not be null");
-		incrementAll(collection);
+	public CountMap(Collection<K> initialIncrements) {
+		this(new HashMap<>(), initialIncrements);
+	}
+
+	/**
+	 * Creates a CountMap, using the provided map as backing, initialized with all the values of the provided collection
+	 * @param innerMap          a map that will be used as the backing of this count map
+	 * @param initialIncrements An existing non null collection to increment the count map with
+	 * @throws NullPointerException if the initialIncrements is null
+	 */
+	public CountMap(Map<K, Integer> innerMap, Collection<K> initialIncrements) {
+		data = innerMap;
+		Objects.requireNonNull(initialIncrements, "initialIncrements must not be null");
+		incrementAll(initialIncrements);
 	}
 
 	/**
