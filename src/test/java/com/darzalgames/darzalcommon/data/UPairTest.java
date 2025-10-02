@@ -127,7 +127,7 @@ class UPairTest {
 	@Test
 	void equals_onDifferentClass_returnsFalse() {
 		UPair<Integer> uPair = new UPair<>(1, 2);
-		Pair<Integer> pair = new Pair(1, 2);
+		Pair<Integer> pair = new Pair<>(1, 2);
 
 		assertNotEquals(uPair, pair);
 	}
@@ -135,8 +135,9 @@ class UPairTest {
 	@Test
 	void equals_onNullValue_returnsFalse() {
 		UPair<Integer> uPair = new UPair<>(1, 2);
+		UPair<Integer> nullUPair = null;
 
-		assertNotEquals(uPair, null);
+		assertNotEquals(uPair, nullUPair);
 	}
 
 	@Test
