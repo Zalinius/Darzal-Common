@@ -1,5 +1,7 @@
 package com.darzalgames.darzalcommon.math;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -176,14 +178,19 @@ public class Fraction implements Comparable<Fraction> {
 		return compareTo(other) <= 0;
 	}
 
-	/**
-	 * Adds two fractions together
-	 * @param f1 the first fraction
-	 * @param f2 the second fraction
-	 * @return the sum of the fractions, with a common denominator
-	 */
-	public static Fraction add(Fraction f1, Fraction f2) {
+	private static Fraction addTwoFractions(Fraction f1, Fraction f2) {
 		return new Fraction(f1.numerator * f2.denominator + f2.numerator * f1.denominator, f1.denominator * f2.denominator);
+	}
+
+	/**
+	 * Adds fractions together
+	 * @param fractions a number of fractions
+	 * @return the sum of the fractions, with a common denominator. Returns the zero fraction if called without argument
+	 */
+	public static Fraction add(Fraction... fractions) {
+		List<Fraction> fractionList = Arrays.asList(fractions);
+		return fractionList.stream()
+				.reduce(new Fraction(), Fraction::addTwoFractions);
 	}
 
 	/**
@@ -198,11 +205,16 @@ public class Fraction implements Comparable<Fraction> {
 
 	/**
 	 * Multiplies two fractions together
-	 * @param f1 the first fraction
-	 * @param f2 the second fraction
+	 * @param fractions a number of fractions
 	 * @return the product of the fractions, with a common denominator
 	 */
-	public static Fraction multiply(Fraction f1, Fraction f2) {
+	public static Fraction multiply(Fraction... fractions) {
+		List<Fraction> fractionList = Arrays.asList(fractions);
+		return fractionList.stream()
+				.reduce(new Fraction(1), Fraction::multiplyTwoFractions);
+	}
+
+	private static Fraction multiplyTwoFractions(Fraction f1, Fraction f2) {
 		return new Fraction(f1.numerator * f2.numerator, f1.denominator * f2.denominator);
 	}
 
