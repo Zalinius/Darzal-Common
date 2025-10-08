@@ -256,6 +256,22 @@ class FractionTest {
 	}
 
 	@Test
+	void add_noFractions_returnsZero() {
+		Fraction addition = Fraction.add();
+
+		Fraction expected = new Fraction(0, 1);
+		assertEquals(expected, addition);
+	}
+
+	@Test
+	void add_oneFractions_returnsSameFraction() {
+		Fraction addition = Fraction.add(new Fraction(5, 7));
+
+		Fraction expected = new Fraction(5, 7);
+		assertEquals(expected, addition);
+	}
+
+	@Test
 	void add_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(1, 3);
 		Fraction f2 = new Fraction(1, 2);
@@ -263,6 +279,18 @@ class FractionTest {
 		Fraction addition = Fraction.add(f1, f2);
 
 		Fraction expected = new Fraction(5, 6);
+		assertEquals(expected, addition);
+	}
+
+	@Test
+	void add_threeFractions_isCorrect() {
+		Fraction f1 = new Fraction(1, 3);
+		Fraction f2 = new Fraction(1, 2);
+		Fraction f3 = new Fraction(1, 5);
+
+		Fraction addition = Fraction.add(f1, f2, f3);
+
+		Fraction expected = new Fraction(31, 30);
 		assertEquals(expected, addition);
 	}
 
@@ -278,6 +306,24 @@ class FractionTest {
 	}
 
 	@Test
+	void multiply_noFractions_returns1() {
+		Fraction multiplication = Fraction.multiply();
+
+		Fraction expected = new Fraction(1);
+		assertEquals(expected, multiplication);
+	}
+
+	@Test
+	void multiply_oneFraction_returnsSameFraction() {
+		Fraction f1 = new Fraction(5, 7);
+
+		Fraction multiplication = Fraction.multiply(f1);
+
+		Fraction expected = new Fraction(5, 7);
+		assertEquals(expected, multiplication);
+	}
+
+	@Test
 	void multiply_twoFractions_isCorrect() {
 		Fraction f1 = new Fraction(5, 7);
 		Fraction f2 = new Fraction(7, 12);
@@ -285,6 +331,18 @@ class FractionTest {
 		Fraction multiplication = Fraction.multiply(f1, f2);
 
 		Fraction expected = new Fraction(5, 12);
+		assertEquals(expected, multiplication);
+	}
+
+	@Test
+	void multiply_threeFractions_isCorrect() {
+		Fraction f1 = new Fraction(5, 7);
+		Fraction f2 = new Fraction(7, 12);
+		Fraction f3 = new Fraction(6, 11);
+
+		Fraction multiplication = Fraction.multiply(f1, f2, f3);
+
+		Fraction expected = new Fraction(5, 22);
 		assertEquals(expected, multiplication);
 	}
 
