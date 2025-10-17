@@ -136,7 +136,7 @@ class VariableHeightGridTest {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
 		grid.add("4");
 
-		assertDoesNotThrow(() -> grid.toString());
+		assertDoesNotThrow(grid::toString);
 	}
 
 	@ParameterizedTest

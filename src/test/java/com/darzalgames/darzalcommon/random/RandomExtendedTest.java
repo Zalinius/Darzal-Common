@@ -25,12 +25,12 @@ class RandomExtendedTest {
 
 	@Test
 	void constructorWithSeed_behavesLikeBasicRandomObjectWithSameSeed() {
-		RandomExtended randomExtended = new RandomExtended(0);
+		RandomExtended randomExtendedSeeded = new RandomExtended(0);
 		Random random = new Random(0);
 
-		assertEquals(random.nextInt(), randomExtended.nextInt());
-		assertEquals(random.nextFloat(), randomExtended.nextFloat());
-		assertEquals(random.nextBoolean(), randomExtended.nextCoinFlip());
+		assertEquals(random.nextInt(), randomExtendedSeeded.nextInt());
+		assertEquals(random.nextFloat(), randomExtendedSeeded.nextFloat());
+		assertEquals(random.nextBoolean(), randomExtendedSeeded.nextCoinFlip());
 	}
 
 	@Test

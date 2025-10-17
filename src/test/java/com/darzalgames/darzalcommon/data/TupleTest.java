@@ -52,8 +52,8 @@ class TupleTest {
 		Tuple<Integer, Double> tuple1 = new Tuple<>(4, 2.7);
 		Tuple<Integer, Double> tuple2 = new Tuple<>(null, null);
 
-		assertDoesNotThrow(() -> tuple1.toString());
-		assertDoesNotThrow(() -> tuple2.toString());
+		assertDoesNotThrow(tuple1::toString);
+		assertDoesNotThrow(tuple2::toString);
 	}
 
 }
