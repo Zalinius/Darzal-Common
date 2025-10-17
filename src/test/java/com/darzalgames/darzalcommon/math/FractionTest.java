@@ -77,7 +77,7 @@ class FractionTest {
 	void invert_fractionWith0Numerator_throwsArithmeticException() {
 		Fraction fraction = new Fraction(0, 1);
 
-		assertThrows(ArithmeticException.class, () -> fraction.invert());
+		assertThrows(ArithmeticException.class, fraction::invert);
 	}
 
 	@Test

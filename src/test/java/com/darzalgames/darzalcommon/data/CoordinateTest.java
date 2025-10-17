@@ -93,7 +93,7 @@ class CoordinateTest {
 	void toString_doesNotThrow() {
 		Coordinate coordinate = new Coordinate();
 
-		assertDoesNotThrow(() -> coordinate.toString());
+		assertDoesNotThrow(coordinate::toString);
 	}
 
 	@Test

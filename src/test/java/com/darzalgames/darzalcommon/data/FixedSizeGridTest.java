@@ -235,7 +235,7 @@ class FixedSizeGridTest {
 		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, "");
 		grid.set(0, 1, "4");
 
-		assertDoesNotThrow(() -> grid.toString());
+		assertDoesNotThrow(grid::toString);
 	}
 
 	@ParameterizedTest

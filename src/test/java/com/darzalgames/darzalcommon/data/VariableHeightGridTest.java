@@ -136,7 +136,7 @@ class VariableHeightGridTest {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
 		grid.add("4");
 
-		assertDoesNotThrow(() -> grid.toString());
+		assertDoesNotThrow(grid::toString);
 	}
 
 	@ParameterizedTest
@@ -200,6 +200,20 @@ class VariableHeightGridTest {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
 
 		assertFalse(grid.hasEntryAt(6, 6));
+	}
+
+	@Test
+	void hasEntryAt_coordinatesForNullEntryNotAtEndOfList_returnsFalse() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("");
+		grid.add("");
+		grid.add(null);
+		grid.add("");
+
+		assertTrue(grid.hasEntryAt(0, 0));
+		assertTrue(grid.hasEntryAt(0, 1));
+		assertFalse(grid.hasEntryAt(1, 0));
+		assertTrue(grid.hasEntryAt(1, 1));
 	}
 
 	@Test
