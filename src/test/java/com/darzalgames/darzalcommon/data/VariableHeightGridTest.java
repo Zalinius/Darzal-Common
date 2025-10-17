@@ -203,6 +203,20 @@ class VariableHeightGridTest {
 	}
 
 	@Test
+	void hasEntryAt_coordinatesForNullEntryNotAtEndOfList_returnsFalse() {
+		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
+		grid.add("");
+		grid.add("");
+		grid.add(null);
+		grid.add("");
+
+		assertTrue(grid.hasEntryAt(0, 0));
+		assertTrue(grid.hasEntryAt(0, 1));
+		assertFalse(grid.hasEntryAt(1, 0));
+		assertTrue(grid.hasEntryAt(1, 1));
+	}
+
+	@Test
 	void hasEntryAt_coordinatesBeyondInnerListButInsideOfGrid_returnsFalse() {
 		VariableHeightGrid<String> grid = new VariableHeightGrid<>(2);
 		grid.add("a");

@@ -73,7 +73,10 @@ public class VariableHeightGrid<E> implements Iterable<E> {
 			return false;
 		}
 		int index = computeLinearPosition(row, column);
-		return index < inside.size() && inside.get(index) != null;
+		if (index >= inside.size()) {
+			return false;
+		}
+		return inside.get(index) != null;
 	}
 
 	/**
