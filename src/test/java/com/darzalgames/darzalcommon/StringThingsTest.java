@@ -37,8 +37,8 @@ class StringThingsTest {
 		assertNotEquals("abc123", shuffledString);
 		assertEquals(6, shuffledString.length());
 		assertTrue(shuffledString.contains("a"));
-		assertTrue(shuffledString.contains("a"));
-		assertTrue(shuffledString.contains("a"));
+		assertTrue(shuffledString.contains("b"));
+		assertTrue(shuffledString.contains("c"));
 		assertTrue(shuffledString.contains("1"));
 		assertTrue(shuffledString.contains("2"));
 		assertTrue(shuffledString.contains("3"));
