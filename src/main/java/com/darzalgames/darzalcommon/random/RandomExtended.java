@@ -3,6 +3,7 @@ package com.darzalgames.darzalcommon.random;
 import java.util.*;
 
 import com.darzalgames.darzalcommon.functional.Do;
+import com.darzalgames.darzalcommon.math.Fraction;
 
 /**
  * An extension to the Java Random class with some convenience functions for GameDev.
@@ -53,6 +54,15 @@ public class RandomExtended extends Random {
 		}
 		int targetToMeetOrBeat = numerator - 1;
 		return targetToMeetOrBeat >= nextInt(denominator);
+	}
+
+	/**
+	 * Returns a random boolean, who's chance of being true is the fractional odds passed in,
+	 * @param odds the odds of returning true
+	 * @return Returns true or false randomly, based on the odds passed in
+	 */
+	public boolean nextChance(Fraction odds) {
+		return nextChance(odds.numerator(), odds.denominator());
 	}
 
 	/**

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.darzalgames.darzalcommon.functional.Do;
+import com.darzalgames.darzalcommon.math.Fraction;
 
 /**
  * We're deliberately not using the same seed here, as we're not testing the source of randomness,
@@ -75,6 +76,14 @@ class RandomExtendedTest {
 		int denominator = 7;
 
 		boolean result = randomExtended.nextChance(numerator, denominator);
+		assertFalse(result);
+	}
+
+	@Test
+	void nextChance_withZeroFraction_returnsAlwaysFalse() {
+		Fraction odds = new Fraction(0, 7);
+
+		boolean result = randomExtended.nextChance(odds);
 		assertFalse(result);
 	}
 
