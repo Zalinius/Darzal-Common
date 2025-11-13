@@ -14,7 +14,7 @@ public class HexagonMap<E> {
 	public E getMiddleHexagonValue() {
 		return grid.get(new Hexagon(0, 0));
 	}
-	
+
 	public void put(Hexagon hexagon, E value) {
 		grid.put(hexagon, value);
 	}
@@ -32,7 +32,7 @@ public class HexagonMap<E> {
 	public Collection<E> getAllValues() {
 		return grid.values();
 	}
-	
+
 	/**
 	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
@@ -44,6 +44,7 @@ public class HexagonMap<E> {
 				.filter(potentialNeighbor -> grid.containsKey(potentialNeighbor))
 				.collect(Collectors.toSet());
 	}
+
 	/**
 	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
@@ -54,9 +55,7 @@ public class HexagonMap<E> {
 	}
 
 	/**
-	 * @param hexagon
-	 * @param direction
-	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException 
+	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */
 	public E getNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
 		Hexagon neighbor = HexagonDirection.getNeighborHexagon(hexagon, direction);
@@ -64,8 +63,7 @@ public class HexagonMap<E> {
 	}
 
 	/**
-	 * @param hexagon
-	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException 
+	 * @return The value at the given hexagon coordinates if it exists, otherwise throws an IllegalArgumentException
 	 */
 	public E getValueAt(Hexagon hexagon) {
 		if (grid.containsKey(hexagon)) {
