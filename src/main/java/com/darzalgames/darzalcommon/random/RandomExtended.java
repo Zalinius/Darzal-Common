@@ -66,6 +66,18 @@ public class RandomExtended extends Random {
 	}
 
 	/**
+	 * Returns a random boolean, who's chance of being true is the percentage odds passed in,
+	 * @param percentageOdds the percentage chance of returning true
+	 * @return Returns true or false randomly, based on the odds passed in
+	 */
+	public boolean nextChance(float percentageOdds) {
+		if (percentageOdds < 0) {
+			throw new IllegalArgumentException("Percentage Odds must be non-negative:" + percentageOdds);
+		}
+		return nextFloat() < percentageOdds;
+	}
+
+	/**
 	 * Gets a random unit-circle angle in radians
 	 * @return a random double radian between 0.0(inclusive) and 2pi(exclusive)
 	 */

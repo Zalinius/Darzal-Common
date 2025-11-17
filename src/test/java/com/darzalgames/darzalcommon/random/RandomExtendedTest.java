@@ -115,6 +115,37 @@ class RandomExtendedTest {
 	}
 
 	@Test
+	void nextChance_withNegativePercentage_throwsIllegalArgumentException() {
+		float odds = -0.5f;
+
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.nextChance(odds));
+	}
+
+	@Test
+	void nextChance_with0Percentage_returnsFalse() {
+		float odds = 0f;
+
+		boolean result = randomExtended.nextChance(odds);
+		assertFalse(result);
+	}
+
+	@Test
+	void nextChance_with100Percentage_returnsTrue() {
+		float odds = 1f;
+
+		boolean result = randomExtended.nextChance(odds);
+		assertTrue(result);
+	}
+
+	@Test
+	void nextChance_withGreaterThan100PercentChance_returnsTrue() {
+		float odds = 2.5f;
+
+		boolean result = randomExtended.nextChance(odds);
+		assertTrue(result);
+	}
+
+	@Test
 	void getRandomElement_withEmptyCollection_throwsIllegalArgumentException() {
 		Collection<Integer> empty = List.of();
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getRandomElement(empty));
