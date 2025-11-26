@@ -1,8 +1,6 @@
 package com.darzalgames.darzalcommon.math;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -297,6 +295,17 @@ class SimpleMathTest {
 		assertFalse(SimpleMath.canParseToFloat(null));
 		assertFalse(SimpleMath.canParseToFloat(""));
 		assertFalse(SimpleMath.canParseToFloat("ten"));
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 0", "1, 1", "2, 3", "5, 15", "20, 210" })
+	void sumOfNaturalNumbers_withVariousNonNegativeInputs_isCorrect(int n, int expectedResult) {
+		assertEquals(expectedResult, SimpleMath.sumOfNaturalNumbers(n));
+	}
+
+	void sumOfNaturalNumbers_withNegativeInput_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.sumOfNaturalNumbers(-1));
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.sumOfNaturalNumbers(-5));
 	}
 
 }
