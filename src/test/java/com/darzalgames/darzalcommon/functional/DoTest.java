@@ -4,35 +4,29 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class DoTest {
 
-	@Test
-	void xTimes_callIncrement20Times_increments20Times() {
+	@ParameterizedTest
+	@CsvSource({ "20, 20", "0, 0", "-5, 0" })
+	void xTimes_callIncrementNTimes_incrementsCorrectly(int n, int expectedResult) {
 		AtomicInteger counter = new AtomicInteger(0);
 
-		Do.xTimes(20, counter::incrementAndGet);
+		Do.xTimes(n, counter::incrementAndGet);
 
-		assertEquals(20, counter.get());
+		assertEquals(expectedResult, counter.get());
 	}
 
-	@Test
-	void xTimes_callIncrement0Times_doesntIncrement() {
+	@ParameterizedTest
+	@CsvSource({ "5, 15", "0, 0", "-5, 0" })
+	void xTimesWithI_callAddUsingIndexNTimes_addsCorrectly(int n, int expectedResult) {
 		AtomicInteger counter = new AtomicInteger(0);
 
-		Do.xTimes(0, counter::incrementAndGet);
+		Do.xTimesWithI(n, i -> counter.addAndGet(i + 1));
 
-		assertEquals(0, counter.get());
-	}
-
-	@Test
-	void xTimes_callIncrementNegativeTimes_doesntIncrement() {
-		AtomicInteger counter = new AtomicInteger(0);
-
-		Do.xTimes(-5, counter::incrementAndGet);
-
-		assertEquals(0, counter.get());
+		assertEquals(expectedResult, counter.get());
 	}
 
 }

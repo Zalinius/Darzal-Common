@@ -109,4 +109,16 @@ public class SimpleMath {
 		return (gcdRecursiveCall(y, x % y));
 	}
 
+	/**
+	 * Computes the sum of natural numbers up to and including n
+	 * @param n a non-negative integer
+	 * @return the sum of natural numbers
+	 */
+	public static int sumOfNaturalNumbers(int n) {
+		if (n < 0) {
+			throw new IllegalArgumentException("n must be non-negative: " + n);
+		}
+		return (n * (n + 1)) / 2;
+	}
+
 }
