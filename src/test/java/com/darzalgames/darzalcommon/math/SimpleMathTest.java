@@ -303,6 +303,7 @@ class SimpleMathTest {
 		assertEquals(expectedResult, SimpleMath.sumOfNaturalNumbers(n));
 	}
 
+	@Test
 	void sumOfNaturalNumbers_withNegativeInput_throwsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> SimpleMath.sumOfNaturalNumbers(-1));
 		assertThrows(IllegalArgumentException.class, () -> SimpleMath.sumOfNaturalNumbers(-5));
