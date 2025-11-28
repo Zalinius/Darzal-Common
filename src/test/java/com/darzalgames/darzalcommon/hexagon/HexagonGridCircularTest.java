@@ -66,4 +66,17 @@ class HexagonGridCircularTest {
 
 		assertEquals(expectedNumberOfHexagons, hexagons.size());
 	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 0", "1, 1", "2, 7", "3, 19", "4, 37", "5, 61" })
+	void computeSize_withVariousRadii_isCorrect(int radius, int expectedSize) {
+		assertEquals(expectedSize, HexagonGridCircular.computeSize(radius));
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 0", "1, 1", "2, 2", "3, 2", "7, 2", "8, 3", "19, 3", "20, 4" })
+	void computeMinimumRadius_withVariousGridSizes_isCorrect(int gridSize, int expectedRadius) {
+		assertEquals(expectedRadius, HexagonGridCircular.computeMinimumRadius(gridSize));
+	}
+
 }
