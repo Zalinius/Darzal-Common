@@ -16,11 +16,14 @@ public class RandomExtended extends Random {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** The seed used by the internal random object */
+	private final long seed;
+
 	/**
 	 * Creates a RandomExtended with a random seed
 	 */
 	public RandomExtended() {
-		super();
+		this(new Random().nextLong());
 	}
 
 	/**
@@ -29,6 +32,15 @@ public class RandomExtended extends Random {
 	 */
 	public RandomExtended(long seed) {
 		super(seed);
+		this.seed = seed;
+	}
+
+	/**
+	 * Gets the seed associated with this random object
+	 * @return a long representing the seed
+	 */
+	public long getSeed() {
+		return seed;
 	}
 
 	/**

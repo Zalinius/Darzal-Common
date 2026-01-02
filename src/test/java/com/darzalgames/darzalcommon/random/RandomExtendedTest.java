@@ -35,6 +35,21 @@ class RandomExtendedTest {
 	}
 
 	@Test
+	void getSeed_fromSeededConstructor_returnsThatSeed() {
+		RandomExtended random = new RandomExtended(5);
+
+		assertEquals(5, random.getSeed());
+	}
+
+	@Test
+	void getSeed_fromDifferentRandomObjects_returnsDifferentSeeds() {
+		RandomExtended random1 = new RandomExtended();
+		RandomExtended random2 = new RandomExtended();
+
+		assertNotEquals(random1.getSeed(), random2.getSeed());
+	}
+
+	@Test
 	void nextRadian__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextRadian();
