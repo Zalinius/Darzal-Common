@@ -1,7 +1,6 @@
 package com.darzalgames.darzalcommon.functional;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -20,6 +19,16 @@ public class MutableCollectors {
 	 */
 	public static <T> Collector<T, ?, List<T>> toList() {
 		return Collectors.toCollection(ArrayList::new);
+	}
+
+	/**
+	 * Returns a Collector that accumulates the input elements into a new {@code Set}. <br>
+	 * The {@code Set} is guaranteed to be mutable.
+	 * @param <T> The type of the input elements
+	 * @return a {@code Collector} which collects all the input elements into a mutable {@code Set}
+	 */
+	public static <T> Collector<T, ?, Set<T>> toSet() {
+		return Collectors.toCollection(HashSet::new);
 	}
 
 }
