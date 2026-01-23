@@ -5,8 +5,10 @@ import java.util.*;
 /**
  * This class implements the Map Interface using typename equality in place of object-equality when comparing keys <br>
  * In other words, in a TypeNameMap, two keys k1 and k2 are considered equal if and only they have the same runtime class <br>
- * <b>This class is not a general-purpose Map implementation! While this class implements the Map interface, it intentionally violates Map's general contract, which mandates the use of the equals method when comparing objects. This class is designed for use only in the rare
- * cases wherein type-equality semantics are required. </b>
+ * <b>This class is not a general-purpose Map implementation!
+ * While this class implements the Map interface, it intentionally violates Map's general contract,
+ * which mandates the use of the equals method when comparing objects.
+ * This class is designed for use only in the rare cases wherein type-equality semantics are required. </b>
  * @param <K> the type of keys maintained by this map
  * @param <V> the type of mapped values
  */

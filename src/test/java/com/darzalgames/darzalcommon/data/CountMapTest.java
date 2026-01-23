@@ -262,6 +262,7 @@ class CountMapTest {
 		assertNotSame(oldKey, newKey);
 		assertEquals(1, countMap.size());
 		assertSame(oldKey, countMap.keySet().iterator().next());
+		assertNotSame(newKey, countMap.keySet().iterator().next());
 	}
 
 	@Test

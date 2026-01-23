@@ -6,18 +6,16 @@ import java.util.*;
  * A convenience map whose value type is always Integers. Useful for keeping counts of stuff.
  * Conveniently, the values are always returned as integer primitives, and cannot return null, nor can they throw Exceptions
  * All keys are valid (including null), and counts without a key can be gotten and modified safely
- * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
+ * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps.
  */
 public class CountMap<K> implements Iterable<K> {
-
-	// TODO create a subclass of countmap called PositiveCountMap, such that negative values are disallowed, and keys whose value is 0 are removed
 
 	private final Map<K, Integer> data;
 
 	private static final int DEFAULT = 0;
 
 	/**
-	 * Creates a blank CountMap
+	 * Creates a blank CountMap, using a HashMap as the backing map
 	 */
 	public CountMap() {
 		this(new HashMap<>());
@@ -32,7 +30,7 @@ public class CountMap<K> implements Iterable<K> {
 	}
 
 	/**
-	 * Creates a CountMap, initialized with all the values of the provided collection
+	 * Creates a CountMap, backed by a HashMap, initialized with all the values of the provided collection
 	 * @param initialIncrements An existing non null collection to increment the count map with
 	 * @throws NullPointerException if the initialIncrements is null
 	 */
@@ -60,6 +58,7 @@ public class CountMap<K> implements Iterable<K> {
 	protected void changeValue(K key, int newValue) {
 		data.put(key, newValue);
 		// TODO can we change the value here without replacing the key parameter?
+		// And is it even necessary? (aka when put(k,v) is called with the key already in the map, is the old key replaced, or only the old value)
 	}
 
 	/**
