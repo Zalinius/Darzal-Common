@@ -7,7 +7,7 @@ import java.util.*;
  * <ul>
  * <li>Negative values are forbidden, and an IllegalStateException will be thrown if ever such a value is stored</li>
  * <li>Keys whose values reach 0 are automatically removed from the map, which is to say any key in the map is associated with a strictly positive value</li>
- * </ol>
+ * </ul>
  * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
  */
 public class PositiveCountMap<K> extends CountMap<K> {

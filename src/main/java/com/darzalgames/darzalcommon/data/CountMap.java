@@ -53,17 +53,22 @@ public class CountMap<K> implements Iterable<K> {
 	}
 
 	/**
+	 * Directly changes the value associated with a given key
+	 * @param key      key with which the specified value is to be associated
+	 * @param newValue value to be associated with the specified key
+	 */
+	protected void changeValue(K key, int newValue) {
+		data.put(key, newValue);
+		// TODO can we change the value here without replacing the key parameter?
+	}
+
+	/**
 	 * Get the count associated with a key
 	 * @param key The key associated with the count
 	 * @return The count of the key, or 0 if the key is not present
 	 */
 	public int get(K key) {
 		return data.getOrDefault(key, DEFAULT);
-	}
-
-	protected void changeValue(K key, int newValue) {
-		data.put(key, newValue);
-		// TODO can we change the value here without replacing the key parameter?
 	}
 
 	/**
