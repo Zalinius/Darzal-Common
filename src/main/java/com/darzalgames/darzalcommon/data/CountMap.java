@@ -10,6 +10,8 @@ import java.util.*;
  */
 public class CountMap<K> implements Iterable<K> {
 
+	// TODO create a subclass of countmap called PositiveCountMap, such that negative values are disallowed, and keys whose value is 0 are removed
+
 	private final Map<K, Integer> data;
 
 	private static final int DEFAULT = 0;
@@ -42,7 +44,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * Creates a CountMap, using the provided map as backing, initialized with all the values of the provided collection
 	 * @param innerMap          a map that will be used as the backing of this count map
 	 * @param initialIncrements An existing non null collection to increment the count map with
-	 * @throws NullPointerException if the initialIncrements is null
+	 * @throws NullPointerException if the initialIncrements collection is null
 	 */
 	public CountMap(Map<K, Integer> innerMap, Collection<K> initialIncrements) {
 		data = innerMap;
@@ -59,12 +61,17 @@ public class CountMap<K> implements Iterable<K> {
 		return data.getOrDefault(key, DEFAULT);
 	}
 
+	protected void changeValue(K key, int newValue) {
+		data.put(key, newValue);
+		// TODO can we change the value here without replacing the key parameter?
+	}
+
 	/**
 	 * Increments the count associated with a key
 	 * @param key The key to increment
 	 */
 	public void increment(K key) {
-		data.put(key, get(key) + 1);
+		changeValue(key, get(key) + 1);
 	}
 
 	/**
@@ -72,7 +79,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param key The key to decrement
 	 */
 	public void decrement(K key) {
-		data.put(key, get(key) - 1);
+		changeValue(key, get(key) - 1);
 	}
 
 	/**
@@ -97,7 +104,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param amount The amount to increase by
 	 */
 	public void increaseBy(K key, int amount) {
-		data.put(key, get(key) + amount);
+		changeValue(key, get(key) + amount);
 	}
 
 	/**
@@ -106,7 +113,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param amount The amount to decrease by
 	 */
 	public void decreaseBy(K key, int amount) {
-		data.put(key, get(key) - amount);
+		changeValue(key, get(key) - amount);
 	}
 
 	/**
