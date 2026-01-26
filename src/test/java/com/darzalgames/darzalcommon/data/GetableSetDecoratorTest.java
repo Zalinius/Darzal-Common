@@ -41,14 +41,28 @@ class GetableSetDecoratorTest {
 	}
 
 	@Test
-	void addAll_addsAllElementsToGetableSet() {
+	void addAll_addsAllElementsToGetableSetAndReturnsTrue() {
 		GetableSet<String> set = GetableSetDecorator.ofHashingType();
 
-		set.addAll(List.of("apple", "pear", "apple", "orange"));
+		boolean setChanged = set.addAll(List.of("apple", "pear", "apple", "orange"));
 
+		assertTrue(setChanged);
 		assertEquals(3, set.size());
 		assertFalse(set.isEmpty());
 		assertTrue(set.containsAll(List.of("orange", "pear", "apple")));
+	}
+
+	@Test
+	void addAll_onTypeNameTypeWithNoNewElementsToAdd_leavesSetUnchangedAndReturnsFalse() {
+		GetableSet<String> set = GetableSetDecorator.ofTypeNameType();
+		set.add("kiwi");
+
+		boolean setChanged = set.addAll(List.of("apple", "pear", "apple", "orange"));
+
+		assertFalse(setChanged);
+		assertEquals(1, set.size());
+		assertFalse(set.isEmpty());
+		assertTrue(set.contains("kiwi"));
 	}
 
 	@Test

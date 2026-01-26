@@ -22,9 +22,13 @@ public class TypeNameSet<E> extends AbstractSet<E> {
 		innerMap = new HashMap<>();
 	}
 
+	private Class<?> computeKey(Object o) {
+		return o.getClass();
+	}
+
 	@Override
 	public boolean add(E e) {
-		Class<?> key = e.getClass();
+		Class<?> key = computeKey(e);
 		if (innerMap.containsKey(key)) {
 			return false;
 		} else {
@@ -35,7 +39,7 @@ public class TypeNameSet<E> extends AbstractSet<E> {
 
 	@Override
 	public boolean remove(Object o) {
-		Class<?> key = o.getClass();
+		Class<?> key = computeKey(o);
 		if (innerMap.containsKey(key)) {
 			innerMap.remove(key);
 			return true;
@@ -46,7 +50,8 @@ public class TypeNameSet<E> extends AbstractSet<E> {
 
 	@Override
 	public boolean contains(Object o) {
-		return innerMap.containsKey(o.getClass());
+		Class<?> key = computeKey(o);
+		return innerMap.containsKey(key);
 	}
 
 	@Override
