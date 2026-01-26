@@ -85,6 +85,22 @@ class GetableSetDecoratorTest {
 	}
 
 	@Test
+	void iterator_onSetWithTypeNameType_returnsIteratorOverElementsOfSet() {
+		GetableSet<String> set = GetableSetDecorator.ofTypeNameType();
+		set.addAll(List.of("apple", "pear", "apple", "orange"));
+
+		Set<String> iteratedElements = new HashSet<>();
+		Iterator<String> it = set.iterator();
+
+		assertTrue(it.hasNext());
+		iteratedElements.add(it.next());
+		assertFalse(it.hasNext());
+		assertThrows(NoSuchElementException.class, () -> it.next());
+		assertEquals(1, iteratedElements.size());
+		assertTrue(iteratedElements.contains("orange"));
+	}
+
+	@Test
 	void remove_whenElementsNotInGetableSet_hasNoEffectAndReturnsFalse() {
 		GetableSet<String> set = GetableSetDecorator.ofHashingType();
 		set.addAll(List.of("apple", "pear", "orange"));

@@ -32,7 +32,7 @@ public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet
 	 * @return A GetableSet backed by hashing, which follows the TypeNameMap contract
 	 */
 	public static final <E> GetableSetDecorator<E> ofTypeNameType() {
-		return new GetableSetDecorator<>(Collections.newSetFromMap(new TypeNameMap<>()), new TypeNameMap<>());
+		return new GetableSetDecorator<>(new TypeNameSet<>(), new TypeNameMap<>());
 	}
 
 	@Override
@@ -56,6 +56,11 @@ public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet
 	public void clear() {
 		innerMap.clear();
 		innerSet.clear();
+	}
+
+	@Override
+	public boolean contains(Object o) {
+		return innerSet.contains(o);
 	}
 
 	@Override

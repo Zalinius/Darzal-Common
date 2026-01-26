@@ -14,8 +14,8 @@ import java.util.*;
  */
 public class TypeNameMap<K, V> implements Map<K, V> {
 
-	private final Map<String, V> innerMap;
-	private final Map<String, K> keyMap;
+	private final Map<Class<?>, V> innerMap;
+	private final Map<Class<?>, K> keyMap;
 
 	/**
 	 * Constructs an empty TypeNameMap, backed by HashMaps
@@ -25,8 +25,8 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 		keyMap = new HashMap<>();
 	}
 
-	private String computeKey(Object key) {
-		return key.getClass().getName();
+	private Class<?> computeKey(Object key) {
+		return key.getClass();
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 
 	@Override
 	public boolean containsKey(Object key) {
-		String typeKey = computeKey(key);
+		Class<?> typeKey = computeKey(key);
 		return innerMap.containsKey(typeKey);
 	}
 
@@ -48,7 +48,7 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V get(Object key) {
-		String typeKey = computeKey(key);
+		Class<?> typeKey = computeKey(key);
 		return innerMap.get(typeKey);
 	}
 
@@ -59,14 +59,14 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 
 	@Override
 	public V put(K key, V value) {
-		String typeKey = computeKey(key);
+		Class<?> typeKey = computeKey(key);
 		keyMap.put(typeKey, key);
 		return innerMap.put(typeKey, value);
 	}
 
 	@Override
 	public V remove(Object key) {
-		String typeKey = computeKey(key);
+		Class<?> typeKey = computeKey(key);
 		keyMap.remove(typeKey);
 		return innerMap.remove(typeKey);
 	}
