@@ -36,7 +36,7 @@ class GetableSetDecoratorTest {
 		set.add(4.0f);
 
 		assertEquals(5, set.get(0));
-		assertEquals(4.0f, set.get(0f));
+		assertEquals(5.0f, set.get(0f));
 		assertEquals("five", set.get("zero"));
 	}
 

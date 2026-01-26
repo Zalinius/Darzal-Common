@@ -42,8 +42,13 @@ public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet
 
 	@Override
 	public boolean add(E e) {
-		innerMap.put(e, e);
-		return innerSet.add(e);
+		if (contains(e)) {
+			return false;
+		} else {
+			innerMap.put(e, e);
+			innerSet.add(e);
+			return true;
+		}
 	}
 
 	@Override
