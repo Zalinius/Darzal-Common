@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * A decorator whick can wrap around a set and map implementation to produce a GetableDecorator
  * @param <E> the type of elements maintained by this set
  */
-public class GetableSetDecorator<E> implements GetableSet<E> {
+public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet<E> {
 
 	private final Set<E> innerSet;
 	private final Map<E, E> innerMap;
@@ -59,18 +59,8 @@ public class GetableSetDecorator<E> implements GetableSet<E> {
 	}
 
 	@Override
-	public boolean contains(Object o) {
-		return innerSet.contains(o);
-	}
-
-	@Override
 	public boolean containsAll(Collection<?> c) {
 		return innerSet.containsAll(c);
-	}
-
-	@Override
-	public boolean isEmpty() {
-		return innerSet.isEmpty();
 	}
 
 	@Override
@@ -85,12 +75,6 @@ public class GetableSetDecorator<E> implements GetableSet<E> {
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c) {
-		c.forEach(innerMap::remove);
-		return innerSet.removeAll(c);
-	}
-
-	@Override
 	public boolean retainAll(Collection<?> c) {
 		Set<E> keysToRemove = innerMap.keySet().stream().filter(key -> !c.contains(key)).collect(Collectors.toSet());
 		keysToRemove.forEach(innerMap::remove);
@@ -100,16 +84,6 @@ public class GetableSetDecorator<E> implements GetableSet<E> {
 	@Override
 	public int size() {
 		return innerSet.size();
-	}
-
-	@Override
-	public Object[] toArray() {
-		return innerSet.toArray();
-	}
-
-	@Override
-	public <T> T[] toArray(T[] a) {
-		return innerSet.toArray(a);
 	}
 
 }
