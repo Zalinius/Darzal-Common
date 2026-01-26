@@ -18,7 +18,7 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 	private final Map<Class<?>, K> keyMap;
 
 	/**
-	 * Constructs an empty TypeNameMap, backed by HashMaps
+	 * Constructs an empty TypeNameMap
 	 */
 	public TypeNameMap() {
 		innerMap = new HashMap<>();
