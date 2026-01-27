@@ -60,7 +60,7 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 	@Override
 	public V put(K key, V value) {
 		Class<?> typeKey = computeKey(key);
-		keyMap.put(typeKey, key);
+		keyMap.putIfAbsent(typeKey, key);
 		return innerMap.put(typeKey, value);
 	}
 

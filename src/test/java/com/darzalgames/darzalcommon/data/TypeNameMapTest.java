@@ -44,7 +44,7 @@ class TypeNameMapTest {
 	}
 
 	@Test
-	void put_multipleValuesOfSameType_replacesValue() {
+	void put_multipleValuesOfSameType_replacesValueButNotKey() {
 		TypeNameMap<Number, String> map = new TypeNameMap<>();
 
 		String previousValue1 = map.put(5, "five");
@@ -55,6 +55,9 @@ class TypeNameMapTest {
 		assertEquals("six", map.get(5));
 		assertEquals("six", map.get(6));
 		assertEquals(1, map.size());
+		Entry<Number, String> entry = map.entrySet().iterator().next();
+		assertEquals(5, entry.getKey());
+		assertEquals("six", entry.getValue());
 	}
 
 	@Test
@@ -166,7 +169,7 @@ class TypeNameMapTest {
 	}
 
 	@Test
-	void keySet_withPutsRemovesAndCollisions_returnsNewestKeys() {
+	void keySet_withPutsRemovesAndCollisions_returnsOriginalKeys() {
 		TypeNameMap<Number, String> map = new TypeNameMap<>();
 
 		map.put(4, "four");
@@ -178,12 +181,12 @@ class TypeNameMapTest {
 		Set<Number> keySet = map.keySet();
 
 		assertEquals(2, keySet.size());
-		assertTrue(keySet.contains(5));
-		assertTrue(keySet.contains(6.0));
+		assertTrue(keySet.contains(4));
+		assertTrue(keySet.contains(5.0));
 	}
 
 	@Test
-	void entries_withPutsRemovesAndCollisions_returnsNewestEntryPairs() {
+	void entries_withPutsRemovesAndCollisions_returnsEntriesContainingOriginalKeysButNewestValues() {
 		TypeNameMap<Number, String> map = new TypeNameMap<>();
 
 		map.put(4, "four");
@@ -196,8 +199,8 @@ class TypeNameMapTest {
 		Set<Entry<Number, String>> entrySet = map.entrySet();
 
 		assertEquals(2, entrySet.size());
-		assertTrue(entrySet.contains(new AbstractMap.SimpleEntry<>(5, "five")));
-		assertTrue(entrySet.contains(new AbstractMap.SimpleEntry<>(6.0, "six.oh")));
+		assertTrue(entrySet.contains(new AbstractMap.SimpleEntry<>(4, "five")));
+		assertTrue(entrySet.contains(new AbstractMap.SimpleEntry<>(5.0, "six.oh")));
 	}
 
 	@Test
