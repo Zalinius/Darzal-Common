@@ -250,6 +250,22 @@ class CountMapTest {
 	}
 
 	@Test
+	void changingAValue_withANewKeyEqualToTheOldKeyButDifferentObjects_doesNotChangeTheKeyInTheMap() {
+		String oldKey = new String("a");
+		String newKey = new String("a");
+		CountMap<String> countMap = new CountMap<>();
+
+		countMap.increment(oldKey);
+		countMap.increment(newKey);
+
+		assertEquals(oldKey, newKey);
+		assertNotSame(oldKey, newKey);
+		assertEquals(1, countMap.size());
+		assertSame(oldKey, countMap.keySet().iterator().next());
+		assertNotSame(newKey, countMap.keySet().iterator().next());
+	}
+
+	@Test
 	void toString_createsStringWithTrackedKeysAndCounts() {
 		CountMap<String> countMap = new CountMap<>();
 

@@ -6,7 +6,7 @@ import java.util.*;
  * A convenience map whose value type is always Integers. Useful for keeping counts of stuff.
  * Conveniently, the values are always returned as integer primitives, and cannot return null, nor can they throw Exceptions
  * All keys are valid (including null), and counts without a key can be gotten and modified safely
- * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps. Null keys are valid
+ * @param <K> The key type for the map. It should implement equals and hashcode like keys used in other maps.
  */
 public class CountMap<K> implements Iterable<K> {
 
@@ -15,7 +15,7 @@ public class CountMap<K> implements Iterable<K> {
 	private static final int DEFAULT = 0;
 
 	/**
-	 * Creates a blank CountMap
+	 * Creates a blank CountMap, using a HashMap as the backing map
 	 */
 	public CountMap() {
 		this(new HashMap<>());
@@ -30,7 +30,7 @@ public class CountMap<K> implements Iterable<K> {
 	}
 
 	/**
-	 * Creates a CountMap, initialized with all the values of the provided collection
+	 * Creates a CountMap, backed by a HashMap, initialized with all the values of the provided collection
 	 * @param initialIncrements An existing non null collection to increment the count map with
 	 * @throws NullPointerException if the initialIncrements is null
 	 */
@@ -42,12 +42,21 @@ public class CountMap<K> implements Iterable<K> {
 	 * Creates a CountMap, using the provided map as backing, initialized with all the values of the provided collection
 	 * @param innerMap          a map that will be used as the backing of this count map
 	 * @param initialIncrements An existing non null collection to increment the count map with
-	 * @throws NullPointerException if the initialIncrements is null
+	 * @throws NullPointerException if the initialIncrements collection is null
 	 */
 	public CountMap(Map<K, Integer> innerMap, Collection<K> initialIncrements) {
 		data = innerMap;
 		Objects.requireNonNull(initialIncrements, "initialIncrements must not be null");
 		incrementAll(initialIncrements);
+	}
+
+	/**
+	 * Directly changes the value associated with a given key
+	 * @param key      key with which the specified value is to be associated
+	 * @param newValue value to be associated with the specified key
+	 */
+	protected void changeValue(K key, int newValue) {
+		data.put(key, newValue);
 	}
 
 	/**
@@ -64,7 +73,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param key The key to increment
 	 */
 	public void increment(K key) {
-		data.put(key, get(key) + 1);
+		changeValue(key, get(key) + 1);
 	}
 
 	/**
@@ -72,7 +81,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param key The key to decrement
 	 */
 	public void decrement(K key) {
-		data.put(key, get(key) - 1);
+		changeValue(key, get(key) - 1);
 	}
 
 	/**
@@ -97,7 +106,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param amount The amount to increase by
 	 */
 	public void increaseBy(K key, int amount) {
-		data.put(key, get(key) + amount);
+		changeValue(key, get(key) + amount);
 	}
 
 	/**
@@ -106,7 +115,7 @@ public class CountMap<K> implements Iterable<K> {
 	 * @param amount The amount to decrease by
 	 */
 	public void decreaseBy(K key, int amount) {
-		data.put(key, get(key) - amount);
+		changeValue(key, get(key) - amount);
 	}
 
 	/**
