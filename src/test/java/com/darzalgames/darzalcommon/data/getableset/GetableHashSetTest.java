@@ -1,4 +1,4 @@
-package com.darzalgames.darzalcommon.data;
+package com.darzalgames.darzalcommon.data.getableset;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,11 +6,11 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-class GetableSetDecoratorTest {
+class GetableHashSetTest {
 
 	@Test
 	void get_whenObjectInSet_returnsTheObject() {
-		GetableSetDecorator<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 
 		set.add("a");
 
@@ -20,29 +20,15 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void get_whenObjectNotInSet_returnsNull() {
-		GetableSetDecorator<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 
 		assertFalse(set.contains("a"));
 		assertEquals(null, set.get("a"));
 	}
 
 	@Test
-	void ofTypeNameType_createsGetableSetThatDeterminesUniquenessBasedOnType() {
-		GetableSet<Object> set = GetableSetDecorator.ofTypeNameType();
-
-		set.add(5);
-		set.add(5.0f);
-		set.add("five");
-		set.add(4.0f);
-
-		assertEquals(5, set.get(0));
-		assertEquals(5.0f, set.get(0f));
-		assertEquals("five", set.get("zero"));
-	}
-
-	@Test
 	void addAll_addsAllElementsToGetableSetAndReturnsTrue() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 
 		boolean setChanged = set.addAll(List.of("apple", "pear", "apple", "orange"));
 
@@ -53,21 +39,8 @@ class GetableSetDecoratorTest {
 	}
 
 	@Test
-	void addAll_onTypeNameTypeWithNoNewElementsToAdd_leavesSetUnchangedAndReturnsFalse() {
-		GetableSet<String> set = GetableSetDecorator.ofTypeNameType();
-		set.add("kiwi");
-
-		boolean setChanged = set.addAll(List.of("apple", "pear", "apple", "orange"));
-
-		assertFalse(setChanged);
-		assertEquals(1, set.size());
-		assertFalse(set.isEmpty());
-		assertTrue(set.contains("kiwi"));
-	}
-
-	@Test
 	void clear_removesAllElementsFromGetableSet() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "apple", "orange"));
 
 		set.clear();
@@ -78,7 +51,7 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void iterator_returnsIteratorOverElementsOfSet() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "apple", "orange"));
 
 		Set<String> iteratedElements = new HashSet<>();
@@ -100,7 +73,7 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void remove_whenElementsNotInGetableSet_hasNoEffectAndReturnsFalse() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean removed = set.remove("banana");
@@ -110,8 +83,8 @@ class GetableSetDecoratorTest {
 	}
 
 	@Test
-	void remove_whenElementsInnetableSet_removesElementsAndReturnsTrue() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+	void remove_whenElementsInGetableSet_removesElementsAndReturnsTrue() {
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean removed = set.remove("apple");
@@ -123,7 +96,7 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void removeAll_whenSomeElementsArePresentInSet_removesThoseElementsAndReturnsTrue() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean setChanged = set.removeAll(List.of("apple", "pear", "banana"));
@@ -135,7 +108,7 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void retainAll_removesElementsNotToBeRetained() {
-		GetableSet<String> set = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set = new GetableHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean setChanged = set.retainAll(List.of("apple", "pear", "banana"));
@@ -147,10 +120,10 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void equals_onTwoIdenticalGetableSets_returnsTrue() {
-		GetableSet<String> set1 = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set1 = new GetableHashSet<>();
 		set1.addAll(List.of("apple", "pear", "apple", "orange"));
 
-		GetableSet<String> set2 = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set2 = new GetableHashSet<>();
 		set2.addAll(List.of("apple", "pear", "pear", "orange"));
 
 		assertEquals(set1, set2);
@@ -159,7 +132,7 @@ class GetableSetDecoratorTest {
 
 	@Test
 	void equals_onTwoDifferentSetTypesWithIdenticalContents_returnsTrue() {
-		Set<String> set1 = GetableSetDecorator.ofHashingType();
+		GetableSet<String> set1 = new GetableHashSet<>();
 		set1.addAll(List.of("apple", "pear", "apple", "orange"));
 		Set<String> set2 = new HashSet<>(List.of("apple", "pear", "pear", "orange"));
 

@@ -1,38 +1,20 @@
-package com.darzalgames.darzalcommon.data;
+package com.darzalgames.darzalcommon.data.getableset;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * A decorator whick can wrap around a set and map implementation to produce a GetableDecorator
+ * A decorator which can wrap around a set and map implementation to produce a GetableDecorator
  * @param <E> the type of elements maintained by this set
  */
-public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet<E> {
+abstract class AbstractGetableSetDecorator<E> extends AbstractSet<E> implements GetableSet<E> {
 
 	private final Set<E> innerSet;
 	private final Map<E, E> innerMap;
 
-	private GetableSetDecorator(Set<E> innerSet, Map<E, E> innerMap) {
+	protected AbstractGetableSetDecorator(Set<E> innerSet, Map<E, E> innerMap) {
 		this.innerSet = innerSet;
 		this.innerMap = innerMap;
-	}
-
-	/**
-	 * Builds a GetableSet using a HashSet and HashMap internally.
-	 * @param <E> the type of elements maintained by this set
-	 * @return A GetableSet backed by hashing, which follows the regular Set contract
-	 */
-	public static final <E> GetableSetDecorator<E> ofHashingType() {
-		return new GetableSetDecorator<>(new HashSet<>(), new HashMap<>());
-	}
-
-	/**
-	 * Builds a GetableSet using a TypeNameMaps internally.
-	 * @param <E> the type of elements maintained by this set
-	 * @return A GetableSet backed by hashing, which follows the TypeNameMap contract
-	 */
-	public static final <E> GetableSetDecorator<E> ofTypeNameType() {
-		return new GetableSetDecorator<>(new TypeNameSet<>(), new TypeNameMap<>());
 	}
 
 	@Override
@@ -53,8 +35,15 @@ public class GetableSetDecorator<E> extends AbstractSet<E> implements GetableSet
 
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		c.forEach(e -> innerMap.put(e, e));
-		return innerSet.addAll(c);
+		boolean setChanged = false;
+		for (Iterator<? extends E> it = c.iterator(); it.hasNext();) {
+			E element = it.next();
+			boolean changed = add(element);
+			if (changed) {
+				setChanged = true;
+			}
+		}
+		return setChanged;
 	}
 
 	@Override

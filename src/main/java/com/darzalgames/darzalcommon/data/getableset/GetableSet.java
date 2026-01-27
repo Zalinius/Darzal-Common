@@ -1,4 +1,4 @@
-package com.darzalgames.darzalcommon.data;
+package com.darzalgames.darzalcommon.data.getableset;
 
 import java.util.Set;
 

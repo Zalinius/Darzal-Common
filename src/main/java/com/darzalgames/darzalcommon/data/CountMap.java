@@ -57,8 +57,6 @@ public class CountMap<K> implements Iterable<K> {
 	 */
 	protected void changeValue(K key, int newValue) {
 		data.put(key, newValue);
-		// TODO can we change the value here without replacing the key parameter?
-		// And is it even necessary? (aka when put(k,v) is called with the key already in the map, is the old key replaced, or only the old value)
 	}
 
 	/**
