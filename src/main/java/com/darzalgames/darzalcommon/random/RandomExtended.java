@@ -20,10 +20,18 @@ public class RandomExtended extends Random {
 	private final long seed;
 
 	/**
+	 * Creates a random seed in a similar way to Java's {@link java.util.Random}
+	 * @return a random seed, suitable for use in rng
+	 */
+	public static long getRandomSeed() {
+		return new Random().nextLong();
+	}
+
+	/**
 	 * Creates a RandomExtended with a random seed
 	 */
 	public RandomExtended() {
-		this(new Random().nextLong());
+		seed = getRandomSeed();
 	}
 
 	/**
