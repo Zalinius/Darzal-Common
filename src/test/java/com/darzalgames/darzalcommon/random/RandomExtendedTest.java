@@ -25,6 +25,15 @@ class RandomExtendedTest {
 	}
 
 	@Test
+	void getRandomSeed_withMultipleInvocations_returnsDifferentSeeds() {
+		List<Long> seeds = new ArrayList<>();
+
+		Do.xTimes(100, () -> seeds.add(RandomExtended.getRandomSeed()));
+
+		assertEquals(100, seeds.stream().distinct().count());
+	}
+
+	@Test
 	void constructorWithSeed_behavesLikeBasicRandomObjectWithSameSeed() {
 		RandomExtended randomExtendedSeeded = new RandomExtended(0);
 		Random random = new Random(0);
