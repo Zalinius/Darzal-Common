@@ -44,6 +44,16 @@ class RandomExtendedTest {
 	}
 
 	@Test
+	void constructorWithSameSeedAsAnotherRandomExtended_behavesIdenticallyToThatRandomExtended() {
+		RandomExtended randomExtendedOriginal = new RandomExtended();
+		RandomExtended randomExtendedWithSameSeed = new RandomExtended(randomExtendedOriginal.getSeed());
+
+		assertEquals(randomExtendedOriginal.nextInt(), randomExtendedWithSameSeed.nextInt());
+		assertEquals(randomExtendedOriginal.nextFloat(), randomExtendedWithSameSeed.nextFloat());
+		assertEquals(randomExtendedOriginal.nextBoolean(), randomExtendedWithSameSeed.nextCoinFlip());
+	}
+
+	@Test
 	void getSeed_fromSeededConstructor_returnsThatSeed() {
 		RandomExtended random = new RandomExtended(5);
 
