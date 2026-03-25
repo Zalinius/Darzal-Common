@@ -1,11 +1,8 @@
 package com.darzalgames.darzalcommon.functional;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -39,6 +36,47 @@ class MutableCollectorsTest {
 		assertDoesNotThrow(() -> set.add(20));
 		assertDoesNotThrow(() -> set.remove(1));
 		assertEquals(4, set.size());
+	}
+
+	@Test
+	void toSortedSet_collectsIntoMutableSortedSet() {
+		Stream<Integer> stream = Stream.of(3, 1, 4, 1, 0, 2, 1);
+
+		SortedSet<Integer> sortedSet = stream.collect(MutableCollectors.toSortedSet());
+
+		assertDoesNotThrow(() -> sortedSet.add(10));
+		assertDoesNotThrow(() -> sortedSet.add(20));
+		assertDoesNotThrow(() -> sortedSet.remove(1));
+		assertEquals(6, sortedSet.size());
+		Iterator<Integer> it = sortedSet.iterator();
+		assertEquals(0, it.next());
+		assertEquals(2, it.next());
+		assertEquals(3, it.next());
+		assertEquals(4, it.next());
+		assertEquals(10, it.next());
+		assertEquals(20, it.next());
+		assertFalse(it.hasNext());
+	}
+
+	@Test
+	void toSortedSet_withDescendingComparator_collectsIntoMutableDescendingSortedSet() {
+		Stream<Integer> stream = Stream.of(3, 1, 4, 1, 0, 2, 1);
+		Comparator<Integer> descendingComparator = (a, b) -> -Integer.compare(a, b);
+
+		SortedSet<Integer> sortedSet = stream.collect(MutableCollectors.toSortedSet(descendingComparator));
+
+		assertDoesNotThrow(() -> sortedSet.add(10));
+		assertDoesNotThrow(() -> sortedSet.add(20));
+		assertDoesNotThrow(() -> sortedSet.remove(1));
+		assertEquals(6, sortedSet.size());
+		Iterator<Integer> it = sortedSet.iterator();
+		assertEquals(20, it.next());
+		assertEquals(10, it.next());
+		assertEquals(4, it.next());
+		assertEquals(3, it.next());
+		assertEquals(2, it.next());
+		assertEquals(0, it.next());
+		assertFalse(it.hasNext());
 	}
 
 }
