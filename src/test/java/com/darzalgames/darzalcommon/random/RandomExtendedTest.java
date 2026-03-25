@@ -50,7 +50,7 @@ class RandomExtendedTest {
 
 		assertEquals(randomExtendedOriginal.nextInt(), randomExtendedWithSameSeed.nextInt());
 		assertEquals(randomExtendedOriginal.nextFloat(), randomExtendedWithSameSeed.nextFloat());
-		assertEquals(randomExtendedOriginal.nextBoolean(), randomExtendedWithSameSeed.nextCoinFlip());
+		assertEquals(randomExtendedOriginal.nextBoolean(), randomExtendedWithSameSeed.nextBoolean());
 	}
 
 	@Test
