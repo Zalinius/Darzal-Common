@@ -17,7 +17,6 @@ import java.util.function.Consumer;
  * @param <V> the type of the thrid argument to the operation
  *
  * @see Consumer
- * @since 1.8
  */
 @FunctionalInterface
 public interface TriConsumer<T, U, V> {
@@ -27,7 +26,7 @@ public interface TriConsumer<T, U, V> {
 	 *
 	 * @param t the first input argument
 	 * @param u the second input argument
-	 * @param v the thrid input argument
+	 * @param v the third input argument
 	 */
 	void accept(T t, U u, V v);
 
