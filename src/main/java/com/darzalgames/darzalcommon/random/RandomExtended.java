@@ -31,7 +31,7 @@ public class RandomExtended extends Random {
 	 * Creates a RandomExtended with a random seed
 	 */
 	public RandomExtended() {
-		seed = getRandomSeed();
+		this(getRandomSeed());
 	}
 
 	/**
