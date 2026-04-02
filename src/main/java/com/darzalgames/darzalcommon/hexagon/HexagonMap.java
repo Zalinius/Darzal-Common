@@ -1,8 +1,6 @@
 package com.darzalgames.darzalcommon.hexagon;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,23 +27,25 @@ public class HexagonMap<E> extends HashMap<Hexagon, E> {
 	}
 
 	/**
+	 * Gets the neighbour hexagons of the input hexagon in this map
 	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
-	 * @return A list of the neighboring {@link Hexagon Hexagons}
+	 * @return A set of the neighboring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
 	 */
 	public Set<Hexagon> getHexagonNeighborsOf(Hexagon hexagon) {
 		return HexagonDirection.values().stream()
 				.map(direction -> direction.getNeighborHexagon(hexagon))
 				.filter(this::containsKey)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 
 	/**
+	 * Gets the neighbour values of the input hexagon in this map
 	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
-	 * @return A list of the neighboring values
+	 * @return A list of the neighboring values, in {@link HexagonDirection} order
 	 */
-	public Collection<E> getValueNeighborsOf(Hexagon hexagon) {
+	public List<E> getValueNeighborsOf(Hexagon hexagon) {
 		return getHexagonNeighborsOf(hexagon).stream().map(this::get).toList();
 	}
 
