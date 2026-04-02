@@ -2,8 +2,7 @@ package com.darzalgames.darzalcommon.hexagon;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
@@ -13,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import com.darzalgames.darzalcommon.hexagon.gridfactory.HexagonGridCircular;
 import com.darzalgames.darzalcommon.hexagon.gridfactory.HexagonGridRectangular;
 
 class HexagonMapTest {
@@ -59,18 +59,35 @@ class HexagonMapTest {
 	}
 
 	@Test
-	void getValueNeighborsOf_variousValues_returnsAllValues() {
+	void getValueNeighborsOf_variousValues_returnsAllValuesInHexagonDirectionOrder() {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, hex.toString()));
-		Set<String> expectedHexagons = Set.of(
-				new Hexagon(0, 1).toString(), new Hexagon(1, 0).toString(), new Hexagon(0, -1).toString(),
-				new Hexagon(1, -1).toString(), new Hexagon(-1, 0).toString(), new Hexagon(-1, 1).toString()
-		);
 
-		Collection<String> neighbors = hexagonMap.getValueNeighborsOf(Hexagon.ORIGIN);
+		List<String> neighbors = hexagonMap.getValueNeighborsOf(Hexagon.ORIGIN);
 
 		assertEquals(6, neighbors.size());
-		assertTrue(neighbors.containsAll(expectedHexagons));
+		assertEquals("Hexagon[q=-1, r=0]", neighbors.get(0));
+		assertEquals("Hexagon[q=0, r=-1]", neighbors.get(1));
+		assertEquals("Hexagon[q=1, r=-1]", neighbors.get(2));
+		assertEquals("Hexagon[q=1, r=0]", neighbors.get(3));
+		assertEquals("Hexagon[q=0, r=1]", neighbors.get(4));
+		assertEquals("Hexagon[q=-1, r=1]", neighbors.get(5));
+	}
+
+	@Test
+	void getHexagonNeighborsOf_origin_returnsThemInDirectionOrdering() {
+		HexagonMap<Void> hexagonMap = new HexagonMap<>();
+		HexagonGridCircular.makeGrid(2).forEach(hex -> hexagonMap.put(hex, null));
+
+		Iterator<Hexagon> neighbours = hexagonMap.getHexagonNeighborsOf(Hexagon.ORIGIN).iterator();
+
+		assertEquals(neighbours.next(), new Hexagon(-1, 0));
+		assertEquals(neighbours.next(), new Hexagon(0, -1));
+		assertEquals(neighbours.next(), new Hexagon(1, -1));
+		assertEquals(neighbours.next(), new Hexagon(1, 0));
+		assertEquals(neighbours.next(), new Hexagon(0, 1));
+		assertEquals(neighbours.next(), new Hexagon(-1, 1));
+		assertFalse(neighbours.hasNext());
 	}
 
 	@ParameterizedTest
