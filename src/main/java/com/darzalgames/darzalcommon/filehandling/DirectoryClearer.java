@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 
+/**
+ * Helper class for deleting files/directories
+ */
 public class DirectoryClearer {
 
 	private DirectoryClearer() {
