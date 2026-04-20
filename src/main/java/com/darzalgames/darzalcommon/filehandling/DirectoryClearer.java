@@ -12,7 +12,8 @@ public class DirectoryClearer {
 	}
 
 	/**
-	 * @param file the root directory to clear recursively
+	 * Recursively clears and deletes files. Specifying a non-existent file is allowed, but achieves nothing.
+	 * @param file a particular file to delete, or the root directory to begin clearing from
 	 * @throws IOException thrown if the deletion failed
 	 */
 	public static void clear(File file) throws IOException {
