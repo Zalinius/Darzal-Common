@@ -14,14 +14,14 @@ class DirectoryClearerTest {
 
 	@Test
 	void clear_onNonexistantDirectoryOrFile_doesNotThrow() {
-		File file = new File("src/test/java/lalala/hooooo");
+		File file = new File("lalala/hooooo");
 
 		assertDoesNotThrow(() -> DirectoryClearer.clear(file));
 	}
 
 	@Test
 	void clear_onRealFile_deletesIt() throws IOException {
-		File file = new File("src/test/java/temp.txt");
+		File file = new File("temp.txt");
 		Files.writeString(file.toPath(), "test file!");
 
 		assertTrue(file.exists());
@@ -32,7 +32,7 @@ class DirectoryClearerTest {
 
 	@Test
 	void clear_onRealEmptyDirectory_deletesIt() throws IOException {
-		File directory = new File("src/test/java/myFolder");
+		File directory = new File("myFolder");
 		Files.createDirectory(directory.toPath());
 
 		assertTrue(directory.exists());
@@ -43,9 +43,9 @@ class DirectoryClearerTest {
 
 	@Test
 	void clear_onRealDirectoryWithFile_deletesBoth() throws IOException {
-		File directory = new File("src/test/java/myFolder");
+		File directory = new File("myFolder");
 		Files.createDirectory(directory.toPath());
-		File file = new File("src/test/java/myFolder/temp.txt");
+		File file = new File("myFolder/temp.txt");
 		Files.writeString(file.toPath(), "test file, but nested!");
 
 		assertTrue(directory.exists());
