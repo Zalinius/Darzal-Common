@@ -181,4 +181,45 @@ public class RandomExtended extends Random {
 		return randomSubset;
 	}
 
+	/**
+	 * Takes a total, and randomly divides it into <i>chunks</i>
+	 * @param total          The total to be divided, must be non-negative
+	 * @param numberOfChunks The number of chunks to divide into, must be strictly positive
+	 * @return A list of n chunk sizes, whose sum is the desired total
+	 */
+	public List<Integer> getNextChunkedAmountList(int total, int numberOfChunks) {
+		if (total < 0) {
+			throw new IllegalArgumentException("Total must be non-negative: " + total);
+		}
+		if (numberOfChunks <= 0) {
+			throw new IllegalArgumentException("NumberOfChunks must be strictly positive: " + numberOfChunks);
+		}
+
+		List<Integer> chunkValues = new ArrayList<>();
+
+		if (total < numberOfChunks || numberOfChunks <= 2) {
+			Do.xTimes(numberOfChunks, () -> chunkValues.add(0));
+			Do.xTimes(total, () -> {
+				int chunkToGrow = nextInt(numberOfChunks);
+				chunkValues.set(chunkToGrow, chunkValues.get(chunkToGrow) + 1);
+			});
+		} else {
+			int divisions = numberOfChunks - 1;
+			int range = total + 1;
+			List<Integer> dividers = new ArrayList<>();
+			Do.xTimes(divisions, () -> dividers.add(nextInt(range)));
+			Collections.sort(dividers);
+			chunkValues.add(dividers.getFirst());
+			for (int i = 0; i < dividers.size() - 1; i++) {
+				int currentDivider = dividers.get(i);
+				int nextDivider = dividers.get(i + 1);
+				int chunkSize = nextDivider - currentDivider;
+				chunkValues.add(chunkSize);
+			}
+			chunkValues.add(total - dividers.getLast());
+		}
+
+		return chunkValues;
+	}
+
 }
