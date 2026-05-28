@@ -264,7 +264,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void getNextChunkedAmountList_with1ChunkAndTotal1_returnsAChunkOf5() {
+	void getNextChunkedAmountList_with1ChunkAndTotal5_returnsAChunkOf5() {
 		List<Integer> chunk = randomExtended.getNextChunkedAmountList(5, 1);
 
 		assertEquals(1, chunk.size());
