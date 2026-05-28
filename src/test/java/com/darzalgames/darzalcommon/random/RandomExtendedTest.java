@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import com.darzalgames.darzalcommon.functional.Do;
 import com.darzalgames.darzalcommon.math.Fraction;
@@ -259,6 +261,41 @@ class RandomExtendedTest {
 		Set<Integer> subset = randomExtended.getNextRandomSubset(set, subsetSize);
 
 		assertEquals(0, subset.size());
+	}
+
+	@Test
+	void getNextChunkedAmountList_with1ChunkAndTotal5_returnsAChunkOf5() {
+		List<Integer> chunk = randomExtended.getNextChunkedAmountList(5, 1);
+
+		assertEquals(1, chunk.size());
+		assertEquals(5, chunk.getFirst());
+	}
+
+	@Test
+	void getNextChunkedAmountList_with1ChunkAndTotal0_returnsAChunkOf0() {
+		List<Integer> chunk = randomExtended.getNextChunkedAmountList(0, 1);
+
+		assertEquals(1, chunk.size());
+		assertEquals(0, chunk.getFirst());
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "10, 5", "23, 67", "200, 7", "28, 391", "3, 70" })
+	void getNextChunkedAmountList_withVariousInputs_sumsToTotalWithDesiredNumberOfChunks(int total, int numberOfChunks) {
+		List<Integer> chunks = randomExtended.getNextChunkedAmountList(total, numberOfChunks);
+
+		assertEquals(total, chunks.stream().reduce(0, Integer::sum));
+		assertEquals(numberOfChunks, chunks.size());
+	}
+
+	@Test
+	void getNextChunkedAmountList_withNegativeTotal_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextChunkedAmountList(-5, 10));
+	}
+
+	@Test
+	void getNextChunkedAmountList_withZeroChunks_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextChunkedAmountList(5, 0));
 	}
 
 }
