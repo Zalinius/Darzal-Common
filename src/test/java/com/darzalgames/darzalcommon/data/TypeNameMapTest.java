@@ -205,7 +205,7 @@ class TypeNameMapTest {
 
 	@Test
 	void putAll_withNormalMapHavingTypeCollisions_createsSmallerTypeMap() {
-		Map<Number, String> map = new HashMap<>();
+		Map<Number, String> map = new LinkedHashMap<>();
 		map.put(4, "four");
 		map.put(5.0, "five.oh");
 		map.put(5, "five");

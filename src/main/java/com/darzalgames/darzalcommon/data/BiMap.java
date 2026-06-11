@@ -1,6 +1,6 @@
 package com.darzalgames.darzalcommon.data;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -18,8 +18,8 @@ public class BiMap<F, S> {
 	 * Creates an empty Bidirectional Map
 	 */
 	public BiMap() {
-		mapFirstToSecond = new HashMap<>();
-		mapSecondToFirst = new HashMap<>();
+		mapFirstToSecond = new LinkedHashMap<>();
+		mapSecondToFirst = new LinkedHashMap<>();
 	}
 
 	/**

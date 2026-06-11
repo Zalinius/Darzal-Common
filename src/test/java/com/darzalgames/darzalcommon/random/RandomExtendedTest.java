@@ -71,6 +71,55 @@ class RandomExtendedTest {
 	}
 
 	@Test
+	void getRandomCallCount_onNewInstance_returns0() {
+		RandomExtended random = new RandomExtended();
+
+		assertEquals(0, random.getRandomCallCount());
+	}
+
+	@Test
+	void getRandomCallCount_onNewSeededInstance_returns0() {
+		RandomExtended random = new RandomExtended(27);
+
+		assertEquals(0, random.getRandomCallCount());
+	}
+
+	@Test
+	void getRandomCallCount_afterCallingNextInt5Times_returns5() {
+		RandomExtended random = new RandomExtended();
+
+		random.nextInt();
+		random.nextInt();
+		random.nextInt();
+		random.nextInt();
+		random.nextInt();
+
+		assertEquals(5, random.getRandomCallCount());
+	}
+
+	@Test
+	void getRandomCallCount_after4SingleRandomnessCalls_returns4() {
+		RandomExtended random = new RandomExtended();
+
+		random.nextInt();
+		random.nextCoinFlip();
+		random.nextFloat();
+		random.nextChance(1, 7);
+
+		assertEquals(4, random.getRandomCallCount());
+	}
+
+	@Test
+	void getRandomCallCount_after2DoubleEntropyRandomnessCalls_returns4() {
+		RandomExtended random = new RandomExtended();
+
+		random.nextLong();
+		random.nextDouble();
+
+		assertEquals(4, random.getRandomCallCount());
+	}
+
+	@Test
 	void nextRadian__returnsAValueBetween0And2Pi() {
 		Do.xTimes(RUNS, () -> {
 			double result = randomExtended.nextRadian();
@@ -198,7 +247,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withSet_returnsAProperSubsetOfCorrectSize() {
-		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 3;
 
 		Set<Integer> subset = randomExtended.getNextRandomSubset(set, subsetSize);
@@ -210,7 +259,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() {
-		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = -1;
 
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubset(set, subsetSize));
@@ -218,7 +267,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() {
-		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 9;
 
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubset(set, subsetSize));
@@ -226,7 +275,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_with0SubsetSize_returnsEmptySet() {
-		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 0;
 
 		Set<Integer> subset = randomExtended.getNextRandomSubset(set, subsetSize);
@@ -236,7 +285,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() {
-		Set<Integer> set = new HashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 8;
 
 		Set<Integer> subset = randomExtended.getNextRandomSubset(set, subsetSize);
@@ -247,7 +296,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() {
-		Set<Integer> set = new HashSet<>(Arrays.asList());
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList());
 		int subsetSize = 8;
 
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubset(set, subsetSize));
@@ -255,7 +304,7 @@ class RandomExtendedTest {
 
 	@Test
 	void randomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() {
-		Set<Integer> set = new HashSet<>(Arrays.asList());
+		Set<Integer> set = new LinkedHashSet<>(Arrays.asList());
 		int subsetSize = 0;
 
 		Set<Integer> subset = randomExtended.getNextRandomSubset(set, subsetSize);

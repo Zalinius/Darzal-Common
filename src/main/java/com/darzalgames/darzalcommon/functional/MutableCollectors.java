@@ -28,7 +28,7 @@ public class MutableCollectors {
 	 * @return a {@link Collector} which collects all the input elements into a mutable {@link Set}
 	 */
 	public static <T> Collector<T, ?, Set<T>> toSet() {
-		return Collectors.toCollection(HashSet::new);
+		return Collectors.toCollection(LinkedHashSet::new);
 	}
 
 	/**

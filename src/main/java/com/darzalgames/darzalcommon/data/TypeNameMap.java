@@ -21,8 +21,8 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 	 * Constructs an empty TypeNameMap
 	 */
 	public TypeNameMap() {
-		innerMap = new HashMap<>();
-		keyMap = new HashMap<>();
+		innerMap = new LinkedHashMap<>();
+		keyMap = new LinkedHashMap<>();
 	}
 
 	private Class<?> computeKey(Object key) {
@@ -88,14 +88,14 @@ public class TypeNameMap<K, V> implements Map<K, V> {
 
 	@Override
 	public Set<Entry<K, V>> entrySet() {
-		Map<K, V> tempMap = new HashMap<>();
+		Map<K, V> tempMap = new LinkedHashMap<>();
 		innerMap.keySet().forEach(typeKey -> tempMap.put(keyMap.get(typeKey), innerMap.get(typeKey)));
 		return tempMap.entrySet();
 	}
 
 	@Override
 	public Set<K> keySet() {
-		return new HashSet<>(keyMap.values());
+		return new LinkedHashSet<>(keyMap.values());
 	}
 
 	@Override

@@ -15,10 +15,10 @@ public class CountMap<K> implements Iterable<K> {
 	private static final int DEFAULT = 0;
 
 	/**
-	 * Creates a blank CountMap, using a HashMap as the backing map
+	 * Creates a blank CountMap, using a LinkedHashMap as the backing map
 	 */
 	public CountMap() {
-		this(new HashMap<>());
+		this(new LinkedHashMap<>());
 	}
 
 	/**
@@ -30,12 +30,12 @@ public class CountMap<K> implements Iterable<K> {
 	}
 
 	/**
-	 * Creates a CountMap, backed by a HashMap, initialized with all the values of the provided collection
+	 * Creates a CountMap, backed by a LinkedHashMap, initialized with all the values of the provided collection
 	 * @param initialIncrements An existing non null collection to increment the count map with
 	 * @throws NullPointerException if the initialIncrements is null
 	 */
 	public CountMap(Collection<K> initialIncrements) {
-		this(new HashMap<>(), initialIncrements);
+		this(new LinkedHashMap<>(), initialIncrements);
 	}
 
 	/**

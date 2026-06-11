@@ -75,7 +75,7 @@ abstract class AbstractGetableSetDecorator<E> extends AbstractSet<E> implements 
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		Set<E> keysToRemove = innerMap.keySet().stream().filter(key -> !c.contains(key)).collect(Collectors.toSet());
+		Set<E> keysToRemove = innerMap.keySet().stream().filter(key -> !c.contains(key)).collect(Collectors.toCollection(LinkedHashSet::new));
 		keysToRemove.forEach(innerMap::remove);
 		return innerSet.retainAll(c);
 	}
