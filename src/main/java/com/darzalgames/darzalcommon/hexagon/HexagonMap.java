@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
  * A java-style map, with hexagons as keys and various convenience functions
  * @param <E> The type for the values of the key-value pairs in the map
  */
-public class HexagonMap<E> extends HashMap<Hexagon, E> {
+public class HexagonMap<E> extends LinkedHashMap<Hexagon, E> {
 
 	private static final long serialVersionUID = 5801182744649958152L;
 

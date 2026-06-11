@@ -173,7 +173,7 @@ class CountMapTest {
 		countMap.increment(null);
 		Iterator<String> iterator = countMap.iterator();
 
-		Set<String> iteratorValues = new HashSet<>();
+		Set<String> iteratorValues = new LinkedHashSet<>();
 		while (iterator.hasNext()) {
 			iteratorValues.add(iterator.next());
 		}

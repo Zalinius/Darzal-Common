@@ -16,7 +16,7 @@ public class PositiveCountMap<K> extends CountMap<K> {
 	 * Creates a blank CountMap
 	 */
 	public PositiveCountMap() {
-		this(new HashMap<>());
+		this(new LinkedHashMap<>());
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class PositiveCountMap<K> extends CountMap<K> {
 	 * @throws NullPointerException if the initialIncrements is null
 	 */
 	public PositiveCountMap(Collection<K> initialIncrements) {
-		this(new HashMap<>(), initialIncrements);
+		this(new LinkedHashMap<>(), initialIncrements);
 	}
 
 	/**

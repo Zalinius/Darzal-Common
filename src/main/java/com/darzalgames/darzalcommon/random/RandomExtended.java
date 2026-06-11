@@ -19,6 +19,8 @@ public class RandomExtended extends Random {
 	/** The seed used by the internal random object */
 	private final long seed;
 
+	private int randomCallCount;
+
 	/**
 	 * Creates a random seed in a similar way to Java's {@link java.util.Random}
 	 * @return a random seed, suitable for use in rng
@@ -41,6 +43,13 @@ public class RandomExtended extends Random {
 	public RandomExtended(long seed) {
 		super(seed);
 		this.seed = seed;
+		randomCallCount = 0;
+	}
+
+	@Override
+	protected int next(int bits) {
+		randomCallCount++;
+		return super.next(bits);
 	}
 
 	/**
@@ -49,6 +58,14 @@ public class RandomExtended extends Random {
 	 */
 	public long getSeed() {
 		return seed;
+	}
+
+	/**
+	 * Gets the number of times the internal random state has been modified
+	 * @return the number of internal calls to the internal random mechanism
+	 */
+	public int getRandomCallCount() {
+		return randomCallCount;
 	}
 
 	/**
@@ -160,8 +177,8 @@ public class RandomExtended extends Random {
 			throw new IllegalArgumentException("Subset size(" + subsetSize + ") must not be greater than original set size(" + set.size() + ")");
 		}
 
-		Set<E> setToPickFrom = new HashSet<>(set);
-		Set<E> randomSubset = new HashSet<>();
+		Set<E> setToPickFrom = new LinkedHashSet<>(set);
+		Set<E> randomSubset = new LinkedHashSet<>();
 
 		Do.xTimes(subsetSize, () -> {
 			int targetToPick = nextInt(setToPickFrom.size());

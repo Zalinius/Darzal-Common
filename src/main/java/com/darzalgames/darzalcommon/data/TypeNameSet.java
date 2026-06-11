@@ -19,7 +19,7 @@ public class TypeNameSet<E> extends AbstractSet<E> {
 	 * Constructs an empty TypeNameSet
 	 */
 	public TypeNameSet() {
-		innerMap = new HashMap<>();
+		innerMap = new LinkedHashMap<>();
 	}
 
 	private Class<?> computeKey(Object o) {

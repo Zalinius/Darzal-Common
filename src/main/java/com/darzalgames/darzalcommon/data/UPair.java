@@ -18,7 +18,7 @@ public class UPair<E> {
 	 * @param otherValue the other element of the unordered pair
 	 */
 	public UPair(E value, E otherValue) {
-		elements = new HashSet<>();
+		elements = new LinkedHashSet<>();
 		elements.add(value);
 		elements.add(otherValue);
 	}
@@ -47,7 +47,7 @@ public class UPair<E> {
 	 * @return a set of the values
 	 */
 	public Set<E> values() {
-		return new HashSet<>(elements);
+		return new LinkedHashSet<>(elements);
 	}
 
 	/**

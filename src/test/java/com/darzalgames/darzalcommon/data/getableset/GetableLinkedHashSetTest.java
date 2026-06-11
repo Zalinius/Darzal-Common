@@ -6,11 +6,11 @@ import java.util.*;
 
 import org.junit.jupiter.api.Test;
 
-class GetableHashSetTest {
+class GetableLinkedHashSetTest {
 
 	@Test
 	void get_whenObjectInSet_returnsTheObject() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 
 		set.add("a");
 
@@ -20,7 +20,7 @@ class GetableHashSetTest {
 
 	@Test
 	void get_whenObjectNotInSet_returnsNull() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 
 		assertFalse(set.contains("a"));
 		assertEquals(null, set.get("a"));
@@ -28,7 +28,7 @@ class GetableHashSetTest {
 
 	@Test
 	void addAll_addsAllElementsToGetableSetAndReturnsTrue() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 
 		boolean setChanged = set.addAll(List.of("apple", "pear", "apple", "orange"));
 
@@ -40,7 +40,7 @@ class GetableHashSetTest {
 
 	@Test
 	void clear_removesAllElementsFromGetableSet() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "apple", "orange"));
 
 		set.clear();
@@ -51,10 +51,10 @@ class GetableHashSetTest {
 
 	@Test
 	void iterator_returnsIteratorOverElementsOfSet() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "apple", "orange"));
 
-		Set<String> iteratedElements = new HashSet<>();
+		Set<String> iteratedElements = new LinkedHashSet<>();
 		Iterator<String> it = set.iterator();
 
 		assertTrue(it.hasNext());
@@ -73,7 +73,7 @@ class GetableHashSetTest {
 
 	@Test
 	void remove_whenElementsNotInGetableSet_hasNoEffectAndReturnsFalse() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean removed = set.remove("banana");
@@ -84,7 +84,7 @@ class GetableHashSetTest {
 
 	@Test
 	void remove_whenElementsInGetableSet_removesElementsAndReturnsTrue() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean removed = set.remove("apple");
@@ -96,7 +96,7 @@ class GetableHashSetTest {
 
 	@Test
 	void removeAll_whenSomeElementsArePresentInSet_removesThoseElementsAndReturnsTrue() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean setChanged = set.removeAll(List.of("apple", "pear", "banana"));
@@ -108,7 +108,7 @@ class GetableHashSetTest {
 
 	@Test
 	void retainAll_removesElementsNotToBeRetained() {
-		GetableSet<String> set = new GetableHashSet<>();
+		GetableSet<String> set = new GetableLinkedHashSet<>();
 		set.addAll(List.of("apple", "pear", "orange"));
 
 		boolean setChanged = set.retainAll(List.of("apple", "pear", "banana"));
@@ -120,10 +120,10 @@ class GetableHashSetTest {
 
 	@Test
 	void equals_onTwoIdenticalGetableSets_returnsTrue() {
-		GetableSet<String> set1 = new GetableHashSet<>();
+		GetableSet<String> set1 = new GetableLinkedHashSet<>();
 		set1.addAll(List.of("apple", "pear", "apple", "orange"));
 
-		GetableSet<String> set2 = new GetableHashSet<>();
+		GetableSet<String> set2 = new GetableLinkedHashSet<>();
 		set2.addAll(List.of("apple", "pear", "pear", "orange"));
 
 		assertEquals(set1, set2);
@@ -132,9 +132,9 @@ class GetableHashSetTest {
 
 	@Test
 	void equals_onTwoDifferentSetTypesWithIdenticalContents_returnsTrue() {
-		GetableSet<String> set1 = new GetableHashSet<>();
+		GetableSet<String> set1 = new GetableLinkedHashSet<>();
 		set1.addAll(List.of("apple", "pear", "apple", "orange"));
-		Set<String> set2 = new HashSet<>(List.of("apple", "pear", "pear", "orange"));
+		Set<String> set2 = new LinkedHashSet<>(List.of("apple", "pear", "pear", "orange"));
 
 		assertEquals(set1, set2);
 		assertEquals(set1.hashCode(), set2.hashCode());
