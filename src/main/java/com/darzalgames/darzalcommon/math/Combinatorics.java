@@ -35,7 +35,7 @@ public class Combinatorics {
 	}
 
 	/**
-	 * Computes n chhose k, which is the number of unique unordered k-sized subsets made from a set of n elements
+	 * Computes n choose k, which is the number of unique unordered k-sized subsets made from a set of n elements
 	 * @param n The total number of elements
 	 * @param k The number of elements in a subset
 	 * @return the number of unique subsets
