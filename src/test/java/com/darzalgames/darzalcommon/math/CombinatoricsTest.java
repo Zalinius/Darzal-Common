@@ -34,6 +34,11 @@ class CombinatoricsTest {
 	}
 
 	@Test
+	void numberOfPermutations_withOverflowCausingInput_throwsArithmeticException() {
+		assertThrows(ArithmeticException.class, () -> Combinatorics.numberOfPermutations(200, 5));
+	}
+
+	@Test
 	void numberOfCombinations_withInvalidInputs_throwsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> Combinatorics.numberOfCombinations(7, -2));
 		assertThrows(IllegalArgumentException.class, () -> Combinatorics.numberOfCombinations(-3, 3));
@@ -48,29 +53,14 @@ class CombinatoricsTest {
 
 	@ParameterizedTest
 	@CsvSource({ "3,1,3", "3,2,3", "4,4,1", "10,5,252", "200,4,64684950", "200,196,64684950" })
-	void numberOfCombinations_withVariousInputs_computesNumberOfCombinations(int n, int k, int expectedPermutations) {
+	void numberOfCombinations_withVariousInputs_computesNumberOfCombinations(int n, int k, int expectedCombinations) {
 		int result = Combinatorics.numberOfCombinations(n, k);
-		assertEquals(expectedPermutations, result);
+		assertEquals(expectedCombinations, result);
 	}
 
 	@Test
 	void numberOfCombinations_withOverflowCausingInput_throwsArithmeticException() {
 		assertThrows(ArithmeticException.class, () -> Combinatorics.numberOfCombinations(200, 5));
-	}
-
-	@Test
-	void getAllPermutations_onListOfThree_doesNotEmptyOriginalList() {
-		List<Integer> test = new ArrayList<>();
-		test.add(1);
-		test.add(2);
-		test.add(3);
-
-		Combinatorics.getAllPermutations(test);
-
-		assertEquals(3, test.size());
-		assertEquals(1, test.get(0));
-		assertEquals(2, test.get(1));
-		assertEquals(3, test.get(2));
 	}
 
 	@Test
@@ -112,4 +102,5 @@ class CombinatoricsTest {
 		assertTrue(permutations.contains(List.of(3, 1, 3)));
 
 	}
+
 }

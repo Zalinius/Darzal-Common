@@ -124,7 +124,7 @@ public class SimpleMath {
 	/**
 	 * Computes the factorial of a value
 	 * @param n a non-negative integer
-	 * @return the the factorial of n
+	 * @return the factorial of n
 	 * @throws ArithmeticException if the result would cause an integer overflow
 	 */
 	public static int factorial(int n) {
