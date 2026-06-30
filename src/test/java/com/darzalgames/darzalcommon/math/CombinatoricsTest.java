@@ -100,7 +100,6 @@ class CombinatoricsTest {
 		assertTrue(permutations.contains(List.of(3, 3, 1)));
 		assertTrue(permutations.contains(List.of(3, 3, 1)));
 		assertTrue(permutations.contains(List.of(3, 1, 3)));
-
 	}
 
 }
