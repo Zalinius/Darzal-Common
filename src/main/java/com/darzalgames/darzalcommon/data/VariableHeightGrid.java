@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  * Can be added to and removed from like a list, and won't keep empty entries between others.
  * @param <E> The Generic type the grid contains
  */
-public class VariableHeightGrid<E> implements Iterable<E> {
+public class VariableHeightGrid<E> implements Collection<E> {
 
 	private final List<E> inside;
 	private final int width;
@@ -51,14 +51,6 @@ public class VariableHeightGrid<E> implements Iterable<E> {
 			rowCount++;
 		}
 		return rowCount;
-	}
-
-	/**
-	 * Get the number of elements in the grid
-	 * @return the number of elements in the grid
-	 */
-	public int size() {
-		return inside.size();
 	}
 
 	/**
@@ -134,19 +126,12 @@ public class VariableHeightGrid<E> implements Iterable<E> {
 		return sb.toString().trim();
 	}
 
-	/**
-	 * Checks if the grid is empty
-	 * @return true if the grid contains no elements
-	 */
+	@Override
 	public boolean isEmpty() {
 		return inside.isEmpty();
 	}
 
-	/**
-	 * Checks if the grid contains an element
-	 * @param o the element to check
-	 * @return true if the grid contains the element
-	 */
+	@Override
 	public boolean contains(Object o) {
 		return inside.contains(o);
 	}
@@ -156,62 +141,59 @@ public class VariableHeightGrid<E> implements Iterable<E> {
 		return inside.iterator();
 	}
 
-	/**
-	 * Adds an element to the end of this variable height grid
-	 * @param e the element to add
-	 */
-	public void add(E e) {
-		inside.add(e);
+	@Override
+	public boolean add(E e) {
+		return inside.add(e);
 	}
 
-	/**
-	 * Remove the first instance matching the argument from this grid
-	 * @param e the element to remove
-	 * @return true if an element was removed
-	 */
-	public boolean remove(E e) {
+	@Override
+	public boolean remove(Object e) {
 		return inside.remove(e);
 	}
 
-	/**
-	 * Checks if a collection of elements are all present in the grid
-	 * @param c the collection to search for
-	 * @return true if every element in the collection is present in the grid
-	 */
+	@Override
 	public boolean containsAll(Collection<?> c) {
 		return inside.containsAll(c);
 	}
 
-	/**
-	 * Adds all elements from a collection to the end of this grid
-	 * @param c the collection of elements to add
-	 */
-	public void addAll(Collection<? extends E> c) {
-		inside.addAll(c);
+	@Override
+	public boolean addAll(Collection<? extends E> c) {
+		return inside.addAll(c);
 	}
 
-	/**
-	 * Remove the elements matching the elements in the collection from the grid
-	 * @param c the collection of elements to remove
-	 * @return true if any elements were removed
-	 */
+	@Override
 	public boolean removeAll(Collection<?> c) {
 		return inside.removeAll(c);
 	}
 
-	/**
-	 * Stream the elements of this grid in order
-	 * @return an ordered stream of the elements
-	 */
+	@Override
 	public Stream<E> stream() {
 		return inside.stream();
 	}
 
-	/**
-	 * Remove all elements from this grid
-	 */
+	@Override
 	public void clear() {
 		inside.clear();
+	}
+
+	@Override
+	public int size() {
+		return inside.size();
+	}
+
+	@Override
+	public Object[] toArray() {
+		return inside.toArray();
+	}
+
+	@Override
+	public <T> T[] toArray(T[] a) {
+		return inside.toArray(a);
+	}
+
+	@Override
+	public boolean retainAll(Collection<?> c) {
+		return inside.retainAll(c);
 	}
 
 }
