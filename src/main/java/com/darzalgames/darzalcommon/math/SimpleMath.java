@@ -140,4 +140,21 @@ public class SimpleMath {
 		}
 	}
 
+	/**
+	 * Computes an integer power of 2
+	 * @param exponent the exponent 2 is raised to, must be between 0 and 30, inclusive
+	 * @return 2 to the power of the exponent, as an integer
+	 * @throws IllegalArgumentException if the exponent would cause the result to be fractional or overflow
+	 */
+	public static int integerPowerOf2(int exponent) {
+		int maxExponent = 30;
+		if (exponent < 0) {
+			throw new IllegalArgumentException("exponent must be between non-negative: " + exponent);
+		} else if (exponent > maxExponent) {
+			throw new ArithmeticException("exponent must be less than or equal to " + maxExponent + " to avoid overflow:" + exponent);
+		} else {
+			return 1 << exponent;
+		}
+	}
+
 }

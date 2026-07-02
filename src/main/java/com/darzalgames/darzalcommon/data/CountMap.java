@@ -119,6 +119,14 @@ public class CountMap<K> implements Iterable<K> {
 	}
 
 	/**
+	 * Adds all the counts from a countMap to this countMap
+	 * @param countMap the countMap whose counts to add
+	 */
+	public void addAll(CountMap<K> countMap) {
+		countMap.forEach(key -> increaseBy(key, countMap.get(key)));
+	}
+
+	/**
 	 * Checks if a key has a count associated with it in the count map
 	 * @param key whose presence is to checked
 	 * @return true if and only if this keys is being tracked in the count map
