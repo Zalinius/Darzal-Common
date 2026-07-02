@@ -322,9 +322,27 @@ class SimpleMathTest {
 	}
 
 	@ParameterizedTest
-	@CsvSource({ "0, 1", "1, 1", "2, 2", "3, 6", "10, 3628800" })
+	@CsvSource({ "0, 1", "1, 1", "2, 2", "3, 6", "10, 3_628_800" })
 	void factorial_onVariousInputs_returnsCorrectValue(int n, int expectedFactorial) {
 		assertEquals(expectedFactorial, SimpleMath.factorial(n));
+	}
+
+	@Test
+	void integerPowerOf2_withNegativeInput_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.integerPowerOf2(-2));
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.integerPowerOf2(-4));
+	}
+
+	@Test
+	void integerPowerOf2_whenResultWouldOverflow_throwsArithmeticException() {
+		assertThrows(ArithmeticException.class, () -> SimpleMath.integerPowerOf2(31));
+		assertThrows(ArithmeticException.class, () -> SimpleMath.integerPowerOf2(100));
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 1", "1, 2", "2, 4", "3, 8", "10, 1024", "30, 1_073_741_824" })
+	void integerPowerOf2_onVariousValidInputs_returnsCorrectValue(int exponent, int expectedResult) {
+		assertEquals(expectedResult, SimpleMath.integerPowerOf2(exponent));
 	}
 
 }

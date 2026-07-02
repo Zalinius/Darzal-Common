@@ -153,6 +153,25 @@ class CountMapTest {
 	}
 
 	@Test
+	void addAll_withExistingCountMap_addsToTheOriginalCountMapWithoutAffectingTheOther() {
+		CountMap<String> original = new CountMap<>();
+		original.increaseBy("apple", 2);
+		original.decreaseBy("banana", 4);
+		CountMap<String> other = new CountMap<>();
+		other.decreaseBy("apple", 3);
+		other.increaseBy("cherry", 5);
+
+		original.addAll(other);
+
+		assertEquals(-1, original.get("apple"));
+		assertEquals(-4, original.get("banana"));
+		assertEquals(5, original.get("cherry"));
+		assertEquals(-3, other.get("apple"));
+		assertEquals(0, other.get("banana"));
+		assertEquals(5, other.get("cherry"));
+	}
+
+	@Test
 	void keySet_returnsPreviouslyUsedKeys() {
 		CountMap<String> countMap = new CountMap<>();
 
