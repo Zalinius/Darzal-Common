@@ -309,4 +309,22 @@ class SimpleMathTest {
 		assertThrows(IllegalArgumentException.class, () -> SimpleMath.sumOfNaturalNumbers(-5));
 	}
 
+	@Test
+	void factorial_withNegativeInput_throwsIllegalArgumentException() {
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.factorial(-1));
+		assertThrows(IllegalArgumentException.class, () -> SimpleMath.factorial(-5));
+	}
+
+	@Test
+	void factorial_whenResultWouldOverflow_throwsArithmeticException() {
+		assertThrows(ArithmeticException.class, () -> SimpleMath.factorial(20));
+		assertThrows(ArithmeticException.class, () -> SimpleMath.factorial(50));
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 1", "1, 1", "2, 2", "3, 6", "10, 3628800" })
+	void factorial_onVariousInputs_returnsCorrectValue(int n, int expectedFactorial) {
+		assertEquals(expectedFactorial, SimpleMath.factorial(n));
+	}
+
 }

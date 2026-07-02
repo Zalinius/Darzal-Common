@@ -121,4 +121,23 @@ public class SimpleMath {
 		return (n * (n + 1)) / 2;
 	}
 
+	/**
+	 * Computes the factorial of a value
+	 * @param n a non-negative integer
+	 * @return the factorial of n
+	 * @throws ArithmeticException if the result would cause an integer overflow
+	 */
+	public static int factorial(int n) {
+		if (n < 0) {
+			throw new IllegalArgumentException("Factorial input must be non-negative: " + n);
+		} else {
+			int factorial = 1;
+			while (n != 0) {
+				factorial = Math.multiplyExact(factorial, n);
+				n--;
+			}
+			return factorial;
+		}
+	}
+
 }
