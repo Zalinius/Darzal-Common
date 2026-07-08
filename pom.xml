@@ -5,7 +5,7 @@
 
 	<groupId>com.darzalgames</groupId>
 	<artifactId>darzal-common</artifactId>
-	<version>0.7.28</version>
+	<version>0.7.29</version>
 	<name>Darzal Common</name>
 
 	<properties>
