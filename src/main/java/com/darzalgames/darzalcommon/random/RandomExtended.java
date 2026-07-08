@@ -19,6 +19,7 @@ public class RandomExtended extends Random {
 	/** The seed used by the internal random object */
 	private final long seed;
 
+	/** The number of times the internal random state has been sampled */
 	private int randomCallCount;
 
 	/**
@@ -237,6 +238,18 @@ public class RandomExtended extends Random {
 		}
 
 		return chunkValues;
+	}
+
+	/**
+	 * Returns a randomly ordered permutation of a collection, without affecting the original collection
+	 * @param <E>        The generic type of the input collection.
+	 * @param collection The input collection. It is not modified by this function call
+	 * @return A random permutation of the input, in an ArrayList
+	 */
+	public <E> List<E> getShuffledList(Collection<E> collection) {
+		List<E> shuffledCopy = new ArrayList<>(collection);
+		Collections.shuffle(shuffledCopy, this);
+		return shuffledCopy;
 	}
 
 }

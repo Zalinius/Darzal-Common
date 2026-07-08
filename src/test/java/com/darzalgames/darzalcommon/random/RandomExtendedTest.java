@@ -347,4 +347,28 @@ class RandomExtendedTest {
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextChunkedAmountList(5, 0));
 	}
 
+	@Test
+	void getShuffledList_withEmptyInput_producesEmptyList() {
+		Collection<String> collection = List.of();
+
+		List<String> shuffled = randomExtended.getShuffledList(collection);
+
+		assertEquals(0, shuffled.size());
+		assertNotSame(collection, shuffled);
+	}
+
+	@Test
+	void getShuffledList_withCollection_producesNewShuffledListWithOriginalElements() {
+		List<String> collection = List.of("apple", "pear", "banana");
+
+		List<String> shuffled = randomExtended.getShuffledList(collection);
+
+		assertNotSame(collection, shuffled);
+		assertEquals("apple", collection.get(0));
+		assertEquals("pear", collection.get(1));
+		assertEquals("banana", collection.get(2));
+		assertEquals(3, shuffled.size());
+		assertTrue(shuffled.containsAll(collection));
+	}
+
 }
