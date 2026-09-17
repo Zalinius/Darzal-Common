@@ -10,7 +10,7 @@ public record Coordinate(
 		/** The i (or horizontal) coordinate */
 		int i,
 		/** The j (or vertical) coordinate */
-		int j) {
+		int j) implements Comparable<Coordinate> {
 
 	/**
 	 * Creates a coordinate centered at the origin
@@ -69,6 +69,17 @@ public record Coordinate(
 	 */
 	public int kingDistance(Coordinate coordinate) {
 		return Math.max(Math.abs(i - coordinate.i), Math.abs(j - coordinate.j));
+	}
+
+	@Override
+	public int compareTo(Coordinate other) {
+		if (j != other.j) {
+			return j - other.j;
+		} else if (i != other.i) {
+			return i - other.i;
+		} else {
+			return 0;
+		}
 	}
 
 }
