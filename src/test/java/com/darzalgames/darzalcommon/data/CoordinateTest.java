@@ -162,4 +162,66 @@ class CoordinateTest {
 		assertEquals(3, distanceReversed);
 	}
 
+	@Test
+	void compareTo_withEqualCoordinates_returns0() {
+		Coordinate coordinate1 = new Coordinate(12, 7);
+		Coordinate coordinate2 = new Coordinate(12, 7);
+
+		assertEquals(0, coordinate1.compareTo(coordinate2));
+		assertEquals(0, coordinate2.compareTo(coordinate1));
+	}
+
+	@Test
+	void compareTo_withLesserIValues_precedeThoseWithGreaterIValues() {
+		Coordinate coordinate1 = new Coordinate(-1, 0);
+		Coordinate coordinate2 = new Coordinate(0, 0);
+		Coordinate coordinate3 = new Coordinate(1, 0);
+
+		assertTrue(0 > coordinate1.compareTo(coordinate2));
+		assertTrue(0 > coordinate1.compareTo(coordinate3));
+		assertTrue(0 > coordinate2.compareTo(coordinate3));
+	}
+
+	@Test
+	void compareTo_withGreaterIValues_succeedThoseWithLesserIValues() {
+		Coordinate coordinate1 = new Coordinate(-1, 0);
+		Coordinate coordinate2 = new Coordinate(0, 0);
+		Coordinate coordinate3 = new Coordinate(1, 0);
+
+		assertTrue(0 < coordinate3.compareTo(coordinate1));
+		assertTrue(0 < coordinate3.compareTo(coordinate2));
+		assertTrue(0 < coordinate2.compareTo(coordinate1));
+	}
+
+	@Test
+	void compareTo_withLesserJValues_precedeThoseWithGreaterJValues() {
+		Coordinate coordinate1 = new Coordinate(0, -1);
+		Coordinate coordinate2 = new Coordinate(0, 0);
+		Coordinate coordinate3 = new Coordinate(0, 1);
+
+		assertTrue(0 > coordinate1.compareTo(coordinate2));
+		assertTrue(0 > coordinate1.compareTo(coordinate3));
+		assertTrue(0 > coordinate2.compareTo(coordinate3));
+	}
+
+	@Test
+	void compareTo_withGreaterJValues_precedeThoseWithLesserLesserJValues() {
+		Coordinate coordinate1 = new Coordinate(0, -1);
+		Coordinate coordinate2 = new Coordinate(0, 0);
+		Coordinate coordinate3 = new Coordinate(0, 1);
+
+		assertTrue(0 < coordinate3.compareTo(coordinate1));
+		assertTrue(0 < coordinate3.compareTo(coordinate2));
+		assertTrue(0 < coordinate2.compareTo(coordinate1));
+	}
+
+	@Test
+	void compareTo_withArbitraryValues_prioritizesJValue() {
+		Coordinate coordinate1 = new Coordinate(0, -1);
+		Coordinate coordinate2 = new Coordinate(-1, 0);
+
+		assertTrue(0 > coordinate1.compareTo(coordinate2));
+		assertTrue(0 < coordinate2.compareTo(coordinate1));
+	}
+
 }
