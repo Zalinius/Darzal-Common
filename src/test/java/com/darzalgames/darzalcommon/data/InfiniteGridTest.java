@@ -1,10 +1,9 @@
 package com.darzalgames.darzalcommon.data;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +33,14 @@ class InfiniteGridTest {
 		assertThrows(IllegalStateException.class, grid::maxI);
 		assertThrows(IllegalStateException.class, grid::minJ);
 		assertThrows(IllegalStateException.class, grid::maxJ);
+	}
+
+	@Test
+	void emptyGrid_has0WidthAndHeight() {
+		InfiniteGrid<String> grid = new InfiniteGrid<>(" ");
+
+		assertEquals(0, grid.width());
+		assertEquals(0, grid.height());
 	}
 
 	@Test
@@ -87,11 +94,16 @@ class InfiniteGridTest {
 		grid.put(1, 1, "d");
 		Iterator<String> it = grid.iterator();
 
+		assertTrue(it.hasNext());
 		assertEquals("a", it.next());
+		assertTrue(it.hasNext());
 		assertEquals("b", it.next());
+		assertTrue(it.hasNext());
 		assertEquals(" ", it.next());
+		assertTrue(it.hasNext());
 		assertEquals("d", it.next());
 		assertFalse(it.hasNext());
+		assertThrows(NoSuchElementException.class, it::next);
 	}
 
 }
