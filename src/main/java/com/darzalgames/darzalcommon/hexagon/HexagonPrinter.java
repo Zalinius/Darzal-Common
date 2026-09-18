@@ -1,6 +1,7 @@
 package com.darzalgames.darzalcommon.hexagon;
 
 import java.util.*;
+import java.util.function.Function;
 
 import com.darzalgames.darzalcommon.data.FixedSizeGrid;
 import com.darzalgames.darzalcommon.data.InfiniteGrid;
@@ -22,6 +23,19 @@ public class HexagonPrinter {
 	 * @return A multiline string graphically representing the map
 	 */
 	public static <E> String toString(HexagonMap<E> hexagonMap) {
+		return toString(hexagonMap, E::toString);
+	}
+
+	/**
+	 * Returns a graphical ascii representation of a hexagon map, showing the values of the map and their q-r coordinates
+	 * Values in the map will be represented using their toString() method
+	 * @param <E>          The type the map contains
+	 * @param hexagonMap   the hexagon map to represent
+	 * @param stringMapper a function that converts elements to a string representation
+	 * @return A multiline string graphically representing the map
+	 */
+	public static <E> String toString(HexagonMap<E> hexagonMap, Function<E, String> stringMapper) {
+
 		final String hexagonTemplateString = """
 				      --------
 				    --        --
@@ -36,7 +50,7 @@ public class HexagonPrinter {
 		Set<Hexagon> allHexagons = hexagonMap.keySet();
 		for (Iterator<Hexagon> it = allHexagons.iterator(); it.hasNext();) {
 			Hexagon hexagon = it.next();
-			String value = hexagonMap.get(hexagon).toString();
+			String value = stringMapper.apply(hexagonMap.get(hexagon));
 			String pattern = "ssssssssssss";
 			value = setStringLength(value, pattern.length());
 
