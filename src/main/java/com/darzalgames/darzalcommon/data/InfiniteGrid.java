@@ -163,13 +163,7 @@ public class InfiniteGrid<E> extends TreeMap<Coordinate, E> implements Iterable<
 				throw new NoSuchElementException();
 			}
 
-			E result;
-
-			if (!containsKey(i, j)) {
-				result = defaultValue;
-			} else {
-				result = get(i, j);
-			}
+			E result = get(i, j);
 
 			if (i == maxI()) {
 				i = minI();
