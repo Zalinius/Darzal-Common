@@ -7,7 +7,7 @@ import java.util.TreeMap;
 /**
  * A generic rectangular grid data structure of infinite size<br>
  * This Class is much like a Grid shaped Map, and can expand in any direction infinitely
- * At any given point, it is canonically a rectangular grid whose width and height are defined by the its extreme elements
+ * At any given point, it is canonically a rectangular grid whose width and height are defined by its extreme elements
  * It's a bit like a spreadsheet
  * @param <E> The Generic type the grid contains
  */

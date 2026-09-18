@@ -41,7 +41,7 @@ public class HexagonPrinter {
 				    --        --
 				  --            --
 				--  ssssssssssss  --
-				  --  (qq)(rr)  --
+				  --  (qq, rr)  --
 				    --        --
 				      --------      """;
 
