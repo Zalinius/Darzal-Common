@@ -17,7 +17,7 @@ class HexagonPrinterTest {
 		map.put(new Hexagon(-1, 0), "left");
 		map.put(new Hexagon(-1, -1), "upleft");
 
-		String printResult = HexagonPrinter.toPretty(map);
+		String printResult = HexagonPrinter.toString(map);
 
 		assertEquals(expectedPrint(), printResult);
 	}

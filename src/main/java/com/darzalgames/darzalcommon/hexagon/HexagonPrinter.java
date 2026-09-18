@@ -21,7 +21,7 @@ public class HexagonPrinter {
 	 * @param hexagonMap the hexagon map to represent
 	 * @return A multiline string graphically representing the map
 	 */
-	public static <E> String toPretty(HexagonMap<E> hexagonMap) {
+	public static <E> String toString(HexagonMap<E> hexagonMap) {
 		final String hexagonTemplateString = """
 				      --------
 				    --        --
