@@ -14,6 +14,7 @@ public class Make {
 
 	/**
 	 * Get from a Supplier x times and return the result in a list.
+	 * @param <E>           The type of the returned list
 	 * @param x             The number of times to get the Supplier
 	 * @param factoryMethod The Supplier to get from
 	 * @return A modifable List containing the x invocations of the factory method
@@ -28,6 +29,7 @@ public class Make {
 	 * Apply from an index to a function x times and return the result in a list.
 	 * It's a cleaner for loop with a counter, where the index is available
 	 * As with normal for loops, the index will run from 0 to x-1
+	 * @param <E>           The type of the returned list
 	 * @param x             The number of times to run the function
 	 * @param factoryMethod The function to execute with the current loop index
 	 * @return A modifable List containing the x invocations of the factory method with index
