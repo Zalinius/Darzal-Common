@@ -10,7 +10,7 @@ public record Coordinate(
 		/** The i (or horizontal) coordinate */
 		int i,
 		/** The j (or vertical) coordinate */
-		int j) {
+		int j) implements Comparable<Coordinate> {
 
 	/**
 	 * Creates a coordinate centered at the origin
@@ -71,4 +71,21 @@ public record Coordinate(
 		return Math.max(Math.abs(i - coordinate.i), Math.abs(j - coordinate.j));
 	}
 
+	/**
+	 * Compares this coordinate with the specified coordinate for ordering in a cartesian grid.
+	 * Coordinates with lesser j-values precede those with greater j-values.
+	 * For coordinates with the same j-value, the one with a lesser i-value will take precedence
+	 * @param other the coordinate to compare to
+	 * @return a negative integer, zero, or a positive integer as this coordinate is less than, equal to, or greater than the specified coordinate.
+	 */
+	@Override
+	public int compareTo(Coordinate other) {
+		if (j != other.j) {
+			return j - other.j;
+		} else if (i != other.i) {
+			return i - other.i;
+		} else {
+			return 0;
+		}
+	}
 }
