@@ -13,7 +13,7 @@ class HexagonPrinterTest {
 		HexagonMap<String> map = new HexagonMap<>();
 		map.put(new Hexagon(0, 0), "origin");
 		map.put(new Hexagon(0, 1), "down");
-		map.put(new Hexagon(1, 0), "right");
+		map.put(new Hexagon(1, 0), "rright");
 		map.put(new Hexagon(1, 1), "downright");
 		map.put(new Hexagon(0, -1), "up");
 		map.put(new Hexagon(-1, 0), "left");
@@ -29,7 +29,7 @@ class HexagonPrinterTest {
 		HexagonMap<String> map = new HexagonMap<>();
 		map.put(new Hexagon(0, 0), "origin");
 		map.put(new Hexagon(0, 1), "down");
-		map.put(new Hexagon(1, 0), "right");
+		map.put(new Hexagon(1, 0), "rright");
 		map.put(new Hexagon(1, 1), "downright");
 		map.put(new Hexagon(0, -1), "up");
 		map.put(new Hexagon(-1, 0), "left");
@@ -39,6 +39,32 @@ class HexagonPrinterTest {
 		String printResult = HexagonPrinter.toString(map, stringMapper);
 
 		assertEquals(expectedCustomPrint(), printResult);
+	}
+
+	@Test
+	void toString_withFilledMapCustomStringMapperAndHexDetailMapper_printsOutCorrectly() {
+		HexagonMap<String> map = new HexagonMap<>();
+		map.put(new Hexagon(0, 0), "origin");
+		map.put(new Hexagon(0, 1), "down");
+		map.put(new Hexagon(1, 0), "rright");
+		map.put(new Hexagon(1, 1), "downright");
+		map.put(new Hexagon(0, -1), "up");
+		map.put(new Hexagon(-1, 0), "left");
+		map.put(new Hexagon(-1, -1), "upleft");
+		Function<String, String> stringMapper = String::toUpperCase;
+		Function<Hexagon, String> hexDetailMapper = hex -> {
+			if (hex.equals(new Hexagon(-1, -1))) {
+				return "ON";
+			} else if (hex.equals(new Hexagon(0, 0))) {
+				return "OFF";
+			} else {
+				return "";
+			}
+		};
+
+		String printResult = HexagonPrinter.toString(map, stringMapper, hexDetailMapper);
+
+		assertEquals(expectedCustomWithHexDetailsPrint(), printResult);
 	}
 
 	private static String expectedBasicPrint() {
@@ -58,7 +84,7 @@ class HexagonPrinterTest {
 				      --------     origin     --------     \s
 				              --  ( 0,  0)  --        --   \s
 				                --        --            -- \s
-				                  --------     right      --
+				                  --------     rright     --
 				                --        --  ( 1,  0)  -- \s
 				              --            --        --   \s
 				            --      down      --------     \s
@@ -88,7 +114,37 @@ class HexagonPrinterTest {
 				      --------     ORIGIN     --------     \s
 				              --  ( 0,  0)  --        --   \s
 				                --        --            -- \s
-				                  --------     RIGHT      --
+				                  --------     RRIGHT     --
+				                --        --  ( 1,  0)  -- \s
+				              --            --        --   \s
+				            --      DOWN      --------     \s
+				              --  ( 0,  1)  --        --   \s
+				                --        --            -- \s
+				                  --------   DOWNRIGHT    --
+				                          --  ( 1,  1)  -- \s
+				                            --        --   \s
+				                              --------     \s
+				""";
+	}
+
+	private static String expectedCustomWithHexDetailsPrint() {
+		return """
+				      --------                             \s
+				    --        --                           \s
+				  --  (  ON  )  --                         \s
+				--     UPLEFT     --------                 \s
+				  --  (-1, -1)  --        --               \s
+				    --        --            --             \s
+				      --------       UP       --           \s
+				    --        --  ( 0, -1)  --             \s
+				  --            --        --               \s
+				--      LEFT      --------                 \s
+				  --  (-1,  0)  --        --               \s
+				    --        --  ( OFF  )  --             \s
+				      --------     ORIGIN     --------     \s
+				              --  ( 0,  0)  --        --   \s
+				                --        --            -- \s
+				                  --------     RRIGHT     --
 				                --        --  ( 1,  0)  -- \s
 				              --            --        --   \s
 				            --      DOWN      --------     \s

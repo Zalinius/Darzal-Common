@@ -35,11 +35,24 @@ public class HexagonPrinter {
 	 * @return A multiline string graphically representing the map
 	 */
 	public static <E> String toString(HexagonMap<E> hexagonMap, Function<E, String> stringMapper) {
+		return toString(hexagonMap, stringMapper, hex -> "");
+	}
+
+	/**
+	 * Returns a graphical ascii representation of a hexagon map, showing the values of the map and their q-r coordinates
+	 * Values in the map will be represented using their toString() method
+	 * @param <E>              The type the map contains
+	 * @param hexagonMap       the hexagon map to represent
+	 * @param stringMapper     a function that converts elements to a string representation
+	 * @param hexDetailsMapper a function that converts hexagons to a string representation
+	 * @return A multiline string graphically representing the map
+	 */
+	public static <E> String toString(HexagonMap<E> hexagonMap, Function<E, String> stringMapper, Function<Hexagon, String> hexDetailsMapper) {
 
 		final String hexagonTemplateString = """
 				      --------
 				    --        --
-				  --            --
+				  --  (detail)  --
 				--  ssssssssssss  --
 				  --  (qq, rr)  --
 				    --        --
@@ -63,8 +76,16 @@ public class HexagonPrinter {
 			if (hexagon.r() >= 0) {
 				rString = " " + rString;
 			}
-			filledHexagonStringTemplate = filledHexagonStringTemplate.replace("qq", qString);
-			filledHexagonStringTemplate = filledHexagonStringTemplate.replace("rr", rString);
+			filledHexagonStringTemplate = filledHexagonStringTemplate.replace("(qq, rr)", "(" + qString + ", " + rString + ")");
+
+			String hexDetail = hexDetailsMapper.apply(hexagon);
+			if (hexDetail.isBlank()) {
+				hexDetail = setStringLength(hexDetail, 8);
+			} else {
+				hexDetail = "(" + setStringLength(hexDetail, 6) + ")";
+			}
+			filledHexagonStringTemplate = filledHexagonStringTemplate.replace("(detail)", hexDetail);
+
 			// Put the template into a fixed size grid
 			final List<String> hexagonTemplateLines = Arrays.asList(filledHexagonStringTemplate.split("\n"));
 			final int hexHeight = hexagonTemplateLines.size();
