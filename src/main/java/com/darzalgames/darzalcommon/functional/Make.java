@@ -17,7 +17,6 @@ public class Make {
 	 * @param <E>           The type of the returned list
 	 * @param x             The number of times to get the Supplier
 	 * @param factoryMethod The Supplier to get from
-	 * @param <E>           The made objects type
 	 * @return A modifable List containing the x invocations of the factory method
 	 */
 	public static <E> List<E> xTimes(int x, Supplier<E> factoryMethod) {
@@ -33,7 +32,6 @@ public class Make {
 	 * @param <E>           The type of the returned list
 	 * @param x             The number of times to run the function
 	 * @param factoryMethod The function to execute with the current loop index
-	 * @param <E>           The made objects type
 	 * @return A modifable List containing the x invocations of the factory method with index
 	 */
 	public static <E> List<E> xTimesWithI(int x, IntFunction<E> factoryMethod) {
