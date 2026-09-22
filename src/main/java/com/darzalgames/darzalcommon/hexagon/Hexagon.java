@@ -1,6 +1,9 @@
 package com.darzalgames.darzalcommon.hexagon;
 
 import java.util.Comparator;
+import java.util.Set;
+
+import com.darzalgames.darzalcommon.functional.MutableCollectors;
 
 /**
  * A simple class representing a flat-top hexagon using axial coordinates
@@ -37,6 +40,16 @@ public record Hexagon(
 	 */
 	public int getRow() {
 		return r() + (q() - (q() & 1)) / 2;
+	}
+
+	/**
+	 * Gets all the neighbouring hexagons
+	 * @return A set of the neighbouring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
+	 */
+	public Set<Hexagon> getNeighbours() {
+		return HexagonDirection.values().stream()
+				.map(direction -> direction.getNeighbourHexagon(this))
+				.collect(MutableCollectors.toSet());
 	}
 
 	/**
