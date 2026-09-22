@@ -28,14 +28,34 @@ public class HexagonMap<E> extends LinkedHashMap<Hexagon, E> {
 
 	/**
 	 * Gets the neighbour hexagons of the input hexagon in this map
-	 * To be used for game logic where adjacencies are relevant
 	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
 	 * @return A set of the neighboring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
 	 */
-	public Set<Hexagon> getHexagonNeighborsOf(Hexagon hexagon) {
+	public Set<Hexagon> getPresentHexagonNeighboursOf(Hexagon hexagon) {
+		return getAllHexagonNeighborsOf(hexagon).stream()
+				.filter(this::containsKey)
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+	}
+
+	/**
+	 * Gets the neighbour hexagons of the input hexagon NOT PRESENT in this map
+	 * @param hexagon The {@link Hexagon} whose absent neighbors you want to find
+	 * @return A set of the neighboring {@link Hexagon Hexagons} which are NOT IN THIS MAP, in {@link HexagonDirection} order
+	 */
+	public Set<Hexagon> getAbsentHexagonNeighborsOf(Hexagon hexagon) {
+		return getAllHexagonNeighborsOf(hexagon).stream()
+				.filter(hex -> !containsKey(hex))
+				.collect(Collectors.toCollection(LinkedHashSet::new));
+	}
+
+	/**
+	 * Gets all the neighbour hexagons of the input hexagon
+	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
+	 * @return A set of the neighboring {@link Hexagon Hexagons}, in {@link HexagonDirection} order. They may or may not be present in this map!
+	 */
+	public Set<Hexagon> getAllHexagonNeighborsOf(Hexagon hexagon) {
 		return HexagonDirection.values().stream()
 				.map(direction -> direction.getNeighborHexagon(hexagon))
-				.filter(this::containsKey)
 				.collect(Collectors.toCollection(LinkedHashSet::new));
 	}
 
@@ -46,7 +66,7 @@ public class HexagonMap<E> extends LinkedHashMap<Hexagon, E> {
 	 * @return A list of the neighboring values, in {@link HexagonDirection} order
 	 */
 	public List<E> getValueNeighborsOf(Hexagon hexagon) {
-		return getHexagonNeighborsOf(hexagon).stream().map(this::get).toList();
+		return getPresentHexagonNeighboursOf(hexagon).stream().map(this::get).toList();
 	}
 
 	/**
