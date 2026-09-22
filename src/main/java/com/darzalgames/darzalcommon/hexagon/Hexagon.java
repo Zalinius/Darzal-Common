@@ -43,12 +43,12 @@ public record Hexagon(
 	}
 
 	/**
-	 * Gets all the neighboring hexagons
-	 * @return A set of the neighboring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
+	 * Gets all the neighbouring hexagons
+	 * @return A set of the neighbouring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
 	 */
-	public Set<Hexagon> getNeighbors() {
+	public Set<Hexagon> getNeighbours() {
 		return HexagonDirection.values().stream()
-				.map(direction -> direction.getNeighborHexagon(this))
+				.map(direction -> direction.getNeighbourHexagon(this))
 				.collect(MutableCollectors.toSet());
 	}
 

@@ -60,11 +60,11 @@ class HexagonTest {
 
 	@ParameterizedTest
 	@CsvSource({ "0, 0", "2, -2", "2, 0", "-1, 1" })
-	void getAllHexagonNeighborsOf_variousHexagons_alwaysReturns6Hexagons(int hexagonQ, int hexagonR) {
+	void getAllHexagonNeighboursOf_variousHexagons_alwaysReturns6Hexagons(int hexagonQ, int hexagonR) {
 		Hexagon hexagon = new Hexagon(hexagonQ, hexagonR);
-		Set<Hexagon> neighbors = hexagon.getNeighbors();
+		Set<Hexagon> neighbours = hexagon.getNeighbours();
 
-		assertEquals(6, neighbors.size());
+		assertEquals(6, neighbours.size());
 	}
 
 	@Test

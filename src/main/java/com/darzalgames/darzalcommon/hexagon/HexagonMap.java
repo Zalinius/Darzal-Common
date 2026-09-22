@@ -30,50 +30,50 @@ public class HexagonMap<E> extends LinkedHashMap<Hexagon, E> {
 	}
 
 	/**
-	 * Gets the neighbor hexagons of the input hexagon in this map
-	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
-	 * @return A set of the neighboring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
+	 * Gets the neighbour hexagons of the input hexagon in this map
+	 * @param hexagon The {@link Hexagon} whose neighbours you want to find
+	 * @return A set of the neighbouring {@link Hexagon Hexagons}, in {@link HexagonDirection} order
 	 */
-	public Set<Hexagon> getPresentHexagonNeighborsOf(Hexagon hexagon) {
+	public Set<Hexagon> getPresentHexagonNeighboursOf(Hexagon hexagon) {
 		return hexagon
-				.getNeighbors()
+				.getNeighbours()
 				.stream()
 				.filter(this::containsKey)
 				.collect(MutableCollectors.toSet());
 	}
 
 	/**
-	 * Gets the neighbor hexagons of the input hexagon NOT PRESENT in this map
-	 * @param hexagon The {@link Hexagon} whose absent neighbors you want to find
-	 * @return A set of the neighboring {@link Hexagon Hexagons} which are NOT IN THIS MAP, in {@link HexagonDirection} order
+	 * Gets the neighbour hexagons of the input hexagon NOT PRESENT in this map
+	 * @param hexagon The {@link Hexagon} whose absent neighbours you want to find
+	 * @return A set of the neighbouring {@link Hexagon Hexagons} which are NOT IN THIS MAP, in {@link HexagonDirection} order
 	 */
-	public Set<Hexagon> getAbsentHexagonNeighborsOf(Hexagon hexagon) {
+	public Set<Hexagon> getAbsentHexagonNeighboursOf(Hexagon hexagon) {
 		return hexagon
-				.getNeighbors()
+				.getNeighbours()
 				.stream()
 				.filter(hex -> !containsKey(hex))
 				.collect(MutableCollectors.toSet());
 	}
 
 	/**
-	 * Gets the neighbor values of the input hexagon in this map
+	 * Gets the neighbour values of the input hexagon in this map
 	 * To be used for game logic where adjacencies are relevant
-	 * @param hexagon The {@link Hexagon} whose neighbors you want to find
-	 * @return A list of the neighboring values, in {@link HexagonDirection} order
+	 * @param hexagon The {@link Hexagon} whose neighbours you want to find
+	 * @return A list of the neighbouring values, in {@link HexagonDirection} order
 	 */
-	public List<E> getValueNeighborsOf(Hexagon hexagon) {
-		return getPresentHexagonNeighborsOf(hexagon).stream().map(this::get).toList();
+	public List<E> getValueNeighboursOf(Hexagon hexagon) {
+		return getPresentHexagonNeighboursOf(hexagon).stream().map(this::get).toList();
 	}
 
 	/**
 	 * Gets the immediate neibhbor value in the specified direction
-	 * @param hexagon   The starting point for searching for a neighbor
+	 * @param hexagon   The starting point for searching for a neighbour
 	 * @param direction the direction to search in
-	 * @return The neighboring value in the given direction if it exists, otherwise throws an IllegalArgumentException
+	 * @return The neighbouring value in the given direction if it exists, otherwise throws an IllegalArgumentException
 	 */
-	public E getValueNeighborInDirection(Hexagon hexagon, HexagonDirection direction) {
-		Hexagon neighbor = direction.getNeighborHexagon(hexagon);
-		return get(neighbor);
+	public E getValueNeighbourInDirection(Hexagon hexagon, HexagonDirection direction) {
+		Hexagon neighbour = direction.getNeighbourHexagon(hexagon);
+		return get(neighbour);
 	}
 
 	@Override

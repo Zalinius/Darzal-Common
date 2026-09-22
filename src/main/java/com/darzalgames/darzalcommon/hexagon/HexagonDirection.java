@@ -32,24 +32,24 @@ public class HexagonDirection {
 	}
 
 	/**
-	 * Calculates the neighboring {@link Hexagon} in a particular hexagonal direction
-	 * @param q Q-axis Hexagon whose neighbor you want to find (axial system)
-	 * @param r R-axis Hexagon whose neighbor you want to find (axial system)
-	 * @return The neighboring {@link Hexagon} in a particular direction
+	 * Calculates the neighbouring {@link Hexagon} in a particular hexagonal direction
+	 * @param q Q-axis Hexagon whose neighbour you want to find (axial system)
+	 * @param r R-axis Hexagon whose neighbour you want to find (axial system)
+	 * @return The neighbouring {@link Hexagon} in a particular direction
 	 */
-	public Hexagon getNeighborHexagon(int q, int r) {
-		int neighborQ = q + direction.q();
-		int neighborR = r + direction.r();
-		return new Hexagon(neighborQ, neighborR);
+	public Hexagon getNeighbourHexagon(int q, int r) {
+		int neighbourQ = q + direction.q();
+		int neighbourR = r + direction.r();
+		return new Hexagon(neighbourQ, neighbourR);
 	}
 
 	/**
-	 * Calculates the neighboring {@link Hexagon} in a particular hexagonal direction
-	 * @param hexagon The hexagon whose neighbor you want to find (axial system)
-	 * @return The neighboring {@link Hexagon} in a particular direction
+	 * Calculates the neighbouring {@link Hexagon} in a particular hexagonal direction
+	 * @param hexagon The hexagon whose neighbour you want to find (axial system)
+	 * @return The neighbouring {@link Hexagon} in a particular direction
 	 */
-	public Hexagon getNeighborHexagon(Hexagon hexagon) {
-		return getNeighborHexagon(hexagon.q(), hexagon.r());
+	public Hexagon getNeighbourHexagon(Hexagon hexagon) {
+		return getNeighbourHexagon(hexagon.q(), hexagon.r());
 	}
 
 	/**
