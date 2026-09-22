@@ -59,27 +59,27 @@ class HexagonMapTest {
 	}
 
 	@Test
-	void getValueNeighborsOf_variousValues_returnsAllValuesInHexagonDirectionOrder() {
+	void getValueNeighboursOf_variousValues_returnsAllValuesInHexagonDirectionOrder() {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(3, 3).forEach(hex -> hexagonMap.put(hex, hex.toString()));
 
-		List<String> neighbors = hexagonMap.getValueNeighborsOf(Hexagon.ORIGIN);
+		List<String> neighbours = hexagonMap.getValueNeighboursOf(Hexagon.ORIGIN);
 
-		assertEquals(6, neighbors.size());
-		assertEquals("Hexagon[q=-1, r=0]", neighbors.get(0));
-		assertEquals("Hexagon[q=0, r=-1]", neighbors.get(1));
-		assertEquals("Hexagon[q=1, r=-1]", neighbors.get(2));
-		assertEquals("Hexagon[q=1, r=0]", neighbors.get(3));
-		assertEquals("Hexagon[q=0, r=1]", neighbors.get(4));
-		assertEquals("Hexagon[q=-1, r=1]", neighbors.get(5));
+		assertEquals(6, neighbours.size());
+		assertEquals("Hexagon[q=-1, r=0]", neighbours.get(0));
+		assertEquals("Hexagon[q=0, r=-1]", neighbours.get(1));
+		assertEquals("Hexagon[q=1, r=-1]", neighbours.get(2));
+		assertEquals("Hexagon[q=1, r=0]", neighbours.get(3));
+		assertEquals("Hexagon[q=0, r=1]", neighbours.get(4));
+		assertEquals("Hexagon[q=-1, r=1]", neighbours.get(5));
 	}
 
 	@Test
-	void getHexagonNeighborsOf_origin_returnsThemInDirectionOrdering() {
+	void getPresentHexagonNeighboursOf_origin_returnsThemInDirectionOrdering() {
 		HexagonMap<Void> hexagonMap = new HexagonMap<>();
 		HexagonGridCircular.makeGrid(2).forEach(hex -> hexagonMap.put(hex, null));
 
-		Iterator<Hexagon> neighbours = hexagonMap.getHexagonNeighborsOf(Hexagon.ORIGIN).iterator();
+		Iterator<Hexagon> neighbours = hexagonMap.getPresentHexagonNeighboursOf(Hexagon.ORIGIN).iterator();
 
 		assertEquals(neighbours.next(), new Hexagon(-1, 0));
 		assertEquals(neighbours.next(), new Hexagon(0, -1));
@@ -90,6 +90,17 @@ class HexagonMapTest {
 		assertFalse(neighbours.hasNext());
 	}
 
+	@Test
+	void getPresentHexagonNeighboursOf_originSurrounded_returnsTheSameSetsAsTheHexagonsNeighbours() {
+		HexagonMap<Void> hexagonMap = new HexagonMap<>();
+		HexagonGridCircular.makeGrid(2).forEach(hex -> hexagonMap.put(hex, null));
+
+		Set<Hexagon> presentNeighbours = hexagonMap.getPresentHexagonNeighboursOf(Hexagon.ORIGIN);
+		Set<Hexagon> allNeighbours = Hexagon.ORIGIN.getNeighbours();
+
+		assertEquals(presentNeighbours, allNeighbours);
+	}
+
 	@ParameterizedTest
 	@CsvSource({
 			"0, 0,		6", // Surrounded hexagon
@@ -97,14 +108,31 @@ class HexagonMapTest {
 			"2, 0,		3", // Corner hexagon (bottom right)
 			"-1, 1,		4", // Edge hexagon
 	})
-	void getHexagonNeighborsOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbors(int hexagonQ, int hexagonR, int expectedNumberOfNeighbors) {
+	void getPresentHexagonNeighboursOf_variousHexagons_returnsTheCorrectNumberOfNonNullNeighbours(int hexagonQ, int hexagonR, int expectedNumberOfNeighbours) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
 
-		Set<Hexagon> neighbors = hexagonMap.getHexagonNeighborsOf(new Hexagon(hexagonQ, hexagonR));
+		Set<Hexagon> neighbours = hexagonMap.getPresentHexagonNeighboursOf(new Hexagon(hexagonQ, hexagonR));
 
-		assertEquals(expectedNumberOfNeighbors, neighbors.size());
-		neighbors.forEach(Assertions::assertNotNull);
+		assertEquals(expectedNumberOfNeighbours, neighbours.size());
+		neighbours.forEach(Assertions::assertNotNull);
+	}
+
+	@ParameterizedTest
+	@CsvSource({
+			"0, 0,		0", // Surrounded hexagon
+			"2, -2,		4", // Corner hexagon (top right)
+			"2, 0,		3", // Corner hexagon (bottom right)
+			"-1, 1,		2", // Edge hexagon
+	})
+	void getAbsentHexagonNeighboursOf_variousHexagons_returnsTheCorrectNumberOfNeighboursNotInTheMap(int hexagonQ, int hexagonR, int expectedNumberOfAbsentNeighbours) {
+		HexagonMap<String> hexagonMap = new HexagonMap<>();
+		HexagonGridRectangular.makeGrid(4, 3).forEach(hex -> hexagonMap.put(hex, ""));
+
+		Set<Hexagon> neighbours = hexagonMap.getAbsentHexagonNeighboursOf(new Hexagon(hexagonQ, hexagonR));
+
+		assertEquals(expectedNumberOfAbsentNeighbours, neighbours.size());
+		neighbours.forEach(n -> assertFalse(hexagonMap.containsKey(n)));
 	}
 
 	@ParameterizedTest
@@ -145,7 +173,7 @@ class HexagonMapTest {
 		assertThrows(IllegalArgumentException.class, () -> hexagonMap.get(hexagon));
 	}
 
-	private static Stream<Arguments> hexagonAndNeighborInDirectionCoordinates() {
+	private static Stream<Arguments> hexagonAndNeighbourInDirectionCoordinates() {
 		return Stream.of(
 				Arguments.of(2, 0, HexagonDirection.TOP, 2, -1),
 				Arguments.of(1, 2, HexagonDirection.TOP_RIGHT, 2, 1),
@@ -157,14 +185,14 @@ class HexagonMapTest {
 	}
 
 	@ParameterizedTest
-	@MethodSource("hexagonAndNeighborInDirectionCoordinates")
-	void getValueNeighborInDirection_variousHexagons_returnsTheCorrectNeighbors(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighborHexagonQ, int expectedNeighborHexagonR) {
+	@MethodSource("hexagonAndNeighbourInDirectionCoordinates")
+	void getValueNeighbourInDirection_variousHexagons_returnsTheCorrectNeighbours(int hexagonQ, int hexagonR, HexagonDirection testDirection, int expectedNeighbourHexagonQ, int expectedNeighbourHexagonR) {
 		HexagonMap<String> hexagonMap = new HexagonMap<>();
 		HexagonGridRectangular.makeGrid(6, 6).forEach(hex -> hexagonMap.put(hex, hex.q() + " " + hex.r()));
 
-		String neighbor = hexagonMap.getValueNeighborInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
+		String neighbour = hexagonMap.getValueNeighbourInDirection(new Hexagon(hexagonQ, hexagonR), testDirection);
 
-		assertEquals(expectedNeighborHexagonQ + " " + expectedNeighborHexagonR, neighbor);
+		assertEquals(expectedNeighbourHexagonQ + " " + expectedNeighbourHexagonR, neighbour);
 	}
 
 	@Test
