@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -54,6 +56,15 @@ class HexagonTest {
 		Hexagon hexagon = new Hexagon(q, r);
 
 		assertEquals(expectedS, hexagon.s());
+	}
+
+	@ParameterizedTest
+	@CsvSource({ "0, 0", "2, -2", "2, 0", "-1, 1" })
+	void getAllHexagonNeighborsOf_variousHexagons_alwaysReturns6Hexagons(int hexagonQ, int hexagonR) {
+		Hexagon hexagon = new Hexagon(hexagonQ, hexagonR);
+		Set<Hexagon> neighbors = hexagon.getNeighbors();
+
+		assertEquals(6, neighbors.size());
 	}
 
 	@Test
