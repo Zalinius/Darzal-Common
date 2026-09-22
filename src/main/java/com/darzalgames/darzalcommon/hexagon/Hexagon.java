@@ -14,7 +14,7 @@ import com.darzalgames.darzalcommon.functional.MutableCollectors;
 public record Hexagon(
 		/** The Q-axis coordinate (axial system) */
 		int q, /** The R-axis coordinate (axial system) */
-		int r) {
+		int r) implements Comparable<Hexagon> {
 
 	public static final Hexagon ORIGIN = new Hexagon(0, 0);
 
@@ -62,6 +62,31 @@ public record Hexagon(
 		int q = column;
 		int r = row - (column - (column & 1)) / 2;
 		return new Hexagon(q, r);
+	}
+
+	/**
+	 * Checks if two hexagons are directly adjacent
+	 * @param h1 the first hexagon
+	 * @param h2 the second hexagon
+	 * @return True if both hexagons are directly adjacent, false otherwise
+	 */
+	public static boolean areAdjacent(Hexagon h1, Hexagon h2) {
+		return computeDistance(h1, h2) == 1;
+	}
+
+	/**
+	 * Computes the cubic distance between two hexagons
+	 * @param h1 the first hexagon
+	 * @param h2 the second hexagon
+	 * @return A non negative integer representing the distance between the two hexagons
+	 */
+	public static int computeDistance(Hexagon h1, Hexagon h2) {
+		return (Math.abs(h1.q() - h2.q()) + Math.abs(h1.r() - h2.r()) + Math.abs(h1.s() - h2.s())) / 2;
+	}
+
+	@Override
+	public int compareTo(Hexagon other) {
+		return topToBottomLeftToRightComparator.compare(this, other);
 	}
 
 	/**
