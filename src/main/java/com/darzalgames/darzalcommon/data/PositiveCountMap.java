@@ -1,6 +1,9 @@
 package com.darzalgames.darzalcommon.data;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
+import com.darzalgames.darzalcommon.functional.StreamFactory;
 
 /**
  * A variation on CountMaps, with the following features:
@@ -55,6 +58,18 @@ public class PositiveCountMap<K> extends CountMap<K> {
 		} else {
 			super.changeValue(key, newValue);
 		}
+	}
+
+	/**
+	 * Creates a mapping of the percentage frequencies of all keys in the PositiveCountMap
+	 * @return a map of the percentage occurence of all the keys, in decreasing order
+	 */
+	public Map<K, Float> toFrequencyPercentageMap() {
+		final int totalOccurences = StreamFactory.of(iterator()).map(this::get).reduce(0, Integer::sum);
+		return StreamFactory.of(iterator())
+				.map(key -> new Tuple<>(key, get(key) / (float) totalOccurences))
+				.sorted(Comparator.comparing(Tuple<K, Float>::f).reversed())
+				.collect(Collectors.toMap(Tuple::e, Tuple::f, (a, b) -> a, LinkedHashMap::new));
 	}
 
 }
