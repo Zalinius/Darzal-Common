@@ -1,7 +1,8 @@
 package com.darzalgames.darzalcommon.data.getableset;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
+import com.darzalgames.darzalcommon.functional.MutableCollectors;
 
 /**
  * A decorator which can wrap around a set and map implementation to produce a GetableDecorator
@@ -75,7 +76,7 @@ abstract class AbstractGetableSetDecorator<E> extends AbstractSet<E> implements 
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		Set<E> keysToRemove = innerMap.keySet().stream().filter(key -> !c.contains(key)).collect(Collectors.toCollection(LinkedHashSet::new));
+		Set<E> keysToRemove = innerMap.keySet().stream().filter(key -> !c.contains(key)).collect(MutableCollectors.toSet());
 		keysToRemove.forEach(innerMap::remove);
 		return innerSet.retainAll(c);
 	}

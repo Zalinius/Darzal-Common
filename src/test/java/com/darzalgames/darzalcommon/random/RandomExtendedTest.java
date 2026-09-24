@@ -246,7 +246,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSet_returnsAProperSubsetOfCorrectSize() {
+	void getNextRandomSubset_withSet_returnsAProperSubsetOfCorrectSize() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 3;
 
@@ -258,7 +258,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() {
+	void getNextRandomSubset_withNegativeSubsetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = -1;
 
@@ -266,7 +266,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() {
+	void getNextRandomSubset_withSubsetSizeGreatherThanSetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 9;
 
@@ -274,7 +274,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_with0SubsetSize_returnsEmptySet() {
+	void getNextRandomSubset_with0SubsetSize_returnsEmptySet() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 0;
 
@@ -284,7 +284,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() {
+	void getNextRandomSubset_withSubsetSizeEqualToSetSize_returnsOriginalSet() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7));
 		int subsetSize = 8;
 
@@ -295,7 +295,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() {
+	void getNextRandomSubset_withEmptySetAndNonZeroSubsetSize_throwsIllegalArgumentException() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList());
 		int subsetSize = 8;
 
@@ -303,7 +303,7 @@ class RandomExtendedTest {
 	}
 
 	@Test
-	void randomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() {
+	void getNextRandomSubset_withEmptySetAndSubsetSize0_returnsEmptySet() {
 		Set<Integer> set = new LinkedHashSet<>(Arrays.asList());
 		int subsetSize = 0;
 
@@ -345,6 +345,75 @@ class RandomExtendedTest {
 	@Test
 	void getNextChunkedAmountList_withZeroChunks_throwsIllegalArgumentException() {
 		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextChunkedAmountList(5, 0));
+	}
+
+	@Test
+	void getNextRandomSubcollection_withList_returnsCollectionOfCorrectSize() {
+		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+		int subcollectionSize = 3;
+
+		Collection<Integer> subcollection = randomExtended.getNextRandomSubcollection(list, subcollectionSize);
+
+		assertEquals(3, subcollection.size());
+		assertTrue(list.containsAll(subcollection));
+		assertFalse(subcollection.containsAll(list));
+	}
+
+	@Test
+	void getNextRandomSubcollection_withNegativeSubcollectionSize_throwsIllegalArgumentException() {
+		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+		int subcollectionSize = -1;
+
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubcollection(list, subcollectionSize));
+	}
+
+	@Test
+	void getNextRandomSubcollection_withSubcollectionSizeGreatherThanListSize_throwsIllegalArgumentException() {
+		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+		int subcollectionSize = 9;
+
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubcollection(list, subcollectionSize));
+	}
+
+	@Test
+	void getNextRandomSubcollection_with0SubcollectionSize_returnsEmptyCollection() {
+		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+		int subcollectionSize = 0;
+
+		Collection<Integer> subcollection = randomExtended.getNextRandomSubcollection(list, subcollectionSize);
+
+		assertEquals(0, subcollection.size());
+	}
+
+	@Test
+	void getNextRandomSubcollection_withSubcollectionSizeEqualToListSize_returnsNewCollectionWithSameEntriesAsOriginalCollection() {
+		List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
+		int subcollectionSize = 8;
+
+		Collection<Integer> subcollection = randomExtended.getNextRandomSubcollection(list, subcollectionSize);
+
+		assertEquals(8, subcollection.size());
+		assertTrue(list.containsAll(subcollection));
+		assertTrue(subcollection.containsAll(list));
+		assertNotEquals(list, subcollection);
+	}
+
+	@Test
+	void getNextRandomSubcollection_withEmptyListAndNonZeroSubcollectionSize_throwsIllegalArgumentException() {
+		List<Integer> list = Arrays.asList();
+		int subcollectionSize = 8;
+
+		assertThrows(IllegalArgumentException.class, () -> randomExtended.getNextRandomSubcollection(list, subcollectionSize));
+	}
+
+	@Test
+	void getNextRandomSubcollection_withEmptyListAndSubcollectionSize0_returnsEmptyCollection() {
+		List<Integer> list = Arrays.asList();
+		int subcollectionSize = 0;
+
+		Collection<Integer> subcollection = randomExtended.getNextRandomSubcollection(list, subcollectionSize);
+
+		assertEquals(0, subcollection.size());
 	}
 
 	@Test
