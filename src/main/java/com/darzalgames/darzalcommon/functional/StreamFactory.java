@@ -15,9 +15,9 @@ public class StreamFactory {
 
 	/**
 	 * Creates a Stream from an iterator
-	 * @param <E>      The type returned by the iterator and resulting Rtream
-	 * @param iterator an iterator
-	 * @return A stream of the elements returned by the iterator
+	 * @param <E>      The type returned by the iterator and resulting Stream
+	 * @param iterator an Iterator
+	 * @return A Stream of the elements returned by the Iterator
 	 */
 	public static <E> Stream<E> of(Iterator<E> iterator) {
 		return StreamSupport.stream(
