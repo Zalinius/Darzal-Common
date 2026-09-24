@@ -171,7 +171,7 @@ public class RandomExtended extends Random {
 	 * @return A new subset, which is modifiable
 	 */
 	public <E> Set<E> getNextRandomSubset(final Set<E> set, final int subsetSize) {
-		return new HashSet<>(getNextRandomSubcollection(set, subsetSize));
+		return new LinkedHashSet<>(getNextRandomSubcollection(set, subsetSize));
 	}
 
 	/**
