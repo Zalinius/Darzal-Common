@@ -164,39 +164,33 @@ public class RandomExtended extends Random {
 	}
 
 	/**
-	 * Returns a random subset
+	 * Returns a random subset of the specified size
 	 * @param <E>        The generic type of the subset
 	 * @param set        The input set. It is not modified by this function call
 	 * @param subsetSize The number of elements desired in the subset. Must be between 0 and the original size, inclusive.
-	 * @return A subset, which is modifiable
+	 * @return A new subset, which is modifiable
 	 */
 	public <E> Set<E> getNextRandomSubset(final Set<E> set, final int subsetSize) {
-		if (subsetSize < 0) {
-			throw new IllegalArgumentException("Subset size must not be negative: " + subsetSize);
+		return new LinkedHashSet<>(getNextRandomSubcollection(set, subsetSize));
+	}
+
+	/**
+	 * Returns a random subcollection of the specified size
+	 * @param <E>               The generic type of the subcollection
+	 * @param collection        The input collection. It is not modified by this function call.
+	 * @param subcollectionSize The number of elements desired in the subcollection. Must be between 0 and the original size, inclusive.
+	 * @return A new subcollection, which is modifiable
+	 */
+	public <E> Collection<E> getNextRandomSubcollection(Collection<E> collection, int subcollectionSize) {
+		if (subcollectionSize < 0) {
+			throw new IllegalArgumentException("Subcollection size must not be negative: " + subcollectionSize);
 		}
-		if (subsetSize > set.size()) {
-			throw new IllegalArgumentException("Subset size(" + subsetSize + ") must not be greater than original set size(" + set.size() + ")");
+		if (subcollectionSize > collection.size()) {
+			throw new IllegalArgumentException("Subcollection size(" + subcollectionSize + ") must not be greater than original collection size(" + collection.size() + ")");
 		}
 
-		Set<E> setToPickFrom = new LinkedHashSet<>(set);
-		Set<E> randomSubset = new LinkedHashSet<>();
-
-		Do.xTimes(subsetSize, () -> {
-			int targetToPick = nextInt(setToPickFrom.size());
-			E toRemove = null;
-			int i = 0;
-			for (E e : setToPickFrom) {
-				if (i == targetToPick) {
-					toRemove = e;
-				}
-				++i;
-			}
-
-			randomSubset.add(toRemove);
-			setToPickFrom.remove(toRemove);
-		});
-
-		return randomSubset;
+		List<E> shuffledList = getShuffledList(collection);
+		return shuffledList.subList(0, subcollectionSize);
 	}
 
 	/**
