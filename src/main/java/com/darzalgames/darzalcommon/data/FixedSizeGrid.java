@@ -220,7 +220,32 @@ public class FixedSizeGrid<E> implements Iterable<E> {
 	public List<E> getAdjacentElements(int i, int j) {
 		List<Coordinate> coordinatesToGet = getAdjacentCoordinates(i, j);
 		return coordinatesToGet.stream().map(this::get).toList();
+	}
 
+	/**
+	 * Gets a new {@link FixedSizeGrid} which is a subset of this grid
+	 * @param beginI the low i endpoint (inclusive) of the subGrid
+	 * @param endI   the high i endpoint (exclusive) of the subGrid
+	 * @param beginJ the low j endpoint (inclusive) of the subGrid
+	 * @param endJ   the high j endpoint (exclusive) of the subGrid
+	 * @return a new {@link FixedSizeGrid} containing the values of the original grid, based on the indices provided
+	 */
+	public FixedSizeGrid<E> subGrid(int beginI, int beginJ, int endI, int endJ) {
+		if (beginI < 0 || beginJ < 0 || endI > width || endJ > height || endI < beginI || endJ < beginJ) {
+			Coordinate upperLeftCorner = new Coordinate(beginI, beginJ);
+			Coordinate bottomRightCorner = new Coordinate(endI, endJ);
+			throw new IllegalArgumentException("Sub Grid indices must form a rectangle withing original grid: " + upperLeftCorner + ", " + bottomRightCorner);
+		}
+
+		FixedSizeGrid<E> subGrid = new FixedSizeGrid<>(endI - beginI, endJ - beginJ);
+		for (int i = beginI; i != endI; i++) {
+			for (int j = beginJ; j != endJ; j++) {
+				E value = get(i, j);
+				subGrid.set(i - beginI, j - beginJ, value);
+			}
+		}
+
+		return subGrid;
 	}
 
 	private E getFromList(int i, int j) {
