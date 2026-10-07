@@ -175,6 +175,55 @@ class FixedSizeGridTest {
 	}
 
 	@Test
+	void subGrid_withEndpointsBeyondCurrentGrid_throwsIllegalArgumentException() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 5, 0);
+
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, 0, 4, 5));
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, -1, 1, 1));
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, 0, 3, 6));
+	}
+
+	@Test
+	void subGrid_withEndpointsLessThanStartPoints_throwsIllegalArgumentException() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 5, 0);
+
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, 0, -1, 5));
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(1, 1, 1, 0));
+	}
+
+	@Test
+	void subGrid_withValidEndpoints_doesNotThrow() {
+		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 5, 0);
+
+		assertDoesNotThrow(() -> grid.subGrid(0, 0, 3, 5));
+	}
+
+	@Test
+	void subGrid_withSizeOfOriginalGrid_createsCopy() {
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, (i, j) -> i + "," + j);
+
+		FixedSizeGrid<String> copy = grid.subGrid(0, 0, 2, 2);
+
+		assertEquals(grid.width(), copy.width());
+		assertEquals(grid.height(), copy.height());
+		assertEquals(grid.get(0, 0), copy.get(0, 0));
+		assertEquals(grid.get(1, 0), copy.get(1, 0));
+		assertEquals(grid.get(0, 1), copy.get(0, 1));
+		assertEquals(grid.get(1, 1), copy.get(1, 1));
+	}
+
+	@Test
+	void subGrid_withSizeSmallerThanOriginalGrid_createsSubGrid() {
+		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 2, (i, j) -> i + "," + j);
+
+		FixedSizeGrid<String> subGrid = grid.subGrid(1, 1, 2, 2);
+
+		assertEquals(1, subGrid.width());
+		assertEquals(1, subGrid.height());
+		assertEquals("1,1", subGrid.get(0, 0));
+	}
+
+	@Test
 	void constructorWithInitializer_whenGivenInitializer_initializesValues() {
 		FixedSizeGrid<String> grid = new FixedSizeGrid<>(2, 3, (i, j) -> (i + "," + j));
 
