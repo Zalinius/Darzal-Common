@@ -181,6 +181,7 @@ class FixedSizeGridTest {
 		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, 0, 4, 5));
 		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, -1, 1, 1));
 		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(0, 0, 3, 6));
+		assertThrows(IllegalArgumentException.class, () -> grid.subGrid(-2, 1, 2, 4));
 	}
 
 	@Test
@@ -196,6 +197,7 @@ class FixedSizeGridTest {
 		FixedSizeGrid<Integer> grid = new FixedSizeGrid<>(3, 5, 0);
 
 		assertDoesNotThrow(() -> grid.subGrid(0, 0, 3, 5));
+		assertDoesNotThrow(() -> grid.subGrid(1, 2, 2, 4));
 	}
 
 	@Test
